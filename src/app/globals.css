@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --darkColor: #1b1b1b;
+  --darkColorRelief: #212121;
+  --whiteColor: #fef6e2;
+  --accentColor: #16f1e4;
+  --errorColor: #e21717;
+}
+
+body {
+  background: var(--darkColor);
+  color: var(--whiteColor);
+  font-family: Arial, Helvetica, sans-serif;
+}
