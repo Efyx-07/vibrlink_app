@@ -1,4 +1,5 @@
 import FormField from '@/components/FormField';
+import Button from '@/components/Shared/Button';
 
 export default function SignupForm() {
   return (
@@ -18,6 +19,7 @@ export default function SignupForm() {
         name="password-confirm"
         type="password"
       />
+      <Button type="submit" label="Sign up" />
     </form>
   );
 }

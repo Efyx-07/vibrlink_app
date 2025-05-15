@@ -7,7 +7,10 @@
   --darkColorRelief: #212121;
   --whiteColor: rgb(254, 246, 226);
   --whiteLight: rgba(254, 246, 226, 0.1);
-  --accentColor: #16f1e4;
+  --accentColor: rgb(22, 241, 228);
+  --accentColor05: rgba(22, 241, 228, 0.05);
+  --accentColor25: rgba(22, 241, 228, 0.25);
+  --accentColor5: rgba(22, 241, 228, 0.5);
   --errorColor: #e21717;
 }
 
