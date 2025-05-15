@@ -1,4 +1,4 @@
-import FormField from '@/components/FormField';
+import FormField from '@/components/Shared/FormField';
 import Button from '@/components/Shared/Button';
 
 export default function SignupForm() {
