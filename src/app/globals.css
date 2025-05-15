@@ -15,3 +15,11 @@ body {
   color: var(--whiteColor);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.page {
+  @apply w-full min-h-[calc(100dvh-12rem)] flex flex-col justify-center items-center;
+}
+
+.content {
+  @apply w-full max-w-[75rem] h-full py-8 px-4 flex flex-col justify-center items-center;
+}
