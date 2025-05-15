@@ -8,7 +8,7 @@ export default function SiteLogo() {
 
   return (
     <h1
-      className="text-[2rem] font-bold text-accentColor cursor-pointer"
+      className="cursor-pointer text-[2rem] font-bold text-accentColor"
       onClick={() => router.push('/vl/home')}
     >
       {siteName}
