@@ -5,7 +5,8 @@
 :root {
   --darkColor: #1b1b1b;
   --darkColorRelief: #212121;
-  --whiteColor: #fef6e2;
+  --whiteColor: rgb(254, 246, 226);
+  --whiteLight: rgba(254, 246, 226, 0.1);
   --accentColor: #16f1e4;
   --errorColor: #e21717;
 }
@@ -17,7 +18,7 @@ body {
 }
 
 .page {
-  @apply flex min-h-[calc(100dvh-12rem)] w-full flex-col items-center justify-center;
+  @apply flex min-h-[calc(100dvh-10rem)] w-full flex-col items-center justify-center;
 }
 
 .content {
