@@ -10,8 +10,8 @@ interface NavItem {
 }
 
 const loggedOutNavitems: NavItem[] = [
-  { name: 'Create a free account', navTo: '/dashboard/account/signup' },
-  { name: 'Sign in', navTo: '/dashboard/account/login' },
+  { name: 'Create a free account', navTo: '/vl/account/signup' },
+  { name: 'Sign in', navTo: '/vl/account/login' },
 ];
 
 // const loggedInNavitems: NavItem[] = [];

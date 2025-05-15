@@ -1,5 +1,17 @@
+'use client';
+
 import { siteName } from '@/config';
+import { useRouter } from 'next/navigation';
 
 export default function SiteLogo() {
-  return <h1 className="text-[2rem] font-bold text-accentColor">{siteName}</h1>;
+  const router = useRouter();
+
+  return (
+    <h1
+      className="text-[2rem] font-bold text-accentColor cursor-pointer"
+      onClick={() => router.push('/vl/home')}
+    >
+      {siteName}
+    </h1>
+  );
 }
