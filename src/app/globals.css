@@ -17,9 +17,9 @@ body {
 }
 
 .page {
-  @apply w-full min-h-[calc(100dvh-12rem)] flex flex-col justify-center items-center;
+  @apply flex min-h-[calc(100dvh-12rem)] w-full flex-col items-center justify-center;
 }
 
 .content {
-  @apply w-full max-w-[75rem] h-full py-8 px-4 flex flex-col justify-center items-center;
+  @apply flex h-full w-full max-w-[75rem] flex-col items-center justify-center px-4 py-8;
 }
