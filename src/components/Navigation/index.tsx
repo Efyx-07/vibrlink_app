@@ -28,15 +28,13 @@ export default function Navigation() {
   const isLogged: boolean = useUserStore((state) => state.isLoggedIn);
   return (
     <nav className="flex h-full items-center justify-center gap-8">
-      {isLogged ? (
-        loggedInNavItems.map((item) => (
-          <NavItem key={item.name} name={item.name} navTo={item.navTo} />
-        ))
-      ) : (
-        loggedOutNavitems.map((item) => (
-          <NavItem key={item.name} name={item.name} navTo={item.navTo} />
-        ))
-      )}
+      {isLogged
+        ? loggedInNavItems.map((item) => (
+            <NavItem key={item.name} name={item.name} navTo={item.navTo} />
+          ))
+        : loggedOutNavitems.map((item) => (
+            <NavItem key={item.name} name={item.name} navTo={item.navTo} />
+          ))}
     </nav>
   );
 }
