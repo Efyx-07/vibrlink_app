@@ -1,7 +1,7 @@
 import { apiUrl } from '@/config';
 import { User, SignupResponse } from '@/interfaces/user.interface';
 
-// Service pour l'inscription d'un utilisateur, retourne les datas del'utilisateur
+// Service pour l'inscription d'un utilisateur, retourne les datas de l'utilisateur
 // ===========================================================================================
 export async function register(
   email: User['email'],
