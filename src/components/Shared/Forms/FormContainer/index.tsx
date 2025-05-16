@@ -1,18 +1,18 @@
 import Link from 'next/link';
 
-interface AccountFormContainerProps {
+interface FormContainerProps {
   children: React.ReactNode;
   addedLinkLabel?: string;
   addedLinkPath?: string;
 }
 
-// Container pour les formulaires relatifs au compte utilisateur pouvant accueillir un lien supplémentaire
+// Container pour les formulaires et pouvant accueillir un lien supplémentaire
 // ===========================================================================================
-export default function AccountFormContainer({
+export default function FormContainer({
   children,
   addedLinkLabel,
   addedLinkPath,
-}: AccountFormContainerProps) {
+}: FormContainerProps) {
   return (
     <div className="flex w-full max-w-[30rem] flex-col gap-8">
       {children}

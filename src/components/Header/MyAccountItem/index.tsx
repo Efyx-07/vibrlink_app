@@ -39,9 +39,9 @@ function HoverUserMenu() {
   // Fonction de déconnexion
   const handleLogout = () => {
     logOutUser();
-    router.push('/vl');
+    router.push('/vl/home');
   };
-  
+
   return (
     <div className="absolute -right-6 top-[4.9rem] w-60 border-4 border-accentColor bg-whiteColor text-darkColor">
       <div className="">
