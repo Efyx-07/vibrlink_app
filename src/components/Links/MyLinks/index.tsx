@@ -5,6 +5,7 @@ import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
 import { useEffect } from 'react';
 import { useReleases } from '@/hooks/useReleases';
+import LoadingPage from '@/components/LoadingPage';
 
 export default function MyLinks() {
   const userStore = useUserStore();
@@ -21,5 +22,5 @@ export default function MyLinks() {
     }
   }, [userId, queryClient]);
 
-  return <div>my links</div>;
+  return isLoading ? <LoadingPage /> : <div>my links</div>;
 }
