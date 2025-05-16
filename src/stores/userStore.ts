@@ -8,6 +8,7 @@ interface State {
   setToken: (newToken: string | null) => void;
   saveUserDataInLocalStorage: () => void;
   setUserData: (user: User) => void;
+  logOutUser: () => void;
 }
 
 const useUserStore = create<State>((set, get) => ({
@@ -24,6 +25,11 @@ const useUserStore = create<State>((set, get) => ({
   setUserData: (user) => {
     set({ user });
     get().saveUserDataInLocalStorage();
+  },
+  logOutUser: () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    set({ user: null, token: null, isLoggedIn: false });
   },
 }));
 
