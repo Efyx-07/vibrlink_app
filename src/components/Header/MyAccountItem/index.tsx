@@ -34,7 +34,14 @@ function HoverUserMenu() {
 
   // Récupère l'utilisateur connecté
   const user = useUserStore((state) => state.user);
+  const { logOutUser } = useUserStore();
 
+  // Fonction de déconnexion
+  const handleLogout = () => {
+    logOutUser();
+    router.push('/vl');
+  };
+  
   return (
     <div className="absolute -right-6 top-[4.9rem] w-60 border-4 border-accentColor bg-whiteColor text-darkColor">
       <div className="">
@@ -45,7 +52,7 @@ function HoverUserMenu() {
           name="Account settings"
           onClick={() => router.push('/vl/account/settings')}
         />
-        <UserItem name="Sign out" onClick={() => {}} />
+        <UserItem name="Sign out" onClick={handleLogout} />
       </div>
     </div>
   );
