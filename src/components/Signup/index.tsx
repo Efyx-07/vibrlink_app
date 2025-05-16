@@ -1,5 +1,3 @@
-'use client';
-
 import SignupForm from './SignupForm';
 import Link from 'next/link';
 
@@ -14,6 +12,8 @@ export default function Signup() {
   );
 }
 
+// Composant local pour le lien vers la page de connexion
+// ===========================================================================================
 function LinkToLogin() {
   return (
     <Link
