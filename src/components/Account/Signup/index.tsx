@@ -1,4 +1,4 @@
-import AccountFormContainer from '../Shared/Forms/AccountFormContainer';
+import AccountFormContainer from '../../Shared/Forms/AccountFormContainer';
 import SignupForm from './SignupForm';
 
 export default function Signup() {
