@@ -18,7 +18,7 @@ export interface Release {
   artistId: string;
   artistImage: string;
   cover: string;
-  preview: string;
+  preview: string | null;
   creationDate: Date;
   lastUpdate: Date;
   userID: number;

@@ -1,8 +1,10 @@
+import MyLinks from '@/components/Links/MyLinks';
+
 export default function MyLinksPage() {
   return (
     <div className="page">
       <div className="content">
-        <h1>My Links</h1>
+        <MyLinks />
       </div>
     </div>
   );
