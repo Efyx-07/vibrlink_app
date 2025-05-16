@@ -1,5 +1,5 @@
 import { apiUrl } from '@/config';
-import { Release } from '@/interfaces/release.interface';
+import { ReleaseResponse } from '@/interfaces/release.interface';
 import { User } from '@/interfaces/user.interface';
 
 // Service pour la création d'un lien. Retourne le slug qui servira pour la redirection
@@ -7,7 +7,7 @@ import { User } from '@/interfaces/user.interface';
 export async function createLink(
   albumUrl: string,
   userId: User['id'] | undefined,
-): Promise<{ releaseSlug: Release['slug'] }> {
+): Promise<{ releaseSlug: ReleaseResponse['releaseSlug'] }> {
   try {
     console.log('Sending album URL:', albumUrl, 'for user ID:', userId);
     const response = await fetch(
@@ -22,8 +22,8 @@ export async function createLink(
     );
 
     if (response.ok) {
-      const data: Release['slug'] = await response.json();
-      return { releaseSlug: data };
+      const data: ReleaseResponse = await response.json();
+      return { releaseSlug: data.releaseSlug };
     } else {
       throw new Error('Failed to send album URL' + response.statusText);
     }

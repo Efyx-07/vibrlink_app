@@ -30,6 +30,7 @@ export default function NewLinkForm() {
     try {
       const data = await createLink(albumUrl, userId);
       const releaseSlug: Release['slug'] = data.releaseSlug;
+      console.log('Release slug: ', releaseSlug);
       router.push(`/vl/links/link-editor/${releaseSlug}`);
     } catch (error) {
       console.error('Failed to send album URL: ', error);
