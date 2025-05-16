@@ -5,9 +5,11 @@ import FormField from '@/components/Shared/Forms/FormField';
 import { useState } from 'react';
 import { login } from '@/services/auth.service';
 import { useRouter } from 'next/navigation';
+import useUserStore from '@/stores/userStore';
 
 export default function LoginForm() {
   const router = useRouter();
+  const { setUserData, setToken } = useUserStore();
 
   // State pour le formulaire de connexion
   const [email, setEmail] = useState<string>('');
@@ -18,9 +20,11 @@ export default function LoginForm() {
     e.preventDefault();
     try {
       const data = await login(email, password);
+      setUserData(data.user);
       const token = data.token;
       localStorage.setItem('token', token);
-      router.push('/links/my-links');
+      setToken(token);
+      router.push('/vl/links/my-links');
     } catch (error) {
       console.error('Error while connecting: ', error);
     }
