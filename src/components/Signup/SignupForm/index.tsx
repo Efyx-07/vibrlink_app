@@ -1,6 +1,6 @@
 'use client';
 
-import FormField from '@/components/Shared/FormField';
+import FormField from '@/components/Shared/Forms/FormField';
 import Button from '@/components/Shared/Button';
 import {
   validateData,
