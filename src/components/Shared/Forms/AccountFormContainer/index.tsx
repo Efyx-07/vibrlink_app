@@ -14,7 +14,7 @@ export default function AccountFormContainer({
   addedLinkPath,
 }: AccountFormContainerProps) {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex w-full max-w-[30rem] flex-col gap-8">
       {children}
       {addedLinkLabel && addedLinkPath && (
         <Link

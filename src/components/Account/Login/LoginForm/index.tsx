@@ -3,12 +3,32 @@
 import Button from '@/components/Shared/Button';
 import FormField from '@/components/Shared/Forms/FormField';
 import { useState } from 'react';
+import { login } from '@/services/auth.service';
+import { useRouter } from 'next/navigation';
 
 export default function LoginForm() {
+  const router = useRouter();
+
+  // State pour le formulaire de connexion
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+  // Fonction de soumission du formulaire
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const data = await login(email, password);
+      const token = data.token;
+      localStorage.setItem('token', token);
+      router.push('/links/my-links');
+    } catch (error) {
+      console.error('Error while connecting: ', error);
+    }
+  };
+  // ===========================================================================================
+
   return (
-    <form className="flex flex-col gap-8">
+    <form className="flex w-full flex-col gap-8" onSubmit={handleSubmit}>
       <FormField
         id="email"
         label="Email address"
@@ -19,8 +39,7 @@ export default function LoginForm() {
       />
       <FormField
         id="password"
-        label="Create a password"
-        addedMention="8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character"
+        label="Enter your password"
         name="password"
         type="password"
         value={password}

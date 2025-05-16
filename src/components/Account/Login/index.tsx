@@ -3,7 +3,7 @@ import LoginForm from './LoginForm';
 
 export default function Login() {
   return (
-    <div>
+    <div className="flex w-full items-center justify-center">
       <AccountFormContainer
         addedLinkLabel="I forgot my password"
         addedLinkPath="/vl/account/reset-password-ask"

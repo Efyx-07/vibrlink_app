@@ -20,7 +20,7 @@ export default function FormField({
   isValid,
 }: FormFieldProps) {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex w-full flex-col gap-2">
       <label htmlFor={id}>{label}</label>
       {addedMention && <p className="text-xs opacity-50">{addedMention}</p>}
       <input

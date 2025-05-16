@@ -7,8 +7,12 @@ export interface User {
 export interface SignupResponse {
   message: string;
   user: {
-    id: number;
+    id: User['id'];
     email: User['email'];
   };
   token: string;
+}
+
+export interface LoginResponse extends SignupResponse {
+  success: boolean;
 }
