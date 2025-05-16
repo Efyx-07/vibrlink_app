@@ -3,18 +3,15 @@
 import { useEffect, useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import isTokenExpired from '@/utils/checkTokenExpiry';
+import LoadingPage from '@/components/LoadingPage';
 
 interface Props {
   children: React.ReactNode;
-  loadingFallback?: React.ReactNode;
 }
 
 // Composant pour initialiser l'app avec les données de l'utilisateur
 // ===========================================================================================
-export default function AppInitializer({
-  children,
-  loadingFallback = null,
-}: Props) {
+export default function AppInitializer({ children }: Props) {
   const [loading, setLoading] = useState(true);
 
   // Récupère les méthodes du store
@@ -52,7 +49,7 @@ export default function AppInitializer({
     appInit();
   }, [setToken, logOutUser, loadUserDataFromLocalStorage]);
 
-  if (loading) return <>{loadingFallback}</>;
+  if (loading) return <LoadingPage />;
 
   return <>{children}</>;
 }
