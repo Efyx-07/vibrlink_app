@@ -15,10 +15,14 @@ export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  // State pour le loader du bouton
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const data = await login(email, password);
       setUserData(data.user);
       const token = data.token;
@@ -26,6 +30,7 @@ export default function LoginForm() {
       setToken(token);
       router.push('/vl/links/my-links');
     } catch (error) {
+      setIsLoading(false);
       console.error('Error while connecting: ', error);
     }
   };
@@ -49,7 +54,7 @@ export default function LoginForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button type="submit" label="Log in" />
+      <Button type="submit" label="Log in" isLoading={isLoading}/>
     </form>
   );
 }
