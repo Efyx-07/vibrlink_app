@@ -17,6 +17,9 @@ export default function NewLinkForm() {
   // State pour l'URL de l'album
   const [albumUrl, setAlbumUrl] = useState<string>('');
 
+  // State pour le loader du bouton
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,11 +31,12 @@ export default function NewLinkForm() {
     const userId: User['id'] | undefined = userStore.user?.id;
 
     try {
+      setIsLoading(true);
       const data = await createLink(albumUrl, userId);
       const releaseSlug: Release['slug'] = data.releaseSlug;
-      console.log('Release slug: ', releaseSlug);
       router.push(`/vl/links/link-editor/${releaseSlug}`);
     } catch (error) {
+      setIsLoading(false);
       console.error('Failed to send album URL: ', error);
     }
   };
@@ -49,7 +53,7 @@ export default function NewLinkForm() {
         value={albumUrl}
         onChange={(e) => setAlbumUrl(e.target.value)}
       />
-      <Button type="submit" label="Create my link" />
+      <Button type="submit" label="Create my link" isLoading={isLoading} />
     </form>
   );
 }
