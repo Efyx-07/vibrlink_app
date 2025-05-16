@@ -1,24 +1,19 @@
-'use client';
-
+import AppInitializer from '@/components/Utils/AppInitializer';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import useAppInitializer from '@/hooks/useAppInitializer';
 
 export default function MainLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const loading = useAppInitializer();
   return (
     <>
-    {loading ? (<p>Loading</p>) : (
-      <>
+      <AppInitializer>
         <Header />
         {children}
         <Footer />
-      </>
-    )}
+      </AppInitializer>
     </>
   );
 }

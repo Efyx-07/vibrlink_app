@@ -1,0 +1,58 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import useUserStore from '@/stores/userStore';
+import isTokenExpired from '@/utils/checkTokenExpiry';
+
+interface Props {
+  children: React.ReactNode;
+  loadingFallback?: React.ReactNode;
+}
+
+// Composant pour initialiser l'app avec les données de l'utilisateur
+// ===========================================================================================
+export default function AppInitializer({
+  children,
+  loadingFallback = null,
+}: Props) {
+  const [loading, setLoading] = useState(true);
+
+  // Récupère les méthodes du store
+  const { setToken, logOutUser, loadUserDataFromLocalStorage } = useUserStore();
+
+  useEffect(() => {
+    const appInit = async () => {
+      try {
+        // Charge les données de l'utilisateur depuis le localStorage
+        await loadUserDataFromLocalStorage();
+
+        // Vérifie si le token est présent dans le localStorage et met à jour le store
+        const token = localStorage.getItem('token');
+        if (token) setToken(token);
+
+        // Vérifie si le token est expiré et déconnecte l'utilisateur si c'est le cas
+        if (token && isTokenExpired(token)) logOutUser();
+
+        // Met en place un intervalle pour vérifier l'expiration du token toutes les heures
+        const interval = setInterval(() => {
+          const storedToken = localStorage.getItem('token');
+          if (storedToken && isTokenExpired(storedToken)) {
+            logOutUser();
+          }
+        }, 3600000);
+
+        return () => clearInterval(interval);
+      } catch (err) {
+        console.error('App initialization error:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    appInit();
+  }, [setToken, logOutUser, loadUserDataFromLocalStorage]);
+
+  if (loading) return <>{loadingFallback}</>;
+
+  return <>{children}</>;
+}
