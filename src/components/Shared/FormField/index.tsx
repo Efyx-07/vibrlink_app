@@ -24,7 +24,7 @@ export default function FormField({
       <label htmlFor={id}>{label}</label>
       {addedMention && <p className="text-xs opacity-50">{addedMention}</p>}
       <input
-        className={`h-16 border ${isValid === false ? 'border-errorColor' : ''} bg-darkColorRelief pl-4 outline-none focus:border-accentColor`}
+        className={`h-16 border ${isValid === false && value !== '' ? 'border-errorColor' : 'border-whiteLight'} bg-darkColorRelief pl-4 outline-none focus:border-accentColor`}
         id={id}
         name={name}
         type={type}
