@@ -9,6 +9,7 @@ export async function createLink(
   userId: User['id'] | undefined,
 ): Promise<{ releaseSlug: Release['slug'] }> {
   try {
+    console.log('Sending album URL:', albumUrl, 'for user ID:', userId);
     const response = await fetch(
       `${apiUrl}/releasesRoute/getReleaseSpotifyUrl`,
       {
