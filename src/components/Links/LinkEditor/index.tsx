@@ -3,6 +3,7 @@
 import { Release } from '@/interfaces/release.interface';
 import { useParams } from 'next/navigation';
 import { useRelease } from '@/hooks/useRelease';
+import LoadingPage from '@/components/LoadingPage';
 
 export default function LinkEditor() {
   const { releaseSlug } = useParams();
@@ -13,7 +14,9 @@ export default function LinkEditor() {
     isLoading,
   } = useRelease(releaseSlug as Release['slug']);
 
-  return (
+  return isLoading ? (
+    <LoadingPage />
+  ) : (
     <div>
       <h1>{releaseSlug}</h1>
       <h2>{release?.artist}</h2>
