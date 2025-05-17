@@ -37,8 +37,8 @@ export default function AppInitializer({ children }: Props) {
         }, 3600000);
 
         return () => clearInterval(interval);
-      } catch (err) {
-        console.error('App initialization error:', err);
+      } catch (error) {
+        console.error('App initialization error:', error);
       } finally {
         setLoading(false);
       }
