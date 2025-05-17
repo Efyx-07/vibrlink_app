@@ -33,9 +33,7 @@ export default function AppInitializer({ children }: Props) {
         // Met en place un intervalle pour vérifier l'expiration du token toutes les heures
         const interval = setInterval(() => {
           const storedToken = localStorage.getItem('token');
-          if (storedToken && isTokenExpired(storedToken)) {
-            logOutUser();
-          }
+          if (storedToken && isTokenExpired(storedToken)) logOutUser();
         }, 3600000);
 
         return () => clearInterval(interval);
