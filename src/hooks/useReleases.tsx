@@ -8,7 +8,7 @@ export function useReleases(userId: User['id'] | undefined) {
     queryKey: ['releases', userId],
     queryFn: ({ queryKey }) => {
       const [, userId] = queryKey;
-      return fetchReleasesData(userId as number);
+      return fetchReleasesData(userId as User['id']);
     },
     enabled: typeof userId === 'number', // évite l'appel au 1er rendu si userId manquant
   });
