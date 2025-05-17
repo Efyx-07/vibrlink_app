@@ -1,7 +1,7 @@
 'use client';
 
 import SiteLogo from './SiteLogo';
-import Navigation from '../Navigation';
+import Navigation from './Navigation';
 import MyAccountItem from './MyAccountItem';
 import MobileMenuIcon from './MobileMenuIcon';
 import MobilieMenu from './MobileMenu';
@@ -21,13 +21,13 @@ export default function Header() {
           <div className="hidden md:block">
             <Navigation />
           </div>
-          <MyAccountItem />
+          {!isOpen && <MyAccountItem />}
           <div className="md:hidden">
             <MobileMenuIcon isOpen={isOpen} onClick={toggleMobileMenu} />
           </div>
         </div>
       </div>
-      <MobilieMenu isOpen={isOpen} />
+      <MobilieMenu isOpen={isOpen} onCloseMenu={() => setIsOpen(false)} />
     </header>
   );
 }

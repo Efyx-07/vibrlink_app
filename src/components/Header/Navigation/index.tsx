@@ -22,19 +22,23 @@ const loggedInNavItems: NavItemProps[] = [
   { name: 'My links', navTo: '/vl/links/my-links' },
 ];
 // ===========================================================================================
+interface NavigationProps {
+  onCloseMenu?: () => void;
+}
 
-export default function Navigation() {
+export default function Navigation({ onCloseMenu }: NavigationProps) {
   // Récupère l'état de connexion de l'utilisateur
   const isLogged: boolean = useUserStore((state) => state.isLoggedIn);
   return (
-    <nav className="flex h-full items-center justify-center gap-12">
-      {isLogged
-        ? loggedInNavItems.map((item) => (
-            <NavItem key={item.name} name={item.name} navTo={item.navTo} />
-          ))
-        : loggedOutNavitems.map((item) => (
-            <NavItem key={item.name} name={item.name} navTo={item.navTo} />
-          ))}
+    <nav className="flex h-full flex-col justify-center gap-6 text-lg md:flex-row md:items-center md:gap-12 md:text-base">
+      {(isLogged ? loggedInNavItems : loggedOutNavitems).map((item) => (
+        <NavItem
+          key={item.name}
+          name={item.name}
+          navTo={item.navTo}
+          onCloseMenu={onCloseMenu}
+        />
+      ))}
     </nav>
   );
 }
@@ -44,9 +48,10 @@ export default function Navigation() {
 interface NavItemProps {
   name: string;
   navTo: string;
+  onCloseMenu?: () => void;
 }
 
-function NavItem({ name, navTo }: NavItemProps) {
+function NavItem({ name, navTo, onCloseMenu }: NavItemProps) {
   const pathname = usePathname();
   const [isActive, setIsActive] = useState(pathname === navTo);
 
@@ -58,6 +63,7 @@ function NavItem({ name, navTo }: NavItemProps) {
     <Link
       href={navTo}
       className={`hover:text-accentColor ${isActive ? 'text-accentColor' : ''}`}
+      onClick={onCloseMenu}
     >
       <p>{name}</p>
     </Link>
