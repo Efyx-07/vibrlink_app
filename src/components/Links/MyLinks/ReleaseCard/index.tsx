@@ -20,10 +20,20 @@ export default function ReleaseCard({ release }: ReleaseCardProps) {
   return (
     <div className="w-full bg-darkColorRelief">
       <h1>{release.title}</h1>
-      <button onClick={() => navToReleaseToEditPage(release.slug)}>Edit</button>
-      <button onClick={() => navToReleaseLandingPage(release.slug)}>
-        Landing page
-      </button>
+      <div className="flex gap-2">
+        <button
+          className="border border-whiteColor p-2"
+          onClick={() => navToReleaseToEditPage(release.slug)}
+        >
+          Edit
+        </button>
+        <button
+          className="border border-whiteColor p-2"
+          onClick={() => navToReleaseLandingPage(release.slug)}
+        >
+          Landing page
+        </button>
+      </div>
     </div>
   );
 }
