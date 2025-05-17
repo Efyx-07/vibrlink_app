@@ -27,7 +27,7 @@ export default function Navigation() {
   // Récupère l'état de connexion de l'utilisateur
   const isLogged: boolean = useUserStore((state) => state.isLoggedIn);
   return (
-    <nav className="flex h-full items-center justify-center gap-8">
+    <nav className="flex h-full items-center justify-center gap-12">
       {isLogged
         ? loggedInNavItems.map((item) => (
             <NavItem key={item.name} name={item.name} navTo={item.navTo} />

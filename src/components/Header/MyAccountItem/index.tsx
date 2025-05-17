@@ -15,7 +15,7 @@ export default function MyAccountItem() {
     isLogged && (
       <>
         <div
-          className="relative flex h-full cursor-pointer items-center hover:text-accentColor"
+          className="relative flex h-full cursor-pointer items-center pr-8 hover:text-accentColor"
           onMouseEnter={() => setIsHoverUserMenuVisible(true)}
           onMouseLeave={() => setIsHoverUserMenuVisible(false)}
         >
@@ -43,7 +43,7 @@ function HoverUserMenu() {
   };
 
   return (
-    <div className="absolute -right-6 top-[4.9rem] w-60 border-4 border-accentColor bg-whiteColor text-darkColor">
+    <div className="absolute right-0 top-[4.9rem] w-60 border-4 border-accentColor bg-whiteColor text-darkColor">
       <div className="">
         <div className="flex items-center justify-center border-b border-whiteLight25 bg-darkColor p-4 text-xs text-whiteColor">
           {user && <p>{user.email}</p>}
