@@ -6,6 +6,7 @@ import { User } from '@/interfaces/user.interface';
 import { useEffect } from 'react';
 import { useReleases } from '@/hooks/useReleases';
 import LoadingPage from '@/components/LoadingPage';
+import ReleaseCard from './ReleaseCard';
 
 export default function MyLinks() {
   const userStore = useUserStore();
@@ -22,5 +23,16 @@ export default function MyLinks() {
     }
   }, [userId, queryClient]);
 
-  return isLoading ? <LoadingPage /> : <div>my links</div>;
+  return isLoading ? (
+    <LoadingPage />
+  ) : (
+    <>
+      {releases &&
+        releases.map((release) => (
+          <div key={release.id} className="w-full">
+            <ReleaseCard release={release} />
+          </div>
+        ))}
+    </>
+  );
 }
