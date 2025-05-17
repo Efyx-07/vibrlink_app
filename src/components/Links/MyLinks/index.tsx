@@ -18,9 +18,8 @@ export default function MyLinks() {
 
   // Re-fetch si userId devient dispo après le 1er rendu
   useEffect(() => {
-    if (typeof userId === 'number') {
+    if (typeof userId === 'number')
       void queryClient.invalidateQueries({ queryKey: ['releases', userId] });
-    }
   }, [userId, queryClient]);
 
   return isLoading ? (
