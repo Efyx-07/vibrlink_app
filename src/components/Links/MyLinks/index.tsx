@@ -6,7 +6,7 @@ import { User } from '@/interfaces/user.interface';
 import { useEffect } from 'react';
 import { useReleases } from '@/hooks/useReleases';
 import LoadingPage from '@/components/LoadingPage';
-import ReleaseCard from './ReleaseCard';
+import LinkCard from '../Shared/LinkCard';
 
 export default function MyLinks() {
   const userStore = useUserStore();
@@ -29,7 +29,7 @@ export default function MyLinks() {
       {releases &&
         releases.map((release) => (
           <div key={release.id} className="w-full">
-            <ReleaseCard release={release} />
+            <LinkCard release={release} />
           </div>
         ))}
     </>

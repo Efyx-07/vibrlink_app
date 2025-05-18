@@ -2,14 +2,14 @@ import { Release } from '@/interfaces/release.interface';
 import { openInANewTab } from '@/utils/openInANewTab';
 import { useRouter } from 'next/navigation';
 
-interface ReleaseCardProps {
+interface LinkCardProps {
   release: Release;
 }
 
-export default function ReleaseCard({ release }: ReleaseCardProps) {
+export default function LinkCard({ release }: LinkCardProps) {
   const router = useRouter();
 
-  const navToReleaseToEditPage = (releaseSlug: string): void => {
+  const navToLinkToEditPage = (releaseSlug: string): void => {
     router.push(`/vl/links/link-editor/${releaseSlug}`);
   };
 
@@ -23,7 +23,7 @@ export default function ReleaseCard({ release }: ReleaseCardProps) {
       <div className="flex gap-2">
         <button
           className="border border-whiteColor p-2"
-          onClick={() => navToReleaseToEditPage(release.slug)}
+          onClick={() => navToLinkToEditPage(release.slug)}
         >
           Edit
         </button>
