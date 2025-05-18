@@ -1,11 +1,10 @@
 import Login from '@/components/Account/Login';
+import PageWrapper from '@/components/Utils/PageWrapper';
 
 export default function LoginPage() {
   return (
-    <div className="page">
-      <div className="content">
-        <Login />
-      </div>
-    </div>
+    <PageWrapper>
+      <Login />
+    </PageWrapper>
   );
 }

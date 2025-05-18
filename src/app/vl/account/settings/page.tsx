@@ -1,9 +1,10 @@
+import Settings from '@/components/Account/Settings';
+import PageWrapper from '@/components/Utils/PageWrapper';
+
 export default function SettingsPage() {
   return (
-    <div className="page">
-      <div className="content">
-        <h1>Account settings</h1>
-      </div>
-    </div>
+    <PageWrapper>
+      <Settings />
+    </PageWrapper>
   );
 }

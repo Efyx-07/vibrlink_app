@@ -1,11 +1,10 @@
 import NewLink from '@/components/Links/NewLink';
+import PageWrapper from '@/components/Utils/PageWrapper';
 
 export default function NewLinkPage() {
   return (
-    <div className="page">
-      <div className="content">
-        <NewLink />
-      </div>
-    </div>
+    <PageWrapper>
+      <NewLink />
+    </PageWrapper>
   );
 }

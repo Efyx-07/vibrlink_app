@@ -1,11 +1,10 @@
 import Signup from '@/components/Account/Signup';
+import PageWrapper from '@/components/Utils/PageWrapper';
 
 export default function SignupPage() {
   return (
-    <div className="page">
-      <div className="content">
-        <Signup />
-      </div>
-    </div>
+    <PageWrapper>
+      <Signup />
+    </PageWrapper>
   );
 }

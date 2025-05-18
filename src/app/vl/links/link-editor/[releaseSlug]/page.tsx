@@ -1,11 +1,10 @@
 import LinkEditor from '@/components/Links/LinkEditor';
+import PageWrapper from '@/components/Utils/PageWrapper';
 
 export default function LinkEditorPage() {
   return (
-    <div className="page">
-      <div className="content">
-        <LinkEditor />
-      </div>
-    </div>
+    <PageWrapper>
+      <LinkEditor />
+    </PageWrapper>
   );
 }
