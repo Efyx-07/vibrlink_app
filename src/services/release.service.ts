@@ -31,3 +31,19 @@ export async function createLink(
     throw new Error('Failed to send album URL' + error);
   }
 }
+
+// Service pour la suppression définitive d'un lien (app et base de donnée)
+// ===========================================================================================
+export async function deleteLinkByReleaseId(
+  releaseId: ReleaseResponse['releaseId'],
+): Promise<void> {
+  try {
+    const response = await fetch(`${apiUrl}/releasesRoute/${releaseId}`, {
+      method: 'DELETE',
+    });
+    if (response.ok) return;
+    else throw new Error('Failed to delete release' + response.statusText);
+  } catch (error) {
+    throw new Error('Failed to delete release' + error);
+  }
+}

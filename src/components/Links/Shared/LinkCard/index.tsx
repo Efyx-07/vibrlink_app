@@ -1,6 +1,8 @@
 import { Release } from '@/interfaces/release.interface';
 import { openInANewTab } from '@/utils/openInANewTab';
 import { useRouter } from 'next/navigation';
+import { deleteLinkByReleaseId } from '@/services/release.service';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface LinkCardProps {
   release: Release;
@@ -8,13 +10,23 @@ interface LinkCardProps {
 
 export default function LinkCard({ release }: LinkCardProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
-  const navToLinkToEditPage = (releaseSlug: string): void => {
+  const navToLinkToEditPage = (releaseSlug: Release['slug']): void => {
     router.push(`/vl/links/link-editor/${releaseSlug}`);
   };
 
-  const navToReleaseLandingPage = (releaseSlug: string): void => {
+  const navToReleaseLandingPage = (releaseSlug: Release['slug']): void => {
     openInANewTab(`/${releaseSlug}`);
+  };
+
+  const deleteLink = async (): Promise<void> => {
+    try {
+      await deleteLinkByReleaseId(release.id);
+      queryClient.invalidateQueries({ queryKey: ['releases'] });
+    } catch (error) {
+      console.error('Error while deleting link:', error);
+    }
   };
 
   return (
@@ -32,6 +44,9 @@ export default function LinkCard({ release }: LinkCardProps) {
           onClick={() => navToReleaseLandingPage(release.slug)}
         >
           Landing page
+        </button>
+        <button className="border border-whiteColor p-2" onClick={deleteLink}>
+          Delete link
         </button>
       </div>
     </div>
