@@ -25,13 +25,13 @@ export default function MyLinks() {
   return isLoading ? (
     <LoadingPage />
   ) : (
-    <>
+    <div className="flex w-full flex-col gap-4">
       {releases &&
         releases.map((release) => (
           <div key={release.id} className="w-full">
             <LinkCard release={release} />
           </div>
         ))}
-    </>
+    </div>
   );
 }

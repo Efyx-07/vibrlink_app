@@ -3,7 +3,7 @@ import PageWrapper from '@/components/Utils/PageWrapper';
 
 export default function MyLinksPage() {
   return (
-    <PageWrapper>
+    <PageWrapper isJustifyStart>
       <MyLinks />
     </PageWrapper>
   );
