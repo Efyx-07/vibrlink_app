@@ -5,6 +5,7 @@ import { deleteLinkByReleaseId } from '@/services/release.service';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Separator from '@/components/Shared/Separator';
+import Button from '@/components/Shared/Button';
 
 interface LinkCardProps {
   release: Release;
@@ -86,7 +87,7 @@ function ActionButtons({ release }: ActionButtonsProps) {
     }
   };
 
-  const CTAButtons: ActionButtonProps[] = [
+  const CTAButtons = [
     { label: 'Edit', onClick: () => navToLinkToEditPage(release.slug) },
     { label: 'Delete link', onClick: deleteLink },
     {
@@ -99,30 +100,15 @@ function ActionButtons({ release }: ActionButtonsProps) {
     <div>
       <div className="flex flex-col gap-4">
         {CTAButtons.map((button, index) => (
-          <ActionButton
+          <Button
             key={index}
+            type="button"
+            isLinkCard={true}
             label={button.label}
-            onClick={button.onClick}
+            onButtonClick={button.onClick}
           />
         ))}
       </div>
     </div>
-  );
-}
-
-// Composant local pour un bouton
-// ===========================================================================================
-interface ActionButtonProps {
-  label: string;
-  onClick: () => void;
-}
-function ActionButton({ label, onClick }: ActionButtonProps) {
-  return (
-    <button
-      className="size-full min-h-10 border border-accentColor5 bg-accentColor05 text-accentColor hover:bg-accentColor25"
-      onClick={onClick}
-    >
-      {label}
-    </button>
   );
 }
