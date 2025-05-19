@@ -21,7 +21,7 @@ export default function PlatformField({
     <div className="flex w-full items-center gap-4">
       <PlatformLogo platform={platform} />
       <input
-        className="h-16 w-full border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
+        className="h-16 w-full border border-whiteLight bg-darkColorRelief pl-4 text-sm outline-none focus:border-accentColor"
         type="text"
         value={value}
         onChange={onChange}
