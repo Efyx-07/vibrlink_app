@@ -4,8 +4,6 @@ import Button from '@/components/Shared/Button';
 import { useLinkEditor } from './hooks/useLinkEditor';
 import PlatformSelector from './PlatformSelector';
 import PlatformField from './PlatformField';
-import { useRelease } from '@/hooks/useRelease';
-import { use } from 'react';
 
 interface LinkEditorFormProps {
   release: Release;
