@@ -54,6 +54,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
             value={newUrls[selectedPlatform.id] || ''}
             onChange={(e) => updateUrl(selectedPlatform.id, e.target.value)}
             onAddButtonClick={handleAddPlatform}
+            placeholder="Enter your URL here"
           />
         )}
         <PlatformSelector

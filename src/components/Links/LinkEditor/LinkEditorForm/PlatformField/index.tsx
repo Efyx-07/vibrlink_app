@@ -8,6 +8,7 @@ interface PlatformFieldProps {
   platformsWithUrl?: Platform[];
   platform: Platform;
   onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
+  placeholder?: string;
 }
 
 export default function PlatformField({
@@ -16,6 +17,7 @@ export default function PlatformField({
   platformsWithUrl,
   platform,
   onAddButtonClick,
+  placeholder,
 }: PlatformFieldProps) {
   return (
     <div className="flex w-full items-center gap-4">
@@ -25,6 +27,7 @@ export default function PlatformField({
         type="text"
         value={value}
         onChange={onChange}
+        placeholder={placeholder}
       />
       {platformsWithUrl ? null : (
         <button onClick={onAddButtonClick}>Add</button>
