@@ -1,5 +1,6 @@
 import { Release, Platform } from '@/interfaces/release.interface';
 import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
+import PlatformLogo from '@/components/Shared/PlatformLogo';
 
 interface LinkEditorFormProps {
   release: Release;
@@ -74,6 +75,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
             value={platform.url as string}
             onChange={() => {}}
             platformsWithUrl={platformsWithUrl}
+            platform={platform}
             onAddButtonClick={() => {}}
           />
         ))}
@@ -82,6 +84,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
           <PlatformField
             value={(selectedPlatform.url as string) || ''}
             onChange={handleSelectedPlatformUrlChange}
+            platform={selectedPlatform}
             onAddButtonClick={handleAddButtonClick}
           />
         )}
@@ -131,16 +134,19 @@ interface PlatformFieldProps {
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   platformsWithUrl?: Platform[];
+  platform: Platform;
   onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
 function PlatformField({
   value,
   onChange,
   platformsWithUrl,
+  platform,
   onAddButtonClick,
 }: PlatformFieldProps) {
   return (
     <div className="flex w-full items-center gap-4">
+      <PlatformLogo platform={platform} />
       <input
         className="h-16 w-full border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
         type="text"
