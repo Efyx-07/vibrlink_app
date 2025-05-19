@@ -20,7 +20,7 @@ export default function LinkEditor() {
   if (!release) return null;
 
   return (
-    <div>
+    <div className="w-full">
       <LinkCard release={release} isEditor={true} />
     </div>
   );

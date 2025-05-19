@@ -3,7 +3,7 @@ import PageWrapper from '@/components/Utils/PageWrapper';
 
 export default function LinkEditorPage() {
   return (
-    <PageWrapper>
+    <PageWrapper isJustifyStart={true}>
       <LinkEditor />
     </PageWrapper>
   );
