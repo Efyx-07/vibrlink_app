@@ -5,6 +5,7 @@ import { useParams } from 'next/navigation';
 import { useRelease } from '@/hooks/useRelease';
 import LoadingPage from '@/components/LoadingPage';
 import LinkCard from '../Shared/LinkCard';
+import LinkEditorForm from './LinkEditorForm';
 
 export default function LinkEditor() {
   const { releaseSlug } = useParams();
@@ -20,8 +21,9 @@ export default function LinkEditor() {
   if (!release) return null;
 
   return (
-    <div className="w-full">
+    <div className="flex w-full flex-col gap-4">
       <LinkCard release={release} isEditor={true} />
+      <LinkEditorForm release={release} />
     </div>
   );
 }
