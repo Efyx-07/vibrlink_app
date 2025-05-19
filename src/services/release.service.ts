@@ -47,3 +47,28 @@ export async function deleteLinkByReleaseId(
     throw new Error('Failed to delete release' + error);
   }
 }
+
+export async function updateLink(
+  newUrls: { [key: number]: string },
+  platformsVisibility: { [key: number]: boolean },
+  releaseId: number,
+) {
+  try {
+    const response = await fetch(`${apiUrl}/releasesRoute/${releaseId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ newUrls, platformsVisibility }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Failed to update release' + response.statusText);
+    }
+  } catch (error) {
+    throw new Error('Failed to update release' + error);
+  }
+}

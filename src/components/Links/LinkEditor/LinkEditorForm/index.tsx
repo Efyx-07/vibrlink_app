@@ -1,163 +1,122 @@
 import { Release, Platform } from '@/interfaces/release.interface';
-import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
-import PlatformLogo from '@/components/Shared/PlatformLogo';
+import { useState, useMemo } from 'react';
+import { updateLink } from '@/services/release.service';
+import PlatformSelector from './PlatformSelector';
+import PlatformField from './PlatformField';
+import Button from '@/components/Shared/Button';
+import { useUrlState } from './hooks/useUrlState';
 
 interface LinkEditorFormProps {
   release: Release;
 }
 
 export default function LinkEditorForm({ release }: LinkEditorFormProps) {
-  // État local pour gérer la liste des plateformes modifiables
   const [platformsState, setPlatformsState] = useState<Platform[]>(
     release.platforms,
   );
 
-  // Plateforme sélectionnée dans la liste déroulante
+  // Mémorisation pour éviter boucle infinie
+  const normalizedPlatformsState = useMemo(() => {
+    return platformsState.map((platform) => ({
+      ...platform,
+      url: platform.url === null ? undefined : platform.url,
+    }));
+  }, [platformsState]);
+
+  const { newUrls, updateUrl } = useUrlState(normalizedPlatformsState);
+
   const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
     null,
   );
 
-  // Plateformes avec une URL définie
-  const platformsWithUrl: Platform[] = platformsState.filter(
+  const platformsWithUrl = platformsState.filter(
     (platform) => platform.url && platform.url.trim() !== '',
   );
 
-  // Plateformes sans URL encore définie
-  const platformsWithoutUrl: Platform[] = platformsState.filter(
+  const platformsWithoutUrl = platformsState.filter(
     (platform) => !platform.url || platform.url.trim() === '',
   );
 
-  // Gère le changement de plateforme sélectionnée dans le select
   const handlePlatformChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const platformId: Platform['id'] = parseInt(e.target.value, 10);
-    const foundPlatform: Platform | undefined = platformsState.find(
-      (p) => p.id === platformId,
-    );
-    if (foundPlatform) setSelectedPlatform({ ...foundPlatform });
+    const platformId = parseInt(e.target.value, 10);
+    const foundPlatform = platformsState.find((p) => p.id === platformId);
+    if (!foundPlatform) return;
+    setSelectedPlatform({ ...foundPlatform });
   };
 
-  // Gère le changement de l'input de l'URL pour la plateforme sélectionnée
   const handleSelectedPlatformUrlChange = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (!selectedPlatform) return;
-    setSelectedPlatform({
-      ...selectedPlatform,
-      url: e.target.value,
-    });
+    updateUrl(selectedPlatform.id, e.target.value);
   };
 
-  // Gère l'ajout à la liste des plateformes avec une URL
   const handleAddButtonClick = () => {
-    if (
-      !selectedPlatform ||
-      !selectedPlatform.url ||
-      selectedPlatform.url.trim() === ''
-    )
-      return;
+    if (!selectedPlatform) return;
+    const enteredUrl = newUrls[selectedPlatform.id]?.trim();
+    if (!enteredUrl) return;
 
-    const updatedPlatforms: Platform[] = platformsState.map((platform) => {
-      // mise à jour avec l'URL saisie
-      if (platform.id === selectedPlatform.id) return { ...selectedPlatform };
-      return platform;
-    });
+    const updatedPlatforms = platformsState.map((platform) =>
+      platform.id === selectedPlatform.id
+        ? { ...platform, url: enteredUrl }
+        : platform,
+    );
 
     setPlatformsState(updatedPlatforms);
     setSelectedPlatform(null);
   };
-  // ===========================================================================================
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    // On extrait la visibilité actuelle de chaque plateforme
+    const platformsVisibility = platformsState.reduce(
+      (acc, platform) => {
+        acc[platform.id] = platform.visibility;
+        return acc;
+      },
+      {} as { [key: number]: boolean },
+    );
+    try {
+      const updatedRelease = await updateLink(
+        newUrls,
+        platformsVisibility,
+        release.id,
+      );
+      console.log('Release updated:', updatedRelease);
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
+  };
 
   return (
-    <form className="w-full">
-      <div className="flex flex-col gap-4">
-        <h1>Generated links</h1>
-        {platformsWithUrl.map((platform) => (
-          <PlatformField
-            key={platform.id}
-            value={platform.url as string}
-            onChange={() => {}}
-            platformsWithUrl={platformsWithUrl}
-            platform={platform}
-            onAddButtonClick={() => {}}
-          />
-        ))}
-        <h1>Enter more links manually</h1>
-        {selectedPlatform && (
-          <PlatformField
-            value={(selectedPlatform.url as string) || ''}
-            onChange={handleSelectedPlatformUrlChange}
-            platform={selectedPlatform}
-            onAddButtonClick={handleAddButtonClick}
-          />
-        )}
-        <PlatformSelector
-          platformsWithoutUrl={platformsWithoutUrl}
-          onChange={handlePlatformChange}
+    <form className="flex w-full flex-col gap-4" onSubmit={handleSubmit}>
+      <h1>Generated links</h1>
+      {platformsWithUrl.map((platform) => (
+        <PlatformField
+          key={platform.id}
+          value={newUrls[platform.id] || ''}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            updateUrl(platform.id, e.target.value)
+          }
+          platformsWithUrl={platformsWithUrl}
+          platform={platform}
+          onAddButtonClick={() => {}}
         />
-      </div>
-    </form>
-  );
-}
-
-// Composant local pour le selecteur de plateforme
-// ===========================================================================================
-interface PlatformSelectorProps {
-  platformsWithoutUrl: Platform[];
-  onChange: ChangeEventHandler<HTMLSelectElement>;
-}
-
-function PlatformSelector({
-  platformsWithoutUrl,
-  onChange,
-}: PlatformSelectorProps) {
-  const defaultOptionValue = 'Add a platform';
-  return (
-    <select
-      className="h-16 border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
-      onChange={onChange}
-      id="platform-select"
-      defaultValue={defaultOptionValue}
-    >
-      <option disabled value={defaultOptionValue} className="default-option">
-        {defaultOptionValue}
-      </option>
-      {platformsWithoutUrl.map((platform) => (
-        <option key={platform.id} value={platform.id}>
-          {platform.name}
-        </option>
       ))}
-    </select>
-  );
-}
-
-// Composant local pour le champ d'une plateforme
-// ===========================================================================================
-interface PlatformFieldProps {
-  value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  platformsWithUrl?: Platform[];
-  platform: Platform;
-  onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
-}
-function PlatformField({
-  value,
-  onChange,
-  platformsWithUrl,
-  platform,
-  onAddButtonClick,
-}: PlatformFieldProps) {
-  return (
-    <div className="flex w-full items-center gap-4">
-      <PlatformLogo platform={platform} />
-      <input
-        className="h-16 w-full border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
-        type="text"
-        value={value}
-        onChange={onChange}
-      />
-      {platformsWithUrl ? null : (
-        <button onClick={onAddButtonClick}>Add</button>
+      <h1>Enter more links manually</h1>
+      {selectedPlatform && (
+        <PlatformField
+          value={newUrls[selectedPlatform.id] || ''}
+          onChange={handleSelectedPlatformUrlChange}
+          platform={selectedPlatform}
+          onAddButtonClick={handleAddButtonClick}
+        />
       )}
-    </div>
+      <PlatformSelector
+        platformsWithoutUrl={platformsWithoutUrl}
+        onChange={handlePlatformChange}
+      />
+      <Button type="submit" label="Update link" />
+    </form>
   );
 }
