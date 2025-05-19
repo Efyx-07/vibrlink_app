@@ -1,4 +1,5 @@
 import { Release, Platform } from '@/interfaces/release.interface';
+import { platform } from 'os';
 import { ChangeEventHandler, useState } from 'react';
 
 interface LinkEditorFormProps {
@@ -34,26 +35,24 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
   // ===========================================================================================
 
   return (
-    <form>
+    <form className="w-full">
       <div className="flex flex-col gap-4">
+        <h1>Generated links</h1>
         {platformsWithUrl.map((platform) => (
-          <input
+          <PlatformField
             key={platform.id}
-            className="h-16 border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
-            type="text"
             value={platform.url as string}
             onChange={() => {}}
+            platformsWithUrl={platformsWithUrl}
           />
         ))}
+        <h1>Enter more links manually</h1>
         {selectedPlatform && (
-          <input
-            className="h-16 border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
-            type="text"
-            value={selectedPlatform.url as string}
+          <PlatformField
+            value={(selectedPlatform.url as string) || ''}
             onChange={() => {}}
           />
         )}
-        {/* Sélecteur de plateforme */}
         <PlatformSelector
           platformsWithoutUrl={platformsWithoutUrl}
           onChange={handlePlatformChange}
@@ -91,5 +90,30 @@ function PlatformSelector({
         </option>
       ))}
     </select>
+  );
+}
+
+// Composant local pour le champ d'une plateforme
+// ===========================================================================================
+interface PlatformFieldProps {
+  value: string;
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  platformsWithUrl?: Platform[];
+}
+function PlatformField({
+  value,
+  onChange,
+  platformsWithUrl,
+}: PlatformFieldProps) {
+  return (
+    <div className="flex w-full items-center gap-4">
+      <input
+        className="h-16 w-full border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
+        type="text"
+        value={value}
+        onChange={onChange}
+      />
+      {platformsWithUrl ? null : <button>Add</button>}
+    </div>
   );
 }
