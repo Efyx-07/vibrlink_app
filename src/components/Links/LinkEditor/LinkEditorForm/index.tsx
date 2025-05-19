@@ -1,36 +1,66 @@
 import { Release, Platform } from '@/interfaces/release.interface';
-import { platform } from 'os';
-import { ChangeEventHandler, useState } from 'react';
+import { ChangeEventHandler, MouseEventHandler, useState } from 'react';
 
 interface LinkEditorFormProps {
   release: Release;
 }
 
 export default function LinkEditorForm({ release }: LinkEditorFormProps) {
-  // Gère l'état de la plateforme sélectionnée
+  // État local pour gérer la liste des plateformes modifiables
+  const [platformsState, setPlatformsState] = useState<Platform[]>(
+    release.platforms,
+  );
+
+  // Plateforme sélectionnée dans la liste déroulante
   const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
     null,
   );
 
-  // Récupère les plateformes de la release
-  const platforms = release.platforms;
-
-  // Filtre les plateformes pour ne garder que celles qui ont une URL (trim vérifie que l'URL n'est pas vide)
-  const platformsWithUrl: Platform[] = release.platforms.filter(
+  // Plateformes avec une URL définie
+  const platformsWithUrl: Platform[] = platformsState.filter(
     (platform) => platform.url && platform.url.trim() !== '',
   );
 
-  // Filtre les plateformes pour ne garder que celles qui n'ont pas encore d'URL
-  const platformsWithoutUrl: Platform[] = release.platforms.filter(
-    (platform) => !platform.url,
+  // Plateformes sans URL encore définie
+  const platformsWithoutUrl: Platform[] = platformsState.filter(
+    (platform) => !platform.url || platform.url.trim() === '',
   );
 
-  const handlePlatformChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-  ): void => {
-    const platformId = parseInt(e.target.value);
-    const platform = platforms.find((p) => p.id === platformId);
-    if (platform) setSelectedPlatform(platform);
+  // Gère le changement de plateforme sélectionnée dans le select
+  const handlePlatformChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const platformId = parseInt(e.target.value, 10);
+    const foundPlatform = platformsState.find((p) => p.id === platformId);
+    if (foundPlatform) setSelectedPlatform({ ...foundPlatform });
+  };
+
+  // Gère le changement de l'input de l'URL pour la plateforme sélectionnée
+  const handleSelectedPlatformUrlChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    if (!selectedPlatform) return;
+    setSelectedPlatform({
+      ...selectedPlatform,
+      url: e.target.value,
+    });
+  };
+
+  // Gère l'ajout à la lise des plateformes avec une URL
+  const handleAddButtonClick = () => {
+    if (
+      !selectedPlatform ||
+      !selectedPlatform.url ||
+      selectedPlatform.url.trim() === ''
+    )
+      return;
+
+    const updatedPlatforms = platformsState.map((platform) => {
+      // mise à jour avec l'URL saisie
+      if (platform.id === selectedPlatform.id) return { ...selectedPlatform };
+      return platform;
+    });
+
+    setPlatformsState(updatedPlatforms);
+    setSelectedPlatform(null);
   };
   // ===========================================================================================
 
@@ -44,13 +74,15 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
             value={platform.url as string}
             onChange={() => {}}
             platformsWithUrl={platformsWithUrl}
+            onAddButtonClick={() => {}}
           />
         ))}
         <h1>Enter more links manually</h1>
         {selectedPlatform && (
           <PlatformField
             value={(selectedPlatform.url as string) || ''}
-            onChange={() => {}}
+            onChange={handleSelectedPlatformUrlChange}
+            onAddButtonClick={handleAddButtonClick}
           />
         )}
         <PlatformSelector
@@ -99,11 +131,13 @@ interface PlatformFieldProps {
   value: string;
   onChange: ChangeEventHandler<HTMLInputElement>;
   platformsWithUrl?: Platform[];
+  onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
 function PlatformField({
   value,
   onChange,
   platformsWithUrl,
+  onAddButtonClick,
 }: PlatformFieldProps) {
   return (
     <div className="flex w-full items-center gap-4">
@@ -113,7 +147,9 @@ function PlatformField({
         value={value}
         onChange={onChange}
       />
-      {platformsWithUrl ? null : <button>Add</button>}
+      {platformsWithUrl ? null : (
+        <button onClick={onAddButtonClick}>Add</button>
+      )}
     </div>
   );
 }
