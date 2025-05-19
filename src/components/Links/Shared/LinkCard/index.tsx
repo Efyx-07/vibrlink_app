@@ -85,28 +85,44 @@ function ActionButtons({ release }: ActionButtonsProps) {
       console.error('Error while deleting link:', error);
     }
   };
+
+  const CTAButtons: ActionButtonProps[] = [
+    { label: 'Edit', onClick: () => navToLinkToEditPage(release.slug) },
+    { label: 'Delete link', onClick: deleteLink },
+    {
+      label: 'Landing page',
+      onClick: () => navToReleaseLandingPage(release.slug),
+    },
+    { label: 'Copy album link', onClick: () => {} },
+  ];
   return (
     <div>
-      <div className="flex flex-col gap-2">
-        <button
-          className="border border-whiteColor p-2"
-          onClick={() => navToLinkToEditPage(release.slug)}
-        >
-          Edit
-        </button>
-        <button className="border border-whiteColor p-2" onClick={deleteLink}>
-          Delete link
-        </button>
-        <button
-          className="border border-whiteColor p-2"
-          onClick={() => navToReleaseLandingPage(release.slug)}
-        >
-          Landing page
-        </button>
-        <button className="border border-whiteColor p-2" onClick={() => {}}>
-          Copy album link
-        </button>
+      <div className="flex flex-col gap-4">
+        {CTAButtons.map((button, index) => (
+          <ActionButton
+            key={index}
+            label={button.label}
+            onClick={button.onClick}
+          />
+        ))}
       </div>
     </div>
+  );
+}
+
+// Composant local pour un bouton
+// ===========================================================================================
+interface ActionButtonProps {
+  label: string;
+  onClick: () => void;
+}
+function ActionButton({ label, onClick }: ActionButtonProps) {
+  return (
+    <button
+      className="size-full min-h-10 border border-accentColor5 bg-accentColor05 text-accentColor hover:bg-accentColor25"
+      onClick={onClick}
+    >
+      {label}
+    </button>
   );
 }
