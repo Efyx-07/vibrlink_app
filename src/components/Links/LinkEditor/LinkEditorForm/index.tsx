@@ -29,8 +29,10 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
 
   // Gère le changement de plateforme sélectionnée dans le select
   const handlePlatformChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const platformId = parseInt(e.target.value, 10);
-    const foundPlatform = platformsState.find((p) => p.id === platformId);
+    const platformId: Platform['id'] = parseInt(e.target.value, 10);
+    const foundPlatform: Platform | undefined = platformsState.find(
+      (p) => p.id === platformId,
+    );
     if (foundPlatform) setSelectedPlatform({ ...foundPlatform });
   };
 
@@ -45,7 +47,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
     });
   };
 
-  // Gère l'ajout à la lise des plateformes avec une URL
+  // Gère l'ajout à la liste des plateformes avec une URL
   const handleAddButtonClick = () => {
     if (
       !selectedPlatform ||
@@ -54,7 +56,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
     )
       return;
 
-    const updatedPlatforms = platformsState.map((platform) => {
+    const updatedPlatforms: Platform[] = platformsState.map((platform) => {
       // mise à jour avec l'URL saisie
       if (platform.id === selectedPlatform.id) return { ...selectedPlatform };
       return platform;
@@ -108,7 +110,7 @@ function PlatformSelector({
   platformsWithoutUrl,
   onChange,
 }: PlatformSelectorProps) {
-  const defaultOptionValue = 'Sélectionner une plateforme';
+  const defaultOptionValue = 'Add a platform';
   return (
     <select
       className="h-16 border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
