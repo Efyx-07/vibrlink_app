@@ -21,7 +21,7 @@ export default function LinkEditor() {
 
   return (
     <div>
-      <LinkCard release={release} />
+      <LinkCard release={release} isEditor={true} />
     </div>
   );
 }

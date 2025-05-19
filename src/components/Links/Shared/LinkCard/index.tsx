@@ -9,11 +9,12 @@ import Button from '@/components/Shared/Button';
 
 interface LinkCardProps {
   release: Release;
+  isEditor?: boolean;
 }
 
-export default function LinkCard({ release }: LinkCardProps) {
+export default function LinkCard({ release, isEditor }: LinkCardProps) {
   return (
-    <div className="grid w-full grid-cols-[4fr_1.5fr] gap-8 border border-whiteLight bg-darkColorRelief p-4">
+    <div className="flex w-full flex-col gap-8 border border-whiteLight bg-darkColorRelief p-4 md:grid md:grid-cols-[4fr_1.5fr]">
       <div className="flex gap-4">
         <div className="size-full max-w-[13rem]">
           <Image
@@ -24,9 +25,9 @@ export default function LinkCard({ release }: LinkCardProps) {
             priority
           />
         </div>
-        <LinkCardInfos release={release} />
+        <LinkCardInfos release={release} isEditor={isEditor} />
       </div>
-      <ActionButtons release={release} />
+      {!isEditor && <ActionButtons release={release} />}
     </div>
   );
 }
@@ -35,14 +36,16 @@ export default function LinkCard({ release }: LinkCardProps) {
 // ===========================================================================================
 interface LinkCardInfosProps {
   release: Release;
+  isEditor?: boolean;
 }
-function LinkCardInfos({ release }: LinkCardInfosProps) {
+function LinkCardInfos({ release, isEditor }: LinkCardInfosProps) {
   return (
-    <div className="w-full">
-      <div>
+    <div className="flex w-full flex-col gap-4">
+      <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2">
-          <div className="size-full max-w-9">
+          <div className="size-6 md:size-9">
             <Image
+              className="rounded-full border-2 border-whiteColor"
               src={release.artistImage}
               width={500}
               height={500}
@@ -50,12 +53,16 @@ function LinkCardInfos({ release }: LinkCardInfosProps) {
               priority
             />
           </div>
-          <p>{release.artist}</p>
+          <p className="text-sm opacity-75">{release.artist}</p>
         </div>
-        <p>{release.title}</p>
+        <p className="text-2xl font-semibold">{release.title}</p>
       </div>
-      <Separator />
-      <p>Creation date</p>
+      {!isEditor && (
+        <>
+          <Separator />
+          <p className="text-xs font-normal opacity-75">Creation date</p>
+        </>
+      )}
     </div>
   );
 }
