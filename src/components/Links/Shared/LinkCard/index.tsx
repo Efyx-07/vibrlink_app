@@ -45,7 +45,7 @@ function LinkCardInfos({ release, isEditor }: LinkCardInfosProps) {
         <div className="flex items-center gap-2">
           <div className="size-6 md:size-9">
             <Image
-              className="rounded-full border-2 border-whiteColor"
+              className="size-full rounded-full border-2 border-whiteColor"
               src={release.artistImage}
               width={500}
               height={500}
