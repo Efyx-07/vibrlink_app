@@ -1,9 +1,9 @@
 import { Release } from '@/interfaces/release.interface';
-import { updateLink } from '@/services/release.service';
 import Button from '@/components/Shared/Button';
 import { useLinkEditor } from './hooks/useLinkEditor';
 import PlatformSelector from './PlatformSelector';
 import PlatformField from './PlatformField';
+import { useUpdateReleaseLinks } from '@/hooks/useUpdateReleaseLinks';
 
 interface LinkEditorFormProps {
   release: Release;
@@ -21,28 +21,15 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
     newUrls,
   } = useLinkEditor(release.platforms);
 
+  const { mutate, isPending } = useUpdateReleaseLinks(
+    release.id,
+    newUrls,
+    platformsState,
+  );
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // Provisoire avant gestion d'un toggle de visibilité
-    const platformsVisibility = platformsState.reduce(
-      (acc, p) => {
-        acc[p.id] = p.visibility;
-        return acc;
-      },
-      {} as { [key: number]: boolean },
-    );
-
-    try {
-      const updatedRelease = await updateLink(
-        newUrls,
-        platformsVisibility,
-        release.id,
-      );
-      console.log('Release updated:', updatedRelease);
-    } catch (error) {
-      console.error('Update failed:', error);
-    }
+    mutate();
   };
 
   return (
@@ -52,6 +39,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
         <PlatformField
           key={platform.id}
           platform={platform}
+          platformsWithUrl={platformsWithUrl}
           value={newUrls[platform.id] || ''}
           onChange={(e) => updateUrl(platform.id, e.target.value)}
           onAddButtonClick={() => {}}
@@ -70,7 +58,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
         platformsWithoutUrl={platformsWithoutUrl}
         onChange={(e) => handlePlatformChange(parseInt(e.target.value, 10))}
       />
-      <Button type="submit" label="Update link" />
+      <Button type="submit" label="Update link" isLoading={isPending} />
     </form>
   );
 }

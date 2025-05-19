@@ -9,6 +9,7 @@ interface PlatformFieldProps {
   platform: Platform;
   onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
+
 export default function PlatformField({
   value,
   onChange,
