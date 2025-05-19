@@ -6,6 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Separator from '@/components/Shared/Separator';
 import Button from '@/components/Shared/Button';
+import { formatDate, timeAgo } from '@/utils/formatDate';
 
 interface LinkCardProps {
   release: Release;
@@ -60,7 +61,16 @@ function LinkCardInfos({ release, isEditor }: LinkCardInfosProps) {
       {!isEditor && (
         <>
           <Separator />
-          <p className="text-xs font-normal opacity-75">Creation date</p>
+          <div className="flex flex-col gap-1">
+            <p className="text-xs font-normal opacity-75">
+              {formatDate(release.creationDate)}
+            </p>
+            {release.creationDate !== release.lastUpdate && (
+              <p className="text-xs font-normal opacity-75">
+                {timeAgo(release.lastUpdate)}
+              </p>
+            )}
+          </div>
         </>
       )}
     </div>
