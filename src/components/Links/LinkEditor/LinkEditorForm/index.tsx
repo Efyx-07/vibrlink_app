@@ -54,7 +54,6 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
             value={newUrls[selectedPlatform.id] || ''}
             onChange={(e) => updateUrl(selectedPlatform.id, e.target.value)}
             onAddButtonClick={handleAddPlatform}
-            placeholder="Enter your URL here"
           />
         )}
         <PlatformSelector
@@ -67,7 +66,8 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
   );
 }
 
-// Composant local pour une section
+// Composant local pour une section de liens
+// ===========================================================================================
 interface LinkEditorSectionProps {
   title: string;
   children: React.ReactNode;

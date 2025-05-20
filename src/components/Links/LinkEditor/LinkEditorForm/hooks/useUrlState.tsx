@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
+import { Platform } from '@/interfaces/release.interface';
 
-type Platform = {
-  id: number;
-  url?: string; // URL optionnelle pour chaque plateforme
-};
-
+// Hook pour gérer l'état des URLs des plateformes
+// ===========================================================================================
 export const useUrlState = (platforms: Platform[]) => {
   // État local pour stocker les nouvelles URLs associées à chaque plateforme (clé = id)
-  const [newUrls, setNewUrls] = useState<{ [id: number]: string }>({});
+  const [newUrls, setNewUrls] = useState<{ [id: Platform['id']]: string }>({});
 
   useEffect(() => {
     // Initialisation des URLs à partir de la prop "platforms"
-    const initialUrls: { [id: number]: string } = {};
+    const initialUrls: { [id: Platform['id']]: string } = {};
 
     platforms.forEach((platform) => {
       // Return si aucune URL
@@ -26,7 +24,7 @@ export const useUrlState = (platforms: Platform[]) => {
   }, [platforms]);
 
   // Fonction pour mettre à jour l'URL d'une plateforme spécifique
-  const updateUrl = (platformId: number, url: string) => {
+  const updateUrl = (platformId: number, url: string): void => {
     setNewUrls((prev) => ({
       ...prev, // on garde les valeurs précédentes
       [platformId]: url, // et on écrase seulement celle qu’on met à jour

@@ -8,7 +8,6 @@ interface PlatformFieldProps {
   platformsWithUrl?: Platform[];
   platform: Platform;
   onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
-  placeholder?: string;
 }
 
 export default function PlatformField({
@@ -17,17 +16,16 @@ export default function PlatformField({
   platformsWithUrl,
   platform,
   onAddButtonClick,
-  placeholder,
 }: PlatformFieldProps) {
   return (
     <div className="flex w-full items-center gap-4">
       <PlatformLogo platform={platform} />
       <input
-        className="h-16 w-full border border-whiteLight bg-darkColorRelief pl-4 text-sm outline-none focus:border-accentColor"
+        className="h-16 w-full border border-whiteLight bg-darkColorRelief pl-4 text-sm placeholder-whiteLight25 outline-none focus:border-accentColor"
         type="text"
         value={value}
         onChange={onChange}
-        placeholder={placeholder}
+        placeholder="Enter your URL here"
       />
       {platformsWithUrl ? null : (
         <button onClick={onAddButtonClick}>Add</button>

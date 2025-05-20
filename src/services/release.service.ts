@@ -1,5 +1,9 @@
 import { apiUrl } from '@/config';
-import { ReleaseResponse } from '@/interfaces/release.interface';
+import {
+  Platform,
+  ReleaseResponse,
+  Release,
+} from '@/interfaces/release.interface';
 import { User } from '@/interfaces/user.interface';
 
 // Service pour la création d'un lien. Retourne le slug qui servira pour la redirection
@@ -9,7 +13,6 @@ export async function createLink(
   userId: User['id'] | undefined,
 ): Promise<{ releaseSlug: ReleaseResponse['releaseSlug'] }> {
   try {
-    console.log('Sending album URL:', albumUrl, 'for user ID:', userId);
     const response = await fetch(
       `${apiUrl}/releasesRoute/getReleaseSpotifyUrl`,
       {
@@ -48,11 +51,13 @@ export async function deleteLinkByReleaseId(
   }
 }
 
+// Service mettre à jour un lien, retourne un message de succès
+// ===========================================================================================
 export async function updateLink(
-  newUrls: { [key: number]: string },
+  newUrls: { [key: Release['id']]: string },
   platformsVisibility: { [key: number]: boolean },
   releaseId: number,
-) {
+): Promise<{ message: string }> {
   try {
     const response = await fetch(`${apiUrl}/releasesRoute/${releaseId}`, {
       method: 'PUT',
@@ -63,7 +68,7 @@ export async function updateLink(
     });
 
     if (response.ok) {
-      const data = await response.json();
+      const data: { message: string } = await response.json();
       return data;
     } else {
       throw new Error('Failed to update release' + response.statusText);
