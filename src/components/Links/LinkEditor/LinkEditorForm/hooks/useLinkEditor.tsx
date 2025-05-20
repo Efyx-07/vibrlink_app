@@ -12,12 +12,12 @@ export function useLinkEditor(initialPlatforms: Platform[]) {
     null,
   );
 
-  // Normalisation des URLs pour remplacer les valeurs null par undefined
+  // Normalisation des URLs pour remplacer les valeurs undefined par null
   // (permet d'éviter les problèmes d'inconsistances dans les champs de formulaire)
   const normalizedPlatformsState = useMemo(() => {
     return platformsState.map((platform) => ({
       ...platform,
-      url: platform.url === null ? undefined : platform.url,
+      url: platform.url === undefined ? null : platform.url,
     }));
   }, [platformsState]);
 

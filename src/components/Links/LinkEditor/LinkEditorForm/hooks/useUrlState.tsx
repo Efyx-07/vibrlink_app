@@ -24,11 +24,16 @@ export const useUrlState = (platforms: Platform[]) => {
   }, [platforms]);
 
   // Fonction pour mettre à jour l'URL d'une plateforme spécifique
-  const updateUrl = (platformId: number, url: string): void => {
-    setNewUrls((prev) => ({
-      ...prev, // Garde les valeurs précédentes
-      [platformId]: url, // Ecrase seulement celle qu’on met à jour
-    }));
+  const updateUrl = (
+    platformId: Platform['id'],
+    url: Platform['url'],
+  ): void => {
+    if (typeof url === 'string') {
+      setNewUrls((prev) => ({
+        ...prev, // Garde les valeurs précédentes
+        [platformId]: url, // Ecrase seulement celle qu’on met à jour
+      }));
+    }
   };
 
   // Retourne les données et la méthode de mise à jour
