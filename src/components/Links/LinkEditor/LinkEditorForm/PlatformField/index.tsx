@@ -1,6 +1,6 @@
 import PlatformLogo from '@/components/Shared/PlatformLogo';
 import { Platform } from '@/interfaces/release.interface';
-import { ChangeEventHandler, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
 
 interface PlatformFieldProps {
   value: string;
