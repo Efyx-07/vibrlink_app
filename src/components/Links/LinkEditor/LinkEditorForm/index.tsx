@@ -63,6 +63,17 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
     setShouldUpdateAfterPlatformAdding,
   ]);
 
+  useEffect(() => {
+    if (shouldUpdateAfterVisibilityChange) {
+      handleSubmit({ preventDefault: () => {} } as React.FormEvent);
+      setShouldUpdateAfterVisibilityChange(false);
+    }
+  }, [
+    shouldUpdateAfterVisibilityChange,
+    handleSubmit,
+    setShouldUpdateAfterVisibilityChange,
+  ]);
+
   return (
     <form className="flex w-full flex-col gap-12" onSubmit={handleSubmit}>
       <LinkEditorSection title="Generated links">
@@ -73,6 +84,8 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
             platformsWithUrl={platformsWithUrl}
             value={newUrls[platform.id] || ''}
             onChange={handleUrlChange}
+            platformsVisibility={platformsVisibility}
+            onVisibilityChange={handleVisibilityChange}
             onAddButtonClick={() => {}}
           />
         ))}
@@ -84,6 +97,8 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
               platform={selectedPlatform}
               value={newUrls[selectedPlatform.id] || ''}
               onChange={handleUrlChange}
+              platformsVisibility={{}}
+              onVisibilityChange={() => {}}
               onAddButtonClick={addToPlatformsWithUrl}
             />
           )}
