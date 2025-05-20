@@ -6,15 +6,19 @@ import { useUpdateReleaseLinks } from '@/hooks/useUpdateReleaseLinks';
 import Separator from '@/components/Shared/Separator';
 import useUrlState from './hooks/useUrlState';
 import useVisibilityState from './hooks/useVisibilityState';
-import { useEffect } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 interface LinkEditorFormProps {
   release: Release;
 }
 
 export default function LinkEditorForm({ release }: LinkEditorFormProps) {
+  // Récupération des plateformes depuis la release
+  // ===========================================================================================
   const platforms: Platform[] = release.platforms;
 
+  // Recupèration des datas et méthodes de mise à jours des URLS
+  // ===========================================================================================
   const {
     platformsWithUrl,
     platformsWithoutUrl,
@@ -23,87 +27,60 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
     addToPlatformsWithUrl,
     selectedPlatform,
     handlePlatformChange,
-    shouldUpdateAfterPlatformAdding,
-    setShouldUpdateAfterPlatformAdding,
-  } = useUrlState(platforms);
+  } = useUrlState({ platforms, triggerUpdate: () => setShouldUpdate(true) });
 
-  const {
-    platformsVisibility,
-    handleVisibilityChange,
-    shouldUpdateAfterVisibilityChange,
-    setShouldUpdateAfterVisibilityChange,
-  } = useVisibilityState(platforms);
+  // Recupèration des datas et méthodes de mise à jours de la visibilité des plateformes
+  // ===========================================================================================
+  const { platformsVisibility, handleVisibilityChange } = useVisibilityState({
+    platforms,
+    triggerUpdate: () => setShouldUpdate(true),
+  });
 
-  const platformsVisibilityArray = Object.entries(platformsVisibility).map(
-    ([id, visibility]) => ({
-      id: Number(id),
-      visibility,
-    }),
+  // Nouveau flag pour gérer la mise à jour automatique après un changement
+  // ===========================================================================================
+  const [shouldUpdate, setShouldUpdate] = useState(false);
+
+  // Memo pour éviter recalcul à chaque render pour la visiibilité des plateformes
+  // On transforme l'objet platformsVisibility en tableau d'objets
+  // ===========================================================================================
+  const platformsVisibilityArray = useMemo(
+    () =>
+      Object.entries(platformsVisibility).map(([id, visibility]) => ({
+        id: Number(id),
+        visibility,
+      })),
+    [platformsVisibility],
   );
 
+  // Utilisation du hook de mise à jour des liens
   const { mutate, isPending } = useUpdateReleaseLinks();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    console.log('🟡 Données envoyées à la mutation :', {
+  // Fonction pour soumettre la mutation avec son payload
+  // ===========================================================================================
+  const submitMutation = () => {
+    mutate({
       releaseId: release.id,
       newUrls,
       platformsState: platformsVisibilityArray,
     });
-
-    mutate(
-      {
-        releaseId: release.id,
-        newUrls,
-        platformsState: platformsVisibilityArray,
-      },
-      {
-        onError: (error) => {
-          console.error(
-            '❌ Erreur dans la mutation updateReleaseLinks :',
-            error,
-          );
-        },
-      },
-    );
   };
 
-  useEffect(() => {
-    if (shouldUpdateAfterPlatformAdding) {
-      mutate({
-        releaseId: release.id,
-        newUrls,
-        platformsState: platformsVisibilityArray,
-      });
-      setShouldUpdateAfterPlatformAdding(false);
-    }
-  }, [
-    shouldUpdateAfterPlatformAdding,
-    release.id,
-    newUrls,
-    platformsVisibilityArray,
-    mutate,
-    setShouldUpdateAfterPlatformAdding,
-  ]);
+  // Soumission du formulaire
+  // ===========================================================================================
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    submitMutation();
+  };
 
+  // useEffect unique qui gère toutes les mises à jour déclenchées par le flag
+  // ===========================================================================================
   useEffect(() => {
-    if (shouldUpdateAfterVisibilityChange) {
-      mutate({
-        releaseId: release.id,
-        newUrls,
-        platformsState: platformsVisibilityArray,
-      });
-      setShouldUpdateAfterVisibilityChange(false);
+    if (shouldUpdate) {
+      submitMutation();
+      setShouldUpdate(false);
     }
-  }, [
-    shouldUpdateAfterVisibilityChange,
-    release.id,
-    newUrls,
-    platformsVisibilityArray,
-    mutate,
-    setShouldUpdateAfterVisibilityChange,
-  ]);
+  }, [shouldUpdate]);
+  // ===========================================================================================
 
   return (
     <form className="flex w-full flex-col gap-12" onSubmit={handleSubmit}>
