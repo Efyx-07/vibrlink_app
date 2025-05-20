@@ -7,6 +7,7 @@ import Separator from '@/components/Shared/Separator';
 import useUrlState from './hooks/useUrlState';
 import useVisibilityState from './hooks/useVisibilityState';
 import { useEffect } from 'react';
+import { updateLink } from '@/services/release.service';
 
 interface LinkEditorFormProps {
   release: Release;
@@ -49,6 +50,11 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('payload', {
+      newUrls,
+      platformsVisibilityArray,
+      releaseId: release.id,
+    });
     mutate();
   };
 
