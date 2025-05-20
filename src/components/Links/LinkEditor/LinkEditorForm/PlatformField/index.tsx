@@ -37,23 +37,30 @@ export default function PlatformField({
       <div className="h-full bg-darkColorRelief py-3">
         <VerticalSeparator />
       </div>
-      {platformsWithUrl ? (
-        <div className="flex size-full max-w-48 flex-col items-center justify-center gap-1 border border-l-0 border-whiteLight bg-darkColorRelief">
+      <div className="flex size-full max-w-48 flex-col items-center justify-center gap-1 border border-l-0 border-whiteLight bg-darkColorRelief">
+        {platformsWithUrl ? (
+          <>
+            <button
+              className="text-sm hover:text-accentColor"
+              onClick={() => platform.url && openInANewTab(platform.url)}
+            >
+              Test link
+            </button>
+            <Switch
+              checked={platformsVisibility[platform.id] || false}
+              onChange={(checked) => onVisibilityChange(platform.id, checked)}
+              label={platformsVisibility[platform.id] ? 'Visible' : 'Hidden'}
+            />
+          </>
+        ) : (
           <button
             className="text-sm hover:text-accentColor"
-            onClick={() => platform.url && openInANewTab(platform.url)}
+            onClick={onAddButtonClick}
           >
-            Test link
+            Add
           </button>
-          <Switch
-            checked={platformsVisibility[platform.id] || false}
-            onChange={(checked) => onVisibilityChange(platform.id, checked)}
-            label={platformsVisibility[platform.id] ? 'Visible' : 'Hidden'}
-          />
-        </div>
-      ) : (
-        <button onClick={onAddButtonClick}>Add</button>
-      )}
+        )}
+      </div>
     </div>
   );
 }
