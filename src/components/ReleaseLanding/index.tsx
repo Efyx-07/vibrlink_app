@@ -19,7 +19,14 @@ export default function ReleaseLanding() {
   ) : (
     <div>
       <h1>{releaseSlug}</h1>
-      <h2>{release?.artist}</h2>
+      {release?.platforms
+        ?.filter((platform) => platform.visibility && platform.url)
+        .map((platform) => (
+          <div key={platform.id}>
+            <h3>{platform.name}</h3>
+            <p>{platform.url}</p>
+          </div>
+        ))}
     </div>
   );
 }
