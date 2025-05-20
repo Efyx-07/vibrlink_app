@@ -41,41 +41,67 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
     }),
   );
 
-  const { mutate, isPending } = useUpdateReleaseLinks(
-    release.id,
-    newUrls,
-    platformsVisibilityArray,
-  );
+  const { mutate, isPending } = useUpdateReleaseLinks();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('payload', {
-      newUrls,
-      platformsVisibilityArray,
+
+    console.log('🟡 Données envoyées à la mutation :', {
       releaseId: release.id,
+      newUrls,
+      platformsState: platformsVisibilityArray,
     });
-    mutate();
+
+    mutate(
+      {
+        releaseId: release.id,
+        newUrls,
+        platformsState: platformsVisibilityArray,
+      },
+      {
+        onError: (error) => {
+          console.error(
+            '❌ Erreur dans la mutation updateReleaseLinks :',
+            error,
+          );
+        },
+      },
+    );
   };
 
   useEffect(() => {
     if (shouldUpdateAfterPlatformAdding) {
-      handleSubmit({ preventDefault: () => {} } as React.FormEvent);
+      mutate({
+        releaseId: release.id,
+        newUrls,
+        platformsState: platformsVisibilityArray,
+      });
       setShouldUpdateAfterPlatformAdding(false);
     }
   }, [
     shouldUpdateAfterPlatformAdding,
-    handleSubmit,
+    release.id,
+    newUrls,
+    platformsVisibilityArray,
+    mutate,
     setShouldUpdateAfterPlatformAdding,
   ]);
 
   useEffect(() => {
     if (shouldUpdateAfterVisibilityChange) {
-      handleSubmit({ preventDefault: () => {} } as React.FormEvent);
+      mutate({
+        releaseId: release.id,
+        newUrls,
+        platformsState: platformsVisibilityArray,
+      });
       setShouldUpdateAfterVisibilityChange(false);
     }
   }, [
     shouldUpdateAfterVisibilityChange,
-    handleSubmit,
+    release.id,
+    newUrls,
+    platformsVisibilityArray,
+    mutate,
     setShouldUpdateAfterVisibilityChange,
   ]);
 

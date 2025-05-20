@@ -15,8 +15,7 @@ export default function useVisibilityState(platforms: Platform[]) {
     if (!isInitialized.current) {
       const initialPlatformsVisibility: { [key: number]: boolean } = {};
       platforms.forEach((platform) => {
-        if (platform.visibility)
-          initialPlatformsVisibility[platform.id] = platform.visibility;
+        initialPlatformsVisibility[platform.id] = platform.visibility;
       });
       setPlatformsVisibility(initialPlatformsVisibility);
       isInitialized.current = true;
