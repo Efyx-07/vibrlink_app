@@ -7,7 +7,6 @@ import Separator from '@/components/Shared/Separator';
 import useUrlState from './hooks/useUrlState';
 import useVisibilityState from './hooks/useVisibilityState';
 import { useEffect } from 'react';
-import { updateLink } from '@/services/release.service';
 
 interface LinkEditorFormProps {
   release: Release;
