@@ -1,0 +1,29 @@
+@tailwind utilities;
+
+.slider {
+  @apply absolute bottom-0 left-0 right-0 top-0 cursor-pointer border border-whiteLight25 bg-darkColor transition duration-500;
+}
+
+.slider:before {
+  @apply absolute bottom-0 left-px top-[1.2px] bg-whiteColor content-[''];
+}
+
+input {
+  @apply appearance-none;
+}
+
+input:checked + .slider {
+  @apply bg-accentColor25;
+}
+
+input:checked + .slider:before {
+  @apply translate-x-[1.55rem] transform bg-accentColor;
+}
+
+.round {
+  @apply rounded-3xl;
+}
+
+.round:before {
+  @apply size-[.7rem] rounded-full;
+}
