@@ -15,7 +15,7 @@ export default function PlatformSelector({
   return (
     <div className="group relative h-14 w-full">
       <select
-        className="size-full cursor-pointer appearance-none border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
+        className="size-full cursor-pointer appearance-none border border-whiteLight bg-darkColorRelief pl-4 outline-none"
         onChange={onChange}
         id="platform-select"
         defaultValue={defaultOptionValue}

@@ -28,7 +28,7 @@ export default function PlatformField({
     <div className="flex h-16 w-full items-center">
       <PlatformLogo platform={platform} />
       <input
-        className="ml-8 size-full border border-r-0 border-whiteLight bg-darkColorRelief pl-4 text-sm placeholder-whiteLight25 outline-none focus:border-accentColor"
+        className="ml-8 size-full border border-whiteLight border-r-transparent bg-darkColorRelief pl-4 text-sm placeholder-whiteLight25 outline-none focus:border-accentColor"
         type="text"
         value={value}
         onChange={(e) => onChange(platform.id, e.target.value)}
