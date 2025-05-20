@@ -21,9 +21,7 @@ export default function useUrlState(platforms: Platform[]) {
     if (!isInitialized.current) {
       const initialUrls: { [key: number]: string } = {};
       platforms.forEach((platform) => {
-        if (platform.url) {
-          initialUrls[platform.id] = platform.url;
-        }
+        if (platform.url) initialUrls[platform.id] = platform.url;
       });
       setNewUrls(initialUrls);
       isInitialized.current = true;
@@ -66,9 +64,7 @@ export default function useUrlState(platforms: Platform[]) {
       const selectElement = document.getElementById(
         'platform-select',
       ) as HTMLSelectElement | null;
-      if (selectElement) {
-        selectElement.selectedIndex = 0;
-      }
+      if (selectElement) selectElement.selectedIndex = 0;
     }
     setShouldUpdateAfterPlatformAdding(true);
   };
@@ -78,9 +74,7 @@ export default function useUrlState(platforms: Platform[]) {
   ): void => {
     const platformId = parseInt(e.target.value);
     const platform = platforms.find((p) => p.id === platformId);
-    if (platform) {
-      setSelectedPlatform(platform);
-    }
+    if (platform) setSelectedPlatform(platform);
   };
 
   return {
