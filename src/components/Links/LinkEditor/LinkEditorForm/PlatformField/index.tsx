@@ -2,6 +2,8 @@ import PlatformLogo from '@/components/Shared/PlatformLogo';
 import Switch from '@/components/Shared/Switch';
 import { Platform } from '@/interfaces/release.interface';
 import { MouseEventHandler } from 'react';
+import { openInANewTab } from '@/utils/openInANewTab';
+import { VerticalSeparator } from '@/components/Shared/Separator';
 
 interface PlatformFieldProps {
   value: string;
@@ -23,21 +25,32 @@ export default function PlatformField({
   onVisibilityChange,
 }: PlatformFieldProps) {
   return (
-    <div className="flex w-full items-center gap-4">
+    <div className="flex h-16 w-full items-center">
       <PlatformLogo platform={platform} />
       <input
-        className="h-16 w-full border border-whiteLight bg-darkColorRelief pl-4 text-sm placeholder-whiteLight25 outline-none focus:border-accentColor"
+        className="ml-8 size-full border border-r-0 border-whiteLight bg-darkColorRelief pl-4 text-sm placeholder-whiteLight25 outline-none focus:border-accentColor"
         type="text"
         value={value}
         onChange={(e) => onChange(platform.id, e.target.value)}
         placeholder="Enter your URL here"
       />
+      <div className="h-full bg-darkColorRelief py-3">
+        <VerticalSeparator />
+      </div>
       {platformsWithUrl ? (
-        <Switch
-          checked={platformsVisibility[platform.id] || false}
-          onChange={(checked) => onVisibilityChange(platform.id, checked)}
-          label={platformsVisibility[platform.id] ? 'Visible' : 'Hidden'}
-        />
+        <div className="flex size-full max-w-48 flex-col items-center justify-center gap-1 border border-l-0 border-whiteLight bg-darkColorRelief">
+          <button
+            className="text-sm hover:text-accentColor"
+            onClick={() => platform.url && openInANewTab(platform.url)}
+          >
+            Test link
+          </button>
+          <Switch
+            checked={platformsVisibility[platform.id] || false}
+            onChange={(checked) => onVisibilityChange(platform.id, checked)}
+            label={platformsVisibility[platform.id] ? 'Visible' : 'Hidden'}
+          />
+        </div>
       ) : (
         <button onClick={onAddButtonClick}>Add</button>
       )}
