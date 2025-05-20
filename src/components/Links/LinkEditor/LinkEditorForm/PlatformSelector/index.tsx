@@ -1,5 +1,6 @@
 import { Platform } from '@/interfaces/release.interface';
 import { ChangeEventHandler } from 'react';
+import { Icon } from '@iconify/react';
 
 interface PlatformSelectorProps {
   platformsWithoutUrl: Platform[];
@@ -12,20 +13,26 @@ export default function PlatformSelector({
 }: PlatformSelectorProps) {
   const defaultOptionValue = 'Add a platform';
   return (
-    <select
-      className="h-16 border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
-      onChange={onChange}
-      id="platform-select"
-      defaultValue={defaultOptionValue}
-    >
-      <option disabled value={defaultOptionValue} className="default-option">
-        {defaultOptionValue}
-      </option>
-      {platformsWithoutUrl.map((platform) => (
-        <option key={platform.id} value={platform.id}>
-          {platform.name}
+    <div className="group relative h-16 w-full">
+      <select
+        className="size-full cursor-pointer appearance-none border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
+        onChange={onChange}
+        id="platform-select"
+        defaultValue={defaultOptionValue}
+      >
+        <option disabled value={defaultOptionValue} className="default-option">
+          {defaultOptionValue}
         </option>
-      ))}
-    </select>
+        {platformsWithoutUrl.map((platform) => (
+          <option key={platform.id} value={platform.id}>
+            {platform.name}
+          </option>
+        ))}
+      </select>
+      <Icon
+        icon="ri:arrow-down-s-line"
+        className="pointer-events-none absolute right-4 top-5 text-3xl group-hover:text-accentColor"
+      />
+    </div>
   );
 }
