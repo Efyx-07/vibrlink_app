@@ -4,7 +4,7 @@ import { ChangeEventHandler, MouseEventHandler } from 'react';
 
 interface PlatformFieldProps {
   value: string;
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange: (platformId: Platform['id'], url: string) => void;
   platformsWithUrl?: Platform[];
   platform: Platform;
   onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
@@ -24,7 +24,7 @@ export default function PlatformField({
         className="h-16 w-full border border-whiteLight bg-darkColorRelief pl-4 text-sm placeholder-whiteLight25 outline-none focus:border-accentColor"
         type="text"
         value={value}
-        onChange={onChange}
+        onChange={(e) => onChange(platform.id, e.target.value)}
         placeholder="Enter your URL here"
       />
       {platformsWithUrl ? null : (

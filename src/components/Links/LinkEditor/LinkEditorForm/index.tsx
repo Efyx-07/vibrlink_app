@@ -1,37 +1,67 @@
-import { Release } from '@/interfaces/release.interface';
+import { Platform, Release } from '@/interfaces/release.interface';
 import Button from '@/components/Shared/Button';
-import { useLinkEditor } from './hooks/useLinkEditor';
 import PlatformSelector from './PlatformSelector';
 import PlatformField from './PlatformField';
 import { useUpdateReleaseLinks } from '@/hooks/useUpdateReleaseLinks';
 import Separator from '@/components/Shared/Separator';
+import useUrlState from './hooks/useUrlState';
+import useVisibilityState from './hooks/useVisibilityState';
+import { useEffect } from 'react';
 
 interface LinkEditorFormProps {
   release: Release;
 }
 
 export default function LinkEditorForm({ release }: LinkEditorFormProps) {
+  const platforms: Platform[] = release.platforms;
+
   const {
-    platformsState,
     platformsWithUrl,
     platformsWithoutUrl,
+    newUrls,
+    handleUrlChange,
+    addToPlatformsWithUrl,
     selectedPlatform,
     handlePlatformChange,
-    handleAddPlatform,
-    updateUrl,
-    newUrls,
-  } = useLinkEditor(release.platforms);
+    shouldUpdateAfterPlatformAdding,
+    setShouldUpdateAfterPlatformAdding,
+  } = useUrlState(platforms);
+
+  const {
+    platformsVisibility,
+    handleVisibilityChange,
+    shouldUpdateAfterVisibilityChange,
+    setShouldUpdateAfterVisibilityChange,
+  } = useVisibilityState(platforms);
+
+  const platformsVisibilityArray = Object.entries(platformsVisibility).map(
+    ([id, visibility]) => ({
+      id: Number(id),
+      visibility,
+    }),
+  );
 
   const { mutate, isPending } = useUpdateReleaseLinks(
     release.id,
     newUrls,
-    platformsState,
+    platformsVisibilityArray,
   );
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     mutate();
   };
+
+  useEffect(() => {
+    if (shouldUpdateAfterPlatformAdding) {
+      handleSubmit({ preventDefault: () => {} } as React.FormEvent);
+      setShouldUpdateAfterPlatformAdding(false);
+    }
+  }, [
+    shouldUpdateAfterPlatformAdding,
+    handleSubmit,
+    setShouldUpdateAfterPlatformAdding,
+  ]);
 
   return (
     <form className="flex w-full flex-col gap-12" onSubmit={handleSubmit}>
@@ -42,7 +72,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
             platform={platform}
             platformsWithUrl={platformsWithUrl}
             value={newUrls[platform.id] || ''}
-            onChange={(e) => updateUrl(platform.id, e.target.value)}
+            onChange={handleUrlChange}
             onAddButtonClick={() => {}}
           />
         ))}
@@ -53,13 +83,13 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
             <PlatformField
               platform={selectedPlatform}
               value={newUrls[selectedPlatform.id] || ''}
-              onChange={(e) => updateUrl(selectedPlatform.id, e.target.value)}
-              onAddButtonClick={handleAddPlatform}
+              onChange={handleUrlChange}
+              onAddButtonClick={addToPlatformsWithUrl}
             />
           )}
           <PlatformSelector
             platformsWithoutUrl={platformsWithoutUrl}
-            onChange={(e) => handlePlatformChange(parseInt(e.target.value, 10))}
+            onChange={handlePlatformChange}
           />
         </LinkEditorSection>
       )}

@@ -1,41 +1,97 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Platform } from '@/interfaces/release.interface';
 
-// Hook pour gérer l'état des URLs des plateformes
-// ===========================================================================================
-export const useUrlState = (platforms: Platform[]) => {
-  // État local pour stocker les nouvelles URLs associées à chaque plateforme (clé = id)
-  const [newUrls, setNewUrls] = useState<{ [id: Platform['id']]: string }>({});
+export default function useUrlState(platforms: Platform[]) {
+  const [platformsWithUrl, setPlatformsWithUrl] = useState<Platform[]>(
+    platforms.filter((platform) => platform.url),
+  );
+  const [platformsWithoutUrl, setPlatformsWithoutUrl] = useState<Platform[]>(
+    platforms.filter((platform) => !platform.url),
+  );
+  const [newUrls, setNewUrls] = useState<{ [key: number]: string }>({});
+  const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
+    null,
+  );
+  const [platformIdsToAdd, setPlatformIdsToAdd] = useState<number[]>([]);
+  const [shouldUpdateAfterPlatformAdding, setShouldUpdateAfterPlatformAdding] =
+    useState<boolean>(false);
+  const isInitialized = useRef(false);
 
   useEffect(() => {
-    // Initialisation des URLs à partir de la prop "platforms"
-    const initialUrls: { [id: Platform['id']]: string } = {};
-
-    platforms.forEach((platform) => {
-      // Retourne si aucune URL
-      if (!platform.url) return;
-
-      // Ajoute l'URL à notre objet d'état
-      initialUrls[platform.id] = platform.url;
-    });
-
-    // Met à jour le state avec les URLs récupérées
-    setNewUrls(initialUrls);
+    if (!isInitialized.current) {
+      const initialUrls: { [key: number]: string } = {};
+      platforms.forEach((platform) => {
+        if (platform.url) {
+          initialUrls[platform.id] = platform.url;
+        }
+      });
+      setNewUrls(initialUrls);
+      isInitialized.current = true;
+    }
   }, [platforms]);
 
-  // Fonction pour mettre à jour l'URL d'une plateforme spécifique
-  const updateUrl = (
-    platformId: Platform['id'],
-    url: Platform['url'],
+  useEffect(() => {
+    if (platformIdsToAdd.length > 0) {
+      setPlatformsWithoutUrl((prevPlatformsWithoutUrl) =>
+        prevPlatformsWithoutUrl.filter(
+          (platform) => !platformIdsToAdd.includes(platform.id),
+        ),
+      );
+    }
+  }, [platformIdsToAdd]);
+
+  const handleUrlChange = (platformId: number, url: string): void => {
+    setNewUrls((prevUrls) => ({ ...prevUrls, [platformId]: url }));
+  };
+
+  const addToPlatformsWithUrl = async (): Promise<void> => {
+    if (selectedPlatform && newUrls[selectedPlatform.id]) {
+      const newUrl = newUrls[selectedPlatform.id];
+
+      const platformToAdd: Platform = {
+        ...selectedPlatform,
+        url: newUrl,
+      };
+
+      setPlatformsWithUrl((prevPlatformsWithUrl) => [
+        ...prevPlatformsWithUrl,
+        platformToAdd,
+      ]);
+      setPlatformIdsToAdd((prevPlatformIds) => [
+        ...prevPlatformIds,
+        selectedPlatform.id,
+      ]);
+      setSelectedPlatform(null);
+
+      const selectElement = document.getElementById(
+        'platform-select',
+      ) as HTMLSelectElement | null;
+      if (selectElement) {
+        selectElement.selectedIndex = 0;
+      }
+    }
+    setShouldUpdateAfterPlatformAdding(true);
+  };
+
+  const handlePlatformChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
-    if (typeof url === 'string') {
-      setNewUrls((prev) => ({
-        ...prev, // Garde les valeurs précédentes
-        [platformId]: url, // Ecrase seulement celle qu’on met à jour
-      }));
+    const platformId = parseInt(e.target.value);
+    const platform = platforms.find((p) => p.id === platformId);
+    if (platform) {
+      setSelectedPlatform(platform);
     }
   };
 
-  // Retourne les données et la méthode de mise à jour
-  return { newUrls, updateUrl };
-};
+  return {
+    platformsWithUrl,
+    platformsWithoutUrl,
+    newUrls,
+    handleUrlChange,
+    addToPlatformsWithUrl,
+    selectedPlatform,
+    handlePlatformChange,
+    shouldUpdateAfterPlatformAdding,
+    setShouldUpdateAfterPlatformAdding,
+  };
+}
