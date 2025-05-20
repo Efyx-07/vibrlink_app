@@ -47,20 +47,22 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
           />
         ))}
       </LinkEditorSection>
-      <LinkEditorSection title="Enter more links manually">
-        {selectedPlatform && (
-          <PlatformField
-            platform={selectedPlatform}
-            value={newUrls[selectedPlatform.id] || ''}
-            onChange={(e) => updateUrl(selectedPlatform.id, e.target.value)}
-            onAddButtonClick={handleAddPlatform}
+      {platformsWithoutUrl.length > 0 && (
+        <LinkEditorSection title="Enter more links manually">
+          {selectedPlatform && (
+            <PlatformField
+              platform={selectedPlatform}
+              value={newUrls[selectedPlatform.id] || ''}
+              onChange={(e) => updateUrl(selectedPlatform.id, e.target.value)}
+              onAddButtonClick={handleAddPlatform}
+            />
+          )}
+          <PlatformSelector
+            platformsWithoutUrl={platformsWithoutUrl}
+            onChange={(e) => handlePlatformChange(parseInt(e.target.value, 10))}
           />
-        )}
-        <PlatformSelector
-          platformsWithoutUrl={platformsWithoutUrl}
-          onChange={(e) => handlePlatformChange(parseInt(e.target.value, 10))}
-        />
-      </LinkEditorSection>
+        </LinkEditorSection>
+      )}
       <Button type="submit" label="Update link" isLoading={isPending} />
     </form>
   );
