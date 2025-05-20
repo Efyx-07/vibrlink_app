@@ -21,7 +21,7 @@ export default function LinkEditor() {
   if (!release) return null;
 
   return (
-    <div className="flex w-full flex-col gap-12">
+    <div className="flex w-full max-w-[60rem] flex-col gap-12">
       <LinkCard release={release} isEditor={true} />
       <LinkEditorForm release={release} />
     </div>

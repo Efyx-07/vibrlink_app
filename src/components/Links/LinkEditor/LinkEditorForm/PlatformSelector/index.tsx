@@ -13,7 +13,7 @@ export default function PlatformSelector({
 }: PlatformSelectorProps) {
   const defaultOptionValue = 'Add a platform';
   return (
-    <div className="group relative h-16 w-full">
+    <div className="group relative h-14 w-full">
       <select
         className="size-full cursor-pointer appearance-none border border-whiteLight bg-darkColorRelief pl-4 outline-none focus:border-accentColor"
         onChange={onChange}
@@ -31,7 +31,7 @@ export default function PlatformSelector({
       </select>
       <Icon
         icon="ri:arrow-down-s-line"
-        className="pointer-events-none absolute right-4 top-5 text-3xl group-hover:text-accentColor"
+        className="pointer-events-none absolute right-4 top-4 text-2xl group-hover:text-accentColor"
       />
     </div>
   );
