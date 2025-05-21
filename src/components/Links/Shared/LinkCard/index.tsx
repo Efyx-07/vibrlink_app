@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { deleteLinkByReleaseId } from '@/services/release.service';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
-import Separator from '@/components/Shared/Separator';
+import HorizontalSeparator from '@/components/Shared/Separator/HorizontalSeparator';
 import Button from '@/components/Shared/Button';
 import { formatDate, timeAgo } from '@/utils/formatDate';
 
@@ -60,7 +60,7 @@ function LinkCardInfos({ release, isEditor }: LinkCardInfosProps) {
       </div>
       {!isEditor && (
         <>
-          <Separator />
+          <HorizontalSeparator />
           <div className="flex flex-col gap-1">
             <p className="text-xs font-normal opacity-75">
               {formatDate(release.creationDate)}

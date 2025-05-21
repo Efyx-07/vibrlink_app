@@ -3,7 +3,7 @@ import Button from '@/components/Shared/Button';
 import PlatformSelector from './PlatformSelector';
 import PlatformField from './PlatformField';
 import { useUpdateReleaseLinks } from '@/hooks/useUpdateReleaseLinks';
-import Separator from '@/components/Shared/Separator';
+import HorizontalSeparator from '@/components/Shared/Separator/HorizontalSeparator';
 import useUrlState from './hooks/useUrlState';
 import useVisibilityState from './hooks/useVisibilityState';
 import { useEffect, useMemo, useState } from 'react';
@@ -124,7 +124,7 @@ function LinkEditorSection({ title, children }: LinkEditorSectionProps) {
     <div className="flex w-full flex-col gap-8">
       <div className="flex w-full items-baseline gap-4">
         <h1 className="whitespace-nowrap">{title}</h1>
-        <Separator />
+        <HorizontalSeparator />
       </div>
       <div className="flex w-full flex-col gap-6">{children}</div>
     </div>

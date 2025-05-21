@@ -3,7 +3,7 @@ import Switch from '@/components/Shared/Switch';
 import { Platform } from '@/interfaces/release.interface';
 import { MouseEventHandler } from 'react';
 import { openInANewTab } from '@/utils/openInANewTab';
-import { VerticalSeparator } from '@/components/Shared/Separator';
+import VerticalSeparator from '@/components/Shared/Separator/VerticalSeparator';
 
 interface PlatformFieldProps {
   value: string;
