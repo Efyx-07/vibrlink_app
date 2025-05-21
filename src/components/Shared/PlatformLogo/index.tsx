@@ -3,14 +3,15 @@ import Image from 'next/image';
 
 interface PlatformLogoProps {
   platform: Platform;
+  size?: number;
 }
 
-export default function PlatformLogo({ platform }: PlatformLogoProps) {
+export default function PlatformLogo({ platform, size }: PlatformLogoProps) {
   return (
     <Image
       src={platform.logoUrl}
-      width={125}
-      height={125}
+      width={size || 125}
+      height={size || 125}
       alt={platform.name}
       priority
     />

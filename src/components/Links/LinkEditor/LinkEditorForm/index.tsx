@@ -126,7 +126,7 @@ function LinkEditorSection({ title, children }: LinkEditorSectionProps) {
         <h1 className="whitespace-nowrap">{title}</h1>
         <HorizontalSeparator />
       </div>
-      <div className="flex w-full flex-col gap-6">{children}</div>
+      <div className="flex w-full flex-col gap-8 md:gap-6">{children}</div>
     </div>
   );
 }
