@@ -5,6 +5,7 @@ export const theme = {
     colors: {
       darkColor: 'var(--darkColor)',
       darkColorRelief: 'var(--darkColorRelief)',
+      darkColor75: 'var(--darkColor75)',
       whiteColor: 'var(--whiteColor)',
       whiteLight: 'var(--whiteLight)',
       whiteLight25: 'var(--whiteLight25)',

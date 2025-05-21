@@ -3,8 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --darkColor: #1b1b1b;
+  --darkColor: rgb(27, 27, 27);
   --darkColorRelief: #212121;
+  --darkColor75: rgba(27, 27, 27, 0.75);
   --whiteColor: rgb(254, 246, 226);
   --whiteLight: rgba(254, 246, 226, 0.1);
   --whiteLight25: rgba(254, 246, 226, 0.25);
@@ -20,11 +21,3 @@ body {
   color: var(--whiteColor);
   font-family: Arial, Helvetica, sans-serif;
 }
-
-/* .page {
-  @apply flex h-full min-h-[calc(100dvh-10rem)] w-full flex-col items-center justify-center;
-}
-
-.content {
-  @apply flex h-full w-full max-w-[75rem] flex-col items-center justify-center px-4 py-16 md:px-8 2xl:max-w-[90rem];
-} */

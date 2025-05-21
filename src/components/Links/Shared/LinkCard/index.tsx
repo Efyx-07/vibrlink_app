@@ -7,6 +7,7 @@ import Image from 'next/image';
 import HorizontalSeparator from '@/components/Shared/Separator/HorizontalSeparator';
 import Button from '@/components/Shared/Button';
 import { formatDate, timeAgo } from '@/utils/formatDate';
+import ConfirmModal from '@/components/Shared/ConfirmModal';
 
 interface LinkCardProps {
   release: Release;
@@ -126,6 +127,13 @@ function ActionButtons({ release }: ActionButtonsProps) {
           />
         ))}
       </div>
+      <ConfirmModal
+        topline={`Are you sure you want to delete "${release.title}" ?`}
+        message="This will definitely remove this release."
+        onConfirm={deleteLink}
+        onCancel={() => {}}
+        icon="mdi:skull-crossbones"
+      />
     </div>
   );
 }
