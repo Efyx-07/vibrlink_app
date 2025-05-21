@@ -107,12 +107,12 @@ function ActionButtons({ release }: ActionButtonsProps) {
 
   const CTAButtons = [
     { label: 'Edit', onClick: () => navToLinkToEditPage(release.slug) },
-    { label: 'Delete link', onClick: deleteLink },
     {
       label: 'Landing page',
       onClick: () => navToReleaseLandingPage(release.slug),
     },
     { label: 'Copy album link', onClick: () => {} },
+    { label: 'Delete link', onClick: deleteLink },
   ];
   return (
     <div>
@@ -127,13 +127,13 @@ function ActionButtons({ release }: ActionButtonsProps) {
           />
         ))}
       </div>
-      <ConfirmModal
+      {/* <ConfirmModal
         topline={`Are you sure you want to delete "${release.title}" ?`}
         message="This will definitely remove this release."
         onConfirm={deleteLink}
         onCancel={() => {}}
         icon="mdi:skull-crossbones"
-      />
+      /> */}
     </div>
   );
 }
