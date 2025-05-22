@@ -5,23 +5,25 @@ import { Icon } from '@iconify/react';
 interface PlatformSelectorProps {
   platformsWithoutUrl: Platform[];
   onChange: ChangeEventHandler<HTMLSelectElement>;
+  selectedPlatformId: number | null;
 }
 
 export default function PlatformSelector({
   platformsWithoutUrl,
   onChange,
+  selectedPlatformId,
 }: PlatformSelectorProps) {
-  const defaultOptionValue = 'Add a platform';
+  const defaultOptionValue = '';
   return (
     <div className="group relative h-14 w-full">
       <select
         className="size-full cursor-pointer appearance-none border border-whiteLight bg-darkColorRelief pl-4 outline-none"
         onChange={onChange}
         id="platform-select"
-        defaultValue={defaultOptionValue}
+        value={selectedPlatformId ?? defaultOptionValue}
       >
         <option disabled value={defaultOptionValue} className="default-option">
-          {defaultOptionValue}
+          Add a platform
         </option>
         {platformsWithoutUrl.map((platform) => (
           <option key={platform.id} value={platform.id}>

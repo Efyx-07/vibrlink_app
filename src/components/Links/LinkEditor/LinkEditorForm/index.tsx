@@ -105,6 +105,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
           <PlatformSelector
             platformsWithoutUrl={platformsWithoutUrl}
             onChange={handlePlatformChange}
+            selectedPlatformId={selectedPlatform?.id ?? null}
           />
         </LinkEditorSection>
       )}
