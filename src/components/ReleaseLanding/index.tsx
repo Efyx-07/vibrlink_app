@@ -6,6 +6,7 @@ import LoadingPage from '../LoadingPage';
 import ReleaseCover from './ReleaseCover';
 import ReleaseInfos from './ReleaseInfos';
 import ReleaseLinks from './ReleaseLinks';
+import Watermark from './Watermark';
 
 interface ReleaseLandingProps {
   slug: Release['slug'];
@@ -28,7 +29,7 @@ export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
           <div className="col-start-2 col-end-[-1] flex w-full max-w-[45rem] flex-col gap-8 px-0 py-16">
             <ReleaseInfos release={data} />
             <ReleaseLinks release={data} />
-            <p>Watermark</p>
+            <Watermark />
           </div>
         </div>
       </div>
