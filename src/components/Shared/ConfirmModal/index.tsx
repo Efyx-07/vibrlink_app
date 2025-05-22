@@ -24,7 +24,7 @@ export default function ConfirmModal({
         <div className="absolute -top-10 left-1/2 flex size-20 -translate-x-1/2 items-center justify-center rounded-full border-4 border-accentColor bg-darkColor">
           <Icon icon={icon} className="text-5xl text-whiteColor" />
         </div>
-        <div className="row-start-2 flex flex-col items-center gap-6">
+        <div className="row-start-2 flex flex-col items-center gap-6 pt-4">
           <div className="flex flex-col items-center gap-2 px-4 text-center">
             <p className="text-xl font-semibold">{topline}</p>
             <p>{message}</p>
