@@ -8,11 +8,10 @@ import LoadingPage from '@/components/LoadingPage';
 export default function ReleaseLanding() {
   const { releaseSlug } = useParams();
 
-  const {
-    data: release,
-    error,
-    isLoading,
-  } = useRelease(releaseSlug as Release['slug']);
+  // Utilise le hook useRelease pour récupérer la release à éditer
+  const { data: release, isLoading } = useRelease(
+    releaseSlug as Release['slug'],
+  );
 
   return isLoading ? (
     <LoadingPage />
