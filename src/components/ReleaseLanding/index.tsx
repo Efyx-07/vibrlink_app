@@ -3,7 +3,7 @@
 import { useRelease } from '@/hooks/useRelease';
 import { Release } from '@/interfaces/release.interface';
 import LoadingPage from '../LoadingPage';
-import ReleaseCover from './ReleaseCover';
+import ReleaseCover from '../Shared/ReleaseCover';
 import ReleaseInfos from './ReleaseInfos';
 import ReleaseLinks from './ReleaseLinks';
 import Watermark from './Watermark';

@@ -1,5 +1,6 @@
 import { Release } from '@/interfaces/release.interface';
 import Image from 'next/image';
+import ReleaseCover from '@/components/Shared/ReleaseCover';
 import HorizontalSeparator from '@/components/Shared/Separator/HorizontalSeparator';
 import { formatDate, timeAgo } from '@/utils/formatDate';
 import CardCTAButtons from './CardCTAButtons';
@@ -14,13 +15,7 @@ export default function LinkCard({ release, isEditor }: LinkCardProps) {
     <div className="flex w-full flex-col gap-8 border border-whiteLight bg-darkColorRelief p-4 md:grid md:grid-cols-[4fr_1.5fr]">
       <div className="flex gap-4">
         <div className="size-full max-w-[13rem]">
-          <Image
-            src={release.cover}
-            width={500}
-            height={500}
-            alt={release.title}
-            priority
-          />
+          <ReleaseCover release={release} size={208} />
         </div>
         <LinkCardInfos release={release} isEditor={isEditor} />
       </div>
@@ -44,8 +39,8 @@ function LinkCardInfos({ release, isEditor }: LinkCardInfosProps) {
             <Image
               className="size-full rounded-full border-2 border-whiteColor"
               src={release.artistImage}
-              width={500}
-              height={500}
+              width={100}
+              height={100}
               alt={release.title}
               priority
             />

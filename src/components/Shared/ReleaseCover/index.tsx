@@ -3,15 +3,16 @@ import Image from 'next/image';
 
 interface ReleaseCoverProps {
   release: Release;
+  size?: number;
 }
 
-export default function ReleaseCover({ release }: ReleaseCoverProps) {
+export default function ReleaseCover({ release, size }: ReleaseCoverProps) {
   return (
     <div>
       <Image
         src={release.cover}
-        width={1000}
-        height={1000}
+        width={size || 500}
+        height={size || 500}
         alt={release.title}
         priority
       />
