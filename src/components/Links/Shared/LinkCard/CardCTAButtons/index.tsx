@@ -5,6 +5,7 @@ import { Release } from '@/interfaces/release.interface';
 import { openInANewTab } from '@/utils/openInANewTab';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { appUrl } from '@/config';
 
 interface CardCTAButtonsProps {
   release: Release;
@@ -24,6 +25,18 @@ export default function CardCTAButtons({ release }: CardCTAButtonsProps) {
   const navToReleaseLandingPage = (releaseSlug: Release['slug']): void =>
     openInANewTab(`/${releaseSlug}`);
 
+  // Copie le lien de la release dans le presse-papiers
+  const [copied, setCopied] = useState<boolean>(false);
+  const copyToClipboard = async (): Promise<void> => {
+    try {
+      await navigator.clipboard.writeText(`${appUrl}/${release.slug}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      console.error('Failed to copy!', error);
+    }
+  };
+
   // Gère l'ouverture et la fermeture de la modale de confirmation
   const openConfirmModal = () => setIsOpen(true);
   const closeConfirmModal = () => setIsOpen(false);
@@ -42,7 +55,10 @@ export default function CardCTAButtons({ release }: CardCTAButtonsProps) {
       label: 'Landing page',
       onClick: () => navToReleaseLandingPage(release.slug),
     },
-    { label: 'Copy album link', onClick: () => {} },
+    {
+      label: copied ? 'Copied to clipboard!' : 'Copy album link',
+      onClick: copyToClipboard,
+    },
     { label: 'Delete link', onClick: openConfirmModal },
   ];
   // ===========================================================================================
