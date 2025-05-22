@@ -7,8 +7,8 @@ import { validateSpotifyUrl } from '@/utils/validateSpotifyUrl';
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
 import { Release } from '@/interfaces/release.interface';
-import { createLink } from '@/services/release.service';
 import { useRouter } from 'next/navigation';
+import { useCreateLink } from '@/hooks/useCreateLink';
 
 export default function NewLinkForm() {
   const userStore = useUserStore();
@@ -17,8 +17,7 @@ export default function NewLinkForm() {
   // State pour l'URL de l'album
   const [albumUrl, setAlbumUrl] = useState<string>('');
 
-  // State pour le loader du bouton
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const {mutate, isPending} = useCreateLink();
 
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,15 +29,16 @@ export default function NewLinkForm() {
     // Récupère l'ID de l'utilisateur dans le store
     const userId: User['id'] | undefined = userStore.user?.id;
 
-    try {
-      setIsLoading(true);
-      const data = await createLink(albumUrl, userId);
-      const releaseSlug: Release['slug'] = data.releaseSlug;
-      router.push(`/vl/links/link-editor/${releaseSlug}`);
-    } catch (error) {
-      setIsLoading(false);
-      console.error('Failed to send album URL: ', error);
-    }
+    mutate(
+      { albumUrl, userId },
+      {
+        onSuccess: (data) => {
+          const releaseSlug: Release['slug'] = data.releaseSlug;
+          router.push(`/vl/links/link-editor/${releaseSlug}`);
+        },
+        onError: (error) => console.error('Failed to create link:', error),
+      }
+    );
   };
   // ===========================================================================================
 
@@ -53,7 +53,7 @@ export default function NewLinkForm() {
         value={albumUrl}
         onChange={(e) => setAlbumUrl(e.target.value)}
       />
-      <Button type="submit" label="Create my link" isLoading={isLoading} />
+      <Button type="submit" label="Create my link" isLoading={isPending} />
     </form>
   );
 }

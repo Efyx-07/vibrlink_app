@@ -21,13 +21,10 @@ export function useUpdateReleaseLinks() {
       );
       return updateLink(newUrls, platformsVisibility, releaseId);
     },
-    onSuccess: (_, variables) => {
+    onSuccess: (_, variables) =>
       queryClient.invalidateQueries({
         queryKey: ['release', variables.releaseId],
-      });
-    },
-    onError: (error) => {
-      console.error('Update failed:', error);
-    },
+      }),
+    onError: (error) => console.error('Update failed:', error),
   });
 }
