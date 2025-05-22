@@ -3,6 +3,7 @@
 import { useRelease } from '@/hooks/useRelease';
 import { Release } from '@/interfaces/release.interface';
 import LoadingPage from '../LoadingPage';
+import ReleaseCover from './ReleaseCover';
 
 interface ReleaseLandingProps {
   slug: Release['slug'];
@@ -18,7 +19,8 @@ export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
       style={{ backgroundImage: `url(${data.cover})` }}
     >
       <div className="flex w-full justify-center overflow-y-auto bg-blackOverlay75 backdrop-blur-xl">
-        <h1>{data.slug}</h1>
+        <ReleaseCover release={data} />
+        {/* <h1>{data.slug}</h1>
         {data.platforms
           ?.filter((platform) => platform.visibility && platform.url)
           .map((platform) => (
@@ -26,7 +28,7 @@ export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
               <h3>{platform.name}</h3>
               <p>{platform.url}</p>
             </div>
-          ))}
+          ))} */}
       </div>
     </div>
   );
