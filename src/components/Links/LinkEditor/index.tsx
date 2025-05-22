@@ -6,6 +6,7 @@ import { useRelease } from '@/hooks/useRelease';
 import LoadingPage from '@/components/LoadingPage';
 import LinkCard from '../Shared/LinkCard';
 import LinkEditorForm from './LinkEditorForm';
+import PageTitle from '@/components/Shared/PageTitle';
 
 export default function LinkEditor() {
   const { releaseSlug } = useParams();
@@ -21,9 +22,12 @@ export default function LinkEditor() {
   if (!release) return null;
 
   return (
-    <div className="flex w-full max-w-[60rem] flex-col gap-12">
-      <LinkCard release={release} isEditor={true} />
-      <LinkEditorForm release={release} />
+    <div className="flex w-full max-w-[65rem] flex-col items-center gap-4">
+      <PageTitle primaryPart="Edit" secondaryPart="your link" />
+      <div className="flex w-full flex-col gap-12">
+        <LinkCard release={release} isEditor={true} />
+        <LinkEditorForm release={release} />
+      </div>
     </div>
   );
 }

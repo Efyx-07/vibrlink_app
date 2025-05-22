@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { useReleases } from '@/hooks/useReleases';
 import LoadingPage from '@/components/LoadingPage';
 import LinkCard from '../Shared/LinkCard';
+import PageTitle from '@/components/Shared/PageTitle';
 
 export default function MyLinks() {
   const userStore = useUserStore();
@@ -25,13 +26,17 @@ export default function MyLinks() {
   return isLoading ? (
     <LoadingPage />
   ) : (
-    <div className="flex w-full flex-col gap-4">
-      {releases &&
-        releases.map((release) => (
-          <div key={release.id} className="w-full">
-            <LinkCard release={release} />
-          </div>
-        ))}
+    <div className="flex w-full max-w-[65rem] flex-col gap-4">
+      {releases && (
+        <>
+          <PageTitle primaryPart="Manage" secondaryPart="your links" />
+          {releases.map((release) => (
+            <div key={release.id} className="w-full">
+              <LinkCard release={release} />
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 }
