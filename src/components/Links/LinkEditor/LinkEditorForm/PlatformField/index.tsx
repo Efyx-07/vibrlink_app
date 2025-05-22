@@ -47,7 +47,7 @@ export default function PlatformField({
           onChange={onChange}
           platform={platform}
         />
-        <div className="hidden h-full bg-darkColorRelief py-3 md:block">
+        <div className="hidden h-full border-b border-t border-b-whiteLight border-t-whiteLight bg-darkColorRelief py-3 md:block">
           <VerticalSeparator />
         </div>
         <div className="hidden size-full max-w-48 border border-l-0 border-whiteLight bg-darkColorRelief md:block">
