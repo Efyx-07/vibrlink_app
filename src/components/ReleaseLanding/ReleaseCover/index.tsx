@@ -10,8 +10,8 @@ export default function ReleaseCover({ release }: ReleaseCoverProps) {
     <div>
       <Image
         src={release.cover}
-        width={500}
-        height={500}
+        width={1000}
+        height={1000}
         alt={release.title}
         priority
       />

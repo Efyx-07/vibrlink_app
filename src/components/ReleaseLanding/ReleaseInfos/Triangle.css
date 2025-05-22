@@ -1,0 +1,5 @@
+@tailwind utilities;
+
+.triangle {
+  @apply absolute -bottom-[.8rem] left-1/2 z-10 size-0 -translate-x-1/2 transform border-l-[.9rem] border-r-[.9rem] border-t-[.9rem] border-l-transparent border-r-transparent border-t-whiteColor;
+}
