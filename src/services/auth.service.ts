@@ -36,7 +36,7 @@ export async function registerUser(
 
 // Service pour la connexion d'un utilisateur
 // ===========================================================================================
-export async function login(
+export async function loginUser(
   email: User['email'],
   password: User['password'],
 ): Promise<LoginResponse> {

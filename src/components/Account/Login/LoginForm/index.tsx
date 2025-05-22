@@ -3,9 +3,9 @@
 import Button from '@/components/Shared/Button';
 import FormField from '@/components/Shared/Forms/FormField';
 import { useState } from 'react';
-import { login } from '@/services/auth.service';
 import { useRouter } from 'next/navigation';
 import useUserStore from '@/stores/userStore';
+import { useLoginUser } from '@/hooks/useLoginUser';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -15,24 +15,28 @@ export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  // State pour le loader du bouton
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // Utilisation du hook de connexion utilisateur
+  const { mutate, isPending } = useLoginUser();
 
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      setIsLoading(true);
-      const data = await login(email, password);
-      setUserData(data.user);
-      const token = data.token;
-      localStorage.setItem('token', token);
-      setToken(token);
-      router.push('/vl/links/my-links');
-    } catch (error) {
-      setIsLoading(false);
-      console.error('Error while connecting: ', error);
-    }
+
+    // Appelle la mutation pour la connexion
+    mutate(
+      { email, password },
+      {
+        onSuccess: (data) => {
+          setUserData(data.user);
+          localStorage.setItem('token', data.token);
+          setToken(data.token);
+          router.push('/vl/links/my-links');
+        },
+        onError: (error) => {
+          console.error('Error while connecting:', error);
+        },
+      },
+    );
   };
   // ===========================================================================================
 
@@ -54,7 +58,7 @@ export default function LoginForm() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <Button type="submit" label="Log in" isLoading={isLoading} />
+      <Button type="submit" label="Log in" isLoading={isPending} />
     </form>
   );
 }
