@@ -17,6 +17,7 @@ export default function NewLinkForm() {
   // State pour l'URL de l'album
   const [albumUrl, setAlbumUrl] = useState<string>('');
 
+  // Utilisation du hook de création des liens
   const { mutate, isPending } = useCreateLink();
 
   // Fonction de soumission du formulaire
