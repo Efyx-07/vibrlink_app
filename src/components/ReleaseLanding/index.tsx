@@ -22,17 +22,38 @@ export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
       style={{ backgroundImage: `url(${data.cover})` }}
     >
       <div className="flex w-full justify-center overflow-y-auto bg-blackOverlay75 backdrop-blur-xl">
-        <div className="relative grid h-dvh w-full grid-cols-2 gap-16 overflow-y-scroll p-16">
-          <div className="fixed top-1/2 ml-40 flex w-[33%] max-w-[35rem] -translate-y-1/2 transform items-center">
-            <ReleaseCover release={data} />
-          </div>
-          <div className="col-start-2 col-end-[-1] flex w-full max-w-[45rem] flex-col gap-8 px-0 py-16">
-            <ReleaseInfos release={data} />
-            <ReleaseLinks release={data} />
-            <Watermark />
-          </div>
-        </div>
+        <ReleaseLandingCardDesktop release={data} />
       </div>
     </div>
   );
 }
+
+// Interface pour les composants enfants
+interface ReleaseLandingCardProps {
+  release: Release;
+}
+
+// Composant local pour la carte version desktop
+// ===========================================================================================
+function ReleaseLandingCardDesktop({ release }: ReleaseLandingCardProps) {
+  return (
+    <div className="relative hidden h-dvh w-full grid-cols-2 gap-16 overflow-y-scroll p-16 xl:grid">
+      <div className="fixed top-1/2 ml-40 flex w-[33%] max-w-[35rem] -translate-y-1/2 transform items-center">
+        <ReleaseCover release={release} />
+      </div>
+      <div className="col-start-2 col-end-[-1] flex w-full max-w-[45rem] flex-col gap-8 px-0 py-16">
+        <ReleaseInfos release={release} />
+        <ReleaseLinks release={release} />
+        <Watermark />
+      </div>
+    </div>
+  );
+}
+
+// Composant local pour la carte version mobile
+// ===========================================================================================
+// function ReleaseLandingCardMobile({ release }: ReleaseLandingCardProps) {
+//   return (
+
+//   );
+// }

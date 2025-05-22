@@ -3,7 +3,7 @@ import { appUrl, siteName } from '@/config';
 
 export default function Watermark() {
   return (
-    <div className="my-2 flex w-full items-center justify-center bg-whiteLight py-4 text-sm md:bg-transparent">
+    <div className="my-2 flex w-full items-center justify-center bg-whiteLight py-4 text-sm xl:bg-transparent">
       <p className="font-extralight">
         Create yours on{' '}
         <span
