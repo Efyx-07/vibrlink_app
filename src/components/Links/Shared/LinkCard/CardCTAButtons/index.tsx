@@ -67,6 +67,7 @@ export default function CardCTAButtons({ release }: CardCTAButtonsProps) {
           onConfirm={deleteLink}
           onCancel={closeConfirmModal}
           icon="mdi:skull-crossbones"
+          isLoading={isPending}
         />
       )}
     </div>

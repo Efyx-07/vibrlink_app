@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react';
+import LoadingSpinner from '../LoadingSpinner';
 
 interface ConfirmModalProps {
   topline: string;
@@ -6,6 +7,7 @@ interface ConfirmModalProps {
   onConfirm: () => void;
   onCancel: () => void;
   icon: string;
+  isLoading?: boolean;
 }
 
 export default function ConfirmModal({
@@ -14,6 +16,7 @@ export default function ConfirmModal({
   onConfirm,
   onCancel,
   icon,
+  isLoading,
 }: ConfirmModalProps) {
   return (
     <div className="fixed right-0 top-0 z-50 flex h-dvh w-dvw items-center justify-center bg-darkColor75">
@@ -27,18 +30,13 @@ export default function ConfirmModal({
             <p>{message}</p>
           </div>
           <div className="flex gap-2">
-            <button
-              className="h-10 w-32 border border-darkColor"
-              onClick={onCancel}
-            >
-              Cancel
-            </button>
-            <button
-              className="h-10 w-32 border border-darkColor bg-darkColor text-whiteColor"
+            <ModalButton label="Cancel" onClick={onCancel} />
+            <ModalButton
+              label="Confirm"
               onClick={onConfirm}
-            >
-              Confirm
-            </button>
+              isPrimary
+              isLoading={isLoading}
+            />
           </div>
         </div>
       </div>
@@ -48,25 +46,26 @@ export default function ConfirmModal({
 
 // Composant local pour un bouton de la modale de confirmation
 // ===========================================================================================
-interface ConfirmButtonProps {
+interface ModalButtonProps {
   label: string;
   onClick: () => void;
   isLoading?: boolean;
   isPrimary?: boolean;
 }
 
-function ConfirmButton({
+function ModalButton({
   label,
   onClick,
-  isLoading = false,
-}: ConfirmButtonProps) {
+  isLoading,
+  isPrimary,
+}: ModalButtonProps) {
   return (
     <button
-      className={`h-10 w-32 border border-darkColor bg-darkColor text-whiteColor`}
+      className={`h-10 w-32 border border-darkColor ${isPrimary ? 'bg-darkColor text-whiteColor hover:bg-whiteColor hover:text-darkColor' : 'hover:bg-darkColor hover:text-whiteColor'}`}
       onClick={onClick}
       disabled={isLoading}
     >
-      {isLoading ? 'Loading...' : label}
+      {isLoading ? <LoadingSpinner className="small-ring" /> : <p>{label}</p>}
     </button>
   );
 }
