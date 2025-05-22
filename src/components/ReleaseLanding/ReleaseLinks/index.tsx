@@ -12,7 +12,7 @@ export default function ReleaseLinks({ release }: ReleaseLinksProps) {
       {release.platforms.map((platform) =>
         platform.url && platform.visibility ? (
           <div
-            className="group flex h-20 cursor-pointer items-center justify-between border-t border-t-whiteLight px-4 hover:bg-darkColor xl:h-[4.25rem] xl:rounded-[4rem] xl:bg-whiteLight25 xl:px-8"
+            className="group flex h-20 cursor-pointer items-center justify-between border-t border-t-whiteLight px-4 hover:bg-darkColor xl:h-[4.25rem] xl:rounded-[4rem] xl:border xl:border-whiteLight xl:bg-whiteLight25 xl:px-8"
             key={platform.id}
             onClick={() => platform.url && openInANewTab(platform.url)}
           >
