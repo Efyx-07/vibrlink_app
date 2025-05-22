@@ -3,14 +3,39 @@
 import useUserStore from '@/stores/userStore';
 import { useRouter } from 'next/navigation';
 import { MouseEventHandler, useState } from 'react';
+import ConfirmModal from '@/components/Shared/ConfirmModal';
+import { User } from '@/interfaces/user.interface';
 
 export default function MyAccountItem() {
+  const router = useRouter();
+
   // Récupère l'état de connexion de l'utilisateur
   const isLogged: boolean = useUserStore((state) => state.isLoggedIn);
+
+  // Récupère l'utilisateur connecté
+  const user = useUserStore((state) => state.user);
+  const { logOutUser } = useUserStore();
 
   // Etat de visibilité du menu utilisateur
   const [isHoverUserMenuVisible, setIsHoverUserMenuVisible] =
     useState<boolean>(false);
+
+  // State pour gérer l'ouverture et la fermeture de la modale de confirmation
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+
+  // Gère l'ouverture et la fermeture de la modale de confirmation
+  const openConfirmModal = () => {
+    setIsConfirmModalOpen(true);
+  };
+  const closeConfirmModal = () => setIsConfirmModalOpen(false);
+
+  // Fonction de déconnexion
+  const handleLogout = () => {
+    logOutUser();
+    router.push('/vl/home');
+    closeConfirmModal();
+  };
+
   return (
     isLogged && (
       <>
@@ -20,8 +45,23 @@ export default function MyAccountItem() {
           onMouseLeave={() => setIsHoverUserMenuVisible(false)}
         >
           <p>My account</p>
-          {isHoverUserMenuVisible && <HoverUserMenu />}
+          {isHoverUserMenuVisible && (
+            <HoverUserMenu
+              user={user}
+              onAccountSettingsClick={() => router.push('/vl/account/settings')}
+              onSignOutClick={openConfirmModal}
+            />
+          )}
         </div>
+        {isConfirmModalOpen && (
+          <ConfirmModal
+            topline="Are you sure?"
+            message="Please confirm to sign out."
+            onConfirm={handleLogout}
+            onCancel={closeConfirmModal}
+            icon="material-symbols:question-mark"
+          />
+        )}
       </>
     )
   );
@@ -29,32 +69,30 @@ export default function MyAccountItem() {
 
 // Composant local pour le menu utilisateur
 // ===========================================================================================
-function HoverUserMenu() {
-  const router = useRouter();
 
-  // Récupère l'utilisateur connecté
-  const user = useUserStore((state) => state.user);
-  const { logOutUser } = useUserStore();
+interface HoverUserMenuProps {
+  user: User | null;
+  onAccountSettingsClick: () => void;
+  onSignOutClick: () => void;
+}
 
-  // Fonction de déconnexion
-  const handleLogout = () => {
-    logOutUser();
-    router.push('/vl/home');
-  };
-
+function HoverUserMenu({
+  user,
+  onAccountSettingsClick,
+  onSignOutClick,
+}: HoverUserMenuProps) {
   return (
-    <div className="absolute -right-16 top-[4.9rem] w-60 border-4 border-accentColor bg-whiteColor text-darkColor md:right-0">
-      <div className="">
-        <div className="flex items-center justify-center border-b border-whiteLight25 bg-darkColor p-4 text-xs text-whiteColor">
-          {user && <p>{user.email}</p>}
+    <>
+      <div className="absolute -right-16 top-[4.9rem] w-60 border-4 border-accentColor bg-whiteColor text-darkColor md:right-0">
+        <div className="">
+          <div className="flex items-center justify-center border-b border-whiteLight25 bg-darkColor p-4 text-xs text-whiteColor">
+            {user && <p>{user.email}</p>}
+          </div>
+          <UserItem name="Account settings" onClick={onAccountSettingsClick} />
+          <UserItem name="Sign out" onClick={onSignOutClick} />
         </div>
-        <UserItem
-          name="Account settings"
-          onClick={() => router.push('/vl/account/settings')}
-        />
-        <UserItem name="Sign out" onClick={handleLogout} />
       </div>
-    </div>
+    </>
   );
 }
 
