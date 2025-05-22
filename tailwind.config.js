@@ -14,6 +14,7 @@ export const theme = {
       accentColor25: 'var(--accentColor25)',
       accentColor5: 'var(--accentColor5)',
       errorColor: 'var(--errorColor)',
+      blackOverlay75: 'var(--blackOverlay75)',
     },
   },
   plugins: [],

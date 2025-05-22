@@ -14,6 +14,7 @@
   --accentColor25: rgba(22, 241, 228, 0.25);
   --accentColor5: rgba(22, 241, 228, 0.5);
   --errorColor: #e21717;
+  --blackOverlay75: rgba(0, 0, 0, 0.75);
 }
 
 body {

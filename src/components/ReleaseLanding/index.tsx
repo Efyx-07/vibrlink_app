@@ -13,16 +13,21 @@ export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
 
   if (isLoading || !data) return <LoadingPage />;
   return (
-    <div>
-      <h1>{data.slug}</h1>
-      {data?.platforms
-        ?.filter((platform) => platform.visibility && platform.url)
-        .map((platform) => (
-          <div key={platform.id}>
-            <h3>{platform.name}</h3>
-            <p>{platform.url}</p>
-          </div>
-        ))}
+    <div
+      className="flex h-dvh w-full justify-center overflow-hidden bg-cover bg-fixed bg-center"
+      style={{ backgroundImage: `url(${data.cover})` }}
+    >
+      <div className="flex w-full justify-center overflow-y-auto bg-blackOverlay75 backdrop-blur-xl">
+        <h1>{data.slug}</h1>
+        {data.platforms
+          ?.filter((platform) => platform.visibility && platform.url)
+          .map((platform) => (
+            <div key={platform.id}>
+              <h3>{platform.name}</h3>
+              <p>{platform.url}</p>
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
