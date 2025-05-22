@@ -9,8 +9,8 @@ import {
   validateConfirmPassword,
 } from '@/utils/validateDatas';
 import { FormEvent, useEffect, useState } from 'react';
-import { register } from '@/services/auth.service';
 import { useRouter } from 'next/navigation';
+import { useRegisterUser } from '@/hooks/useRegisterUser';
 
 // Composant pour l'inscription d'un utilisateur
 // ===========================================================================================
@@ -33,6 +33,9 @@ export default function SignupForm() {
     setConfirmPasswordValid(validateConfirmPassword(password, confirmPassword));
   }, [email, password, confirmPassword]);
 
+  // Utilisation du hook d'inscription utilisateur
+  const { mutate, isPending } = useRegisterUser();
+
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
@@ -44,12 +47,15 @@ export default function SignupForm() {
       console.error('Invalid email or password format');
       return;
     }
-    try {
-      await register(email, password);
-      router.push('/vl/account/login');
-    } catch (error) {
-      console.error('Error during registration: ' + error);
-    }
+
+    // Appelle la mutation pour l'inscription
+    mutate(
+      { email, password },
+      {
+        onSuccess: () => router.push('/vl/account/login'),
+        onError: (error) => console.error('Failed during registration:', error),
+      },
+    );
   };
   // ===========================================================================================
 
@@ -84,7 +90,7 @@ export default function SignupForm() {
         onChange={(e) => setConfirmPassword(e.target.value)}
         isValid={isConfirmPasswordValid}
       />
-      <Button type="submit" label="Sign up" />
+      <Button type="submit" label="Sign up" isLoading={isPending} />
     </form>
   );
 }

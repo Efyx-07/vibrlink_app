@@ -7,7 +7,7 @@ import {
 
 // Service pour l'inscription d'un utilisateur, retourne les datas de l'utilisateur
 // ===========================================================================================
-export async function register(
+export async function registerUser(
   email: User['email'],
   password: User['password'],
 ): Promise<SignupResponse> {
