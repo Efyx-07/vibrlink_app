@@ -26,7 +26,7 @@ export default function MyLinks() {
   return isLoading ? (
     <LoadingPage />
   ) : (
-    <div className="flex w-full max-w-[65rem] flex-col gap-4">
+    <div className="flex w-full max-w-[70rem] flex-col gap-4">
       {releases && (
         <>
           <PageTitle primaryPart="Manage" secondaryPart="your links" />

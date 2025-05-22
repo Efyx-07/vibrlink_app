@@ -22,7 +22,7 @@ export default function LinkEditor() {
   if (!release) return null;
 
   return (
-    <div className="flex w-full max-w-[65rem] flex-col items-center gap-4">
+    <div className="flex w-full max-w-[70rem] flex-col items-center gap-4">
       <PageTitle primaryPart="Edit" secondaryPart="your link" />
       <div className="flex w-full flex-col gap-12">
         <LinkCard release={release} isEditor={true} />
