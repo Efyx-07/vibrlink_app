@@ -26,19 +26,11 @@ export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
             <ReleaseCover release={data} />
           </div>
           <div className="col-start-2 col-end-[-1] flex w-full max-w-[45rem] flex-col gap-8 px-0 py-16">
-            {/* <ReleaseInfos release={data} /> */}
+            <ReleaseInfos release={data} />
             <ReleaseLinks release={data} />
+            <p>Watermark</p>
           </div>
         </div>
-        {/* <h1>{data.slug}</h1>
-        {data.platforms
-          ?.filter((platform) => platform.visibility && platform.url)
-          .map((platform) => (
-            <div key={platform.id}>
-              <h3>{platform.name}</h3>
-              <p>{platform.url}</p>
-            </div>
-          ))} */}
       </div>
     </div>
   );
