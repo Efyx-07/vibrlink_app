@@ -1,9 +1,8 @@
 import Button from '@/components/Shared/Button';
 import ConfirmModal from '@/components/Shared/ConfirmModal';
+import { useDeleteLink } from '@/hooks/useDeleteLink';
 import { Release } from '@/interfaces/release.interface';
-import { deleteLinkByReleaseId } from '@/services/release.service';
 import { openInANewTab } from '@/utils/openInANewTab';
-import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -13,30 +12,30 @@ interface CardCTAButtonsProps {
 
 export default function CardCTAButtons({ release }: CardCTAButtonsProps) {
   const router = useRouter();
-  const queryClient = useQueryClient();
 
+  // State pour gérer l'ouverture et la fermeture de la modale de confirmation
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const navToLinkToEditPage = (releaseSlug: Release['slug']): void => {
+  // Navigue vers la page d'édition du lien
+  const navToLinkToEditPage = (releaseSlug: Release['slug']): void =>
     router.push(`/vl/links/link-editor/${releaseSlug}`);
-  };
 
-  const navToReleaseLandingPage = (releaseSlug: Release['slug']): void => {
+  // Ouvre la landing page du lien dans un nouvel onglet
+  const navToReleaseLandingPage = (releaseSlug: Release['slug']): void =>
     openInANewTab(`/${releaseSlug}`);
-  };
 
+  // Gère l'ouverture et la fermeture de la modale de confirmation
   const openConfirmModal = () => setIsOpen(true);
   const closeConfirmModal = () => setIsOpen(false);
 
+  // Utilisation du hook et la mutation pour supprimer le lien
+  const { mutate, isPending } = useDeleteLink();
   const deleteLink = async (): Promise<void> => {
-    try {
-      await deleteLinkByReleaseId(release.id);
-      queryClient.invalidateQueries({ queryKey: ['releases'] });
-    } catch (error) {
-      console.error('Error while deleting link:', error);
-    }
+    mutate(release.id);
+    closeConfirmModal();
   };
 
+  // Liste des boutons d'action
   const CTAButtons = [
     { label: 'Edit', onClick: () => navToLinkToEditPage(release.slug) },
     {
@@ -46,6 +45,8 @@ export default function CardCTAButtons({ release }: CardCTAButtonsProps) {
     { label: 'Copy album link', onClick: () => {} },
     { label: 'Delete link', onClick: openConfirmModal },
   ];
+  // ===========================================================================================
+
   return (
     <div>
       <div className="flex flex-col gap-4">

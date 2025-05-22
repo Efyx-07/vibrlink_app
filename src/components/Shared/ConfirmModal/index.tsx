@@ -45,3 +45,28 @@ export default function ConfirmModal({
     </div>
   );
 }
+
+// Composant local pour un bouton de la modale de confirmation
+// ===========================================================================================
+interface ConfirmButtonProps {
+  label: string;
+  onClick: () => void;
+  isLoading?: boolean;
+  isPrimary?: boolean;
+}
+
+function ConfirmButton({
+  label,
+  onClick,
+  isLoading = false,
+}: ConfirmButtonProps) {
+  return (
+    <button
+      className={`h-10 w-32 border border-darkColor bg-darkColor text-whiteColor`}
+      onClick={onClick}
+      disabled={isLoading}
+    >
+      {isLoading ? 'Loading...' : label}
+    </button>
+  );
+}
