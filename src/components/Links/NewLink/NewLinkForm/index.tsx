@@ -17,7 +17,7 @@ export default function NewLinkForm() {
   // State pour l'URL de l'album
   const [albumUrl, setAlbumUrl] = useState<string>('');
 
-  const {mutate, isPending} = useCreateLink();
+  const { mutate, isPending } = useCreateLink();
 
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,6 +29,7 @@ export default function NewLinkForm() {
     // Récupère l'ID de l'utilisateur dans le store
     const userId: User['id'] | undefined = userStore.user?.id;
 
+    // Appelle la mutation pour créer le lien
     mutate(
       { albumUrl, userId },
       {
@@ -37,7 +38,7 @@ export default function NewLinkForm() {
           router.push(`/vl/links/link-editor/${releaseSlug}`);
         },
         onError: (error) => console.error('Failed to create link:', error),
-      }
+      },
     );
   };
   // ===========================================================================================
