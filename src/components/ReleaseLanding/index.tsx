@@ -5,6 +5,7 @@ import { Release } from '@/interfaces/release.interface';
 import LoadingPage from '../LoadingPage';
 import ReleaseCover from './ReleaseCover';
 import ReleaseInfos from './ReleaseInfos';
+import ReleaseLinks from './ReleaseLinks';
 
 interface ReleaseLandingProps {
   slug: Release['slug'];
@@ -25,7 +26,8 @@ export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
             <ReleaseCover release={data} />
           </div>
           <div className="col-start-2 col-end-[-1] flex w-full max-w-[45rem] flex-col gap-8 px-0 py-16">
-            <ReleaseInfos release={data} />
+            {/* <ReleaseInfos release={data} /> */}
+            <ReleaseLinks release={data} />
           </div>
         </div>
         {/* <h1>{data.slug}</h1>
