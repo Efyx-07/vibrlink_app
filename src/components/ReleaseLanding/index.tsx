@@ -1,24 +1,21 @@
 'use client';
 
-import { Release } from '@/interfaces/release.interface';
-import { useParams } from 'next/navigation';
 import { useRelease } from '@/hooks/useRelease';
-import LoadingPage from '@/components/LoadingPage';
+import { Release } from '@/interfaces/release.interface';
+import LoadingPage from '../LoadingPage';
 
-export default function ReleaseLanding() {
-  const { releaseSlug } = useParams();
+interface ReleaseLandingProps {
+  slug: Release['slug'];
+}
 
-  // Utilise le hook useRelease pour récupérer la release à éditer
-  const { data: release, isLoading } = useRelease(
-    releaseSlug as Release['slug'],
-  );
+export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
+  const { data, isLoading } = useRelease(slug);
 
-  return isLoading ? (
-    <LoadingPage />
-  ) : (
+  if (isLoading || !data) return <LoadingPage />;
+  return (
     <div>
-      <h1>{releaseSlug}</h1>
-      {release?.platforms
+      <h1>{data.slug}</h1>
+      {data?.platforms
         ?.filter((platform) => platform.visibility && platform.url)
         .map((platform) => (
           <div key={platform.id}>
