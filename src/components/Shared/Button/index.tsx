@@ -6,6 +6,7 @@ interface ButtonProps {
   isLoading?: boolean;
   onButtonClick?: () => void;
   isLinkCard?: boolean;
+  addMention?: string;
 }
 
 export default function Button({
@@ -14,6 +15,7 @@ export default function Button({
   isLoading,
   onButtonClick,
   isLinkCard,
+  addMention,
 }: ButtonProps) {
   return (
     <button
@@ -21,7 +23,14 @@ export default function Button({
       className={`${isLinkCard ? 'size-full min-h-10' : 'h-16 w-full'} border border-accentColor5 bg-accentColor05 text-accentColor hover:bg-accentColor25`}
       onClick={onButtonClick}
     >
-      {isLoading ? <LoadingSpinner className="medium-ring" /> : <p>{label}</p>}
+      {isLoading ? (
+        <div className="flex items-center justify-center gap-2">
+          <p>{addMention}</p>
+          <LoadingSpinner className="medium-ring" />
+        </div>
+      ) : (
+        <p>{label}</p>
+      )}
     </button>
   );
 }

@@ -109,7 +109,12 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
           />
         </LinkEditorSection>
       )}
-      <Button type="submit" label="Update link" isLoading={isPending} />
+      <Button
+        type="submit"
+        label="Update link"
+        isLoading={isPending}
+        addMention="Auto-save"
+      />
     </form>
   );
 }
