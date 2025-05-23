@@ -54,7 +54,7 @@ export default function NewLinkForm() {
         label="Enter your release Spotify link:"
         addedMention='example: "https://open.spotify.com/intl-fr/album/..."'
         name="albumUrl"
-        type="text"
+        type="url"
         value={albumUrl}
         onChange={(e) => setAlbumUrl(e.target.value)}
       />

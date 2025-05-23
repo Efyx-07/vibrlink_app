@@ -3,7 +3,7 @@ interface FormFieldProps {
   label: string;
   addedMention?: string;
   name: string;
-  type: string;
+  type: 'text' | 'email' | 'password' | 'url';
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isValid?: boolean;

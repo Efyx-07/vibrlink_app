@@ -80,7 +80,7 @@ function PlatformFieldInput({
   return (
     <input
       className="size-full border border-whiteLight bg-darkColorRelief pl-4 text-sm placeholder-whiteLight25 outline-none focus:border-accentColor md:border-r-transparent"
-      type="text"
+      type="url"
       value={value}
       onChange={(e) => onChange(platform.id, e.target.value)}
       placeholder="Enter your URL here"
