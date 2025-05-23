@@ -7,7 +7,6 @@ interface ButtonProps {
   onButtonClick?: () => void;
   isLinkCard?: boolean;
   addMention?: string;
-  disabled?: boolean;
 }
 
 export default function Button({
@@ -17,20 +16,12 @@ export default function Button({
   onButtonClick,
   isLinkCard,
   addMention,
-  disabled,
 }: ButtonProps) {
-  const baseClasses = isLinkCard ? 'size-full min-h-10' : 'h-16 w-full';
-  const enabledClasses =
-    'cursor-pointer border border-accentColor5 bg-accentColor05 text-accentColor hover:bg-accentColor25';
-  const disabledClasses =
-    'cursor-not-allowed border-accentColor05 bg-accentColor05 text-whiteLight50';
-
   return (
     <button
       type={type}
-      className={`${disabled ? disabledClasses : enabledClasses} ${baseClasses}`}
+      className={`${isLinkCard ? 'size-full min-h-10' : 'h-16 w-full'} cursor-pointer border border-accentColor5 bg-accentColor05 text-accentColor hover:bg-accentColor25`}
       onClick={onButtonClick}
-      disabled={disabled}
     >
       {isLoading ? (
         <div className="flex items-center justify-center gap-2">

@@ -24,10 +24,6 @@ export default function LoginForm() {
   const { isPasswordVisible, togglePasswordVisibility } =
     usePasswordVisibility();
 
-  // Vérifie que les champs sont remplis, non constitués d'espaces
-  const isButtonDisabled: boolean =
-    email.trim() === '' || password.trim() === '';
-
   // Utilisation du hook de connexion utilisateur
   const { mutate, isPending } = useLoginUser();
 
@@ -84,12 +80,7 @@ export default function LoginForm() {
         isPasswordVisible={isPasswordVisible('password')}
         required
       />
-      <Button
-        type="submit"
-        label="Log in"
-        isLoading={isPending}
-        disabled={isButtonDisabled}
-      />
+      <Button type="submit" label="Log in" isLoading={isPending} />
       {errorMessage && (
         <p className="-mb-2 -mt-4 text-sm text-errorColor">{errorMessage}</p>
       )}
