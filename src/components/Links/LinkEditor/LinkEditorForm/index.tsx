@@ -105,7 +105,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
           <PlatformSelector
             platformsWithoutUrl={platformsWithoutUrl}
             onChange={handlePlatformChange}
-            selectedPlatformId={selectedPlatform?.id ?? null}
+            selectedPlatformId={selectedPlatform?.id ?? null} // Réinitialise à la valeur par défaut après ajout d'une platform
           />
         </LinkEditorSection>
       )}
