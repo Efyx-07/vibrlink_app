@@ -11,6 +11,7 @@ import {
 import { FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
+import { User } from '@/interfaces/user.interface';
 
 // Composant pour l'inscription d'un utilisateur
 // ===========================================================================================
@@ -18,7 +19,7 @@ export default function SignupForm() {
   const router = useRouter();
 
   // State pour les champs du formulaire
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<User['email']>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isEmailValid, setEmailValid] = useState<boolean>(false);

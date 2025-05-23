@@ -1,3 +1,5 @@
+import { SpotifyEntry } from '@/interfaces/spotify.interface';
+
 // Url Spotify valide: spotifyPrefix(Country or International) + spotifyId (22 or 48 chars)
 // !!! spotifyCountryPrefix !== spotifyInternationalPrefix
 
@@ -9,7 +11,9 @@ const regexString48: RegExp = /^.{48}$/;
 
 // Foncion pour valider une URL Spotify au bon format
 // ===========================================================================================
-export function validateSpotifyUrl(albumUrl: string): boolean {
+export function validateSpotifyUrl(
+  albumUrl: SpotifyEntry['albumUrl'],
+): boolean {
   if (
     spotifyCountryPrefixRegex.test(albumUrl) ||
     albumUrl.startsWith(spotifyInternationalPrefix)

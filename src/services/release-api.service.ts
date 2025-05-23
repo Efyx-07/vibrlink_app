@@ -1,10 +1,13 @@
 import { apiUrl } from '@/config';
 import { Release, Platform } from '@/interfaces/release.interface';
+import { User } from '@/interfaces/user.interface';
 import { getAuthTokenFromLocalStorage } from '@/utils/getTokenFromLocalStorage';
 
 // Service pour fetcher les releases pour un utilisateur (userId). Retourne un tableau de Release
 // ===========================================================================================
-export async function fetchReleasesData(userId: number): Promise<Release[]> {
+export async function fetchReleasesData(
+  userId: User['id'],
+): Promise<Release[]> {
   try {
     const token = getAuthTokenFromLocalStorage();
     if (!token) throw new Error('No auth token found');
@@ -42,7 +45,7 @@ export async function fetchReleasesData(userId: number): Promise<Release[]> {
 // Service pour fetcher une release par son slug. Retourne un Release.
 // ===========================================================================================
 export async function fetchReleaseDataBySlug(
-  releaseSlug: string,
+  releaseSlug: Release['slug'],
 ): Promise<Release> {
   try {
     const response = await fetch(

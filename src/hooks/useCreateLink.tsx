@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createLink } from '@/services/release.service';
 import { User } from '@/interfaces/user.interface';
+import { SpotifyEntry } from '@/interfaces/spotify.interface';
 
 // Hook pour gérer la création d'un lien avec React Query
 // ===========================================================================================
@@ -10,7 +11,7 @@ export function useCreateLink() {
   return useMutation({
     mutationKey: ['createLink'],
     mutationFn: async (params: {
-      albumUrl: string;
+      albumUrl: SpotifyEntry['albumUrl'];
       userId: User['id'] | undefined;
     }) => {
       const { albumUrl, userId } = params;

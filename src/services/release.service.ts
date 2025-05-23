@@ -1,4 +1,5 @@
 import { apiUrl } from '@/config';
+import { SpotifyEntry } from '@/interfaces/spotify.interface';
 import {
   Platform,
   ReleaseResponse,
@@ -9,7 +10,7 @@ import { User } from '@/interfaces/user.interface';
 // Service pour la création d'un lien. Retourne le slug qui servira pour la redirection.
 // ===========================================================================================
 export async function createLink(
-  albumUrl: string,
+  albumUrl: SpotifyEntry['albumUrl'],
   userId: User['id'] | undefined,
 ): Promise<{ releaseSlug: ReleaseResponse['releaseSlug'] }> {
   try {
@@ -54,9 +55,9 @@ export async function deleteLinkByReleaseId(
 // Service mettre à jour un lien, retourne un message de succès
 // ===========================================================================================
 export async function updateLink(
-  newUrls: { [key: Release['id']]: string },
-  platformsVisibility: { [key: number]: boolean },
-  releaseId: number,
+  newUrls: { [key: Platform['id']]: string },
+  platformsVisibility: { [key: Platform['id']]: Platform['visibility'] },
+  releaseId: Release['id'],
 ): Promise<{ message: string }> {
   try {
     const response = await fetch(`${apiUrl}/releasesRoute/${releaseId}`, {

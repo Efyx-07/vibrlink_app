@@ -6,13 +6,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import useUserStore from '@/stores/userStore';
 import { useLoginUser } from '@/hooks/useLoginUser';
+import { User } from '@/interfaces/user.interface';
 
 export default function LoginForm() {
   const router = useRouter();
   const { setUserData, setToken } = useUserStore();
 
   // State pour le formulaire de connexion
-  const [email, setEmail] = useState<string>('');
+  const [email, setEmail] = useState<User['email']>('');
   const [password, setPassword] = useState<string>('');
 
   // Utilisation du hook de connexion utilisateur

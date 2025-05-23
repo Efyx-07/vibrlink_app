@@ -7,6 +7,7 @@ import { validateSpotifyUrl } from '@/utils/validateSpotifyUrl';
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
 import { Release } from '@/interfaces/release.interface';
+import { SpotifyEntry } from '@/interfaces/spotify.interface';
 import { useRouter } from 'next/navigation';
 import { useCreateLink } from '@/hooks/useCreateLink';
 
@@ -15,7 +16,7 @@ export default function NewLinkForm() {
   const router = useRouter();
 
   // State pour l'URL de l'album
-  const [albumUrl, setAlbumUrl] = useState<string>('');
+  const [albumUrl, setAlbumUrl] = useState<SpotifyEntry['albumUrl']>('');
 
   // Utilisation du hook de création des liens
   const { mutate, isPending } = useCreateLink();
