@@ -6,7 +6,7 @@ import {
 } from '@/interfaces/release.interface';
 import { User } from '@/interfaces/user.interface';
 
-// Service pour la création d'un lien. Retourne le slug qui servira pour la redirection
+// Service pour la création d'un lien. Retourne le slug qui servira pour la redirection.
 // ===========================================================================================
 export async function createLink(
   albumUrl: string,

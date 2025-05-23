@@ -34,7 +34,7 @@ export async function registerUser(
   }
 }
 
-// Service pour la connexion d'un utilisateur
+// Service pour la connexion d'un utilisateur, retourne un objet (message de succès, user et token)
 // ===========================================================================================
 export async function loginUser(
   email: User['email'],

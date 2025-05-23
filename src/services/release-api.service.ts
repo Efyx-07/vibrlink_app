@@ -39,7 +39,7 @@ export async function fetchReleasesData(userId: number): Promise<Release[]> {
   }
 }
 
-// Service pour fetcher une release par son slug. Retourne un Release
+// Service pour fetcher une release par son slug. Retourne un Release.
 // ===========================================================================================
 export async function fetchReleaseDataBySlug(
   releaseSlug: string,
