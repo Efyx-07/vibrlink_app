@@ -67,7 +67,7 @@ export default function LoginForm() {
         onEyeClick={() => togglePasswordVisibility('password')}
         isPasswordVisible={isPasswordVisible('password')}
       />
-      <Button type="submit" label="Log in" isLoading={isPending} />
+      <Button type="submit" label="Log in" isLoading={isPending} disabled />
     </form>
   );
 }

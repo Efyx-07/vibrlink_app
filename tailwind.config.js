@@ -9,6 +9,7 @@ export const theme = {
       whiteColor: 'var(--whiteColor)',
       whiteLight: 'var(--whiteLight)',
       whiteLight25: 'var(--whiteLight25)',
+      whiteLight50: 'var(--whiteLight50)',
       accentColor: 'var(--accentColor)',
       accentColor05: 'var(--accentColor05)',
       accentColor25: 'var(--accentColor25)',
