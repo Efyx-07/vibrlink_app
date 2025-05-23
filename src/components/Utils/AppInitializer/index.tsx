@@ -12,7 +12,7 @@ interface Props {
 // Composant pour initialiser l'app avec les données de l'utilisateur
 // ===========================================================================================
 export default function AppInitializer({ children }: Props) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Récupère les méthodes du store
   const { setToken, logOutUser, loadUserDataFromLocalStorage } = useUserStore();
@@ -24,14 +24,14 @@ export default function AppInitializer({ children }: Props) {
         await loadUserDataFromLocalStorage();
 
         // Vérifie si le token est présent dans le localStorage et met à jour le store
-        const token = localStorage.getItem('token');
+        const token: string | null = localStorage.getItem('token');
         if (token) setToken(token);
 
         // Vérifie si le token est expiré et déconnecte l'utilisateur si c'est le cas
         if (token && isTokenExpired(token)) logOutUser();
 
         // Met en place un intervalle pour vérifier l'expiration du token toutes les heures
-        const interval = setInterval(() => {
+        const interval: NodeJS.Timeout = setInterval(() => {
           const storedToken = localStorage.getItem('token');
           if (storedToken && isTokenExpired(storedToken)) logOutUser();
         }, 3600000);

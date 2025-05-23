@@ -16,7 +16,7 @@ export function WithPageLoader({
   loadingPageMention,
 }: WithPageLoaderProps) {
   // Utilise le hook pour le chargement de la page
-  const isContentVisible = usePageLoader();
+  const isContentVisible: boolean = usePageLoader();
   return (
     <>
       {isContentVisible ? (
@@ -28,14 +28,14 @@ export function WithPageLoader({
   );
 }
 
-// Hook pour gèrer le chargement des pages avec le delay défini dans config.ts
+// Hook pour gèrer le chargement des pages
 // ===========================================================================================
 function usePageLoader() {
   const [isContentVisible, setIsContentVisible] = useState<boolean>(false);
 
   // Utilisation de useEffect pour éviter les effets de bords
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
+    const timeoutId: NodeJS.Timeout = setTimeout(() => {
       setIsContentVisible(true);
     }, 500);
     return () => clearTimeout(timeoutId);

@@ -6,6 +6,8 @@ interface PageWrapperProps {
   isJustifyStart?: boolean;
 }
 
+// Wrapper pour les pages du dashboard nécessitant un style commun inclut un loader de transition
+// ===========================================================================================
 export default function PageWrapper({
   children,
   isJustifyStart,
