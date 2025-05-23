@@ -21,16 +21,16 @@ export default function MyAccountItem() {
     useState<boolean>(false);
 
   // State pour gérer l'ouverture et la fermeture de la modale de confirmation
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
 
   // Gère l'ouverture et la fermeture de la modale de confirmation
-  const openConfirmModal = () => {
+  const openConfirmModal = (): void => {
     setIsConfirmModalOpen(true);
   };
-  const closeConfirmModal = () => setIsConfirmModalOpen(false);
+  const closeConfirmModal = (): void => setIsConfirmModalOpen(false);
 
   // Fonction de déconnexion
-  const handleLogout = () => {
+  const handleLogout = (): void => {
     logOutUser();
     router.push('/vl/home');
     closeConfirmModal();

@@ -53,7 +53,7 @@ interface NavItemProps {
 
 function NavItem({ name, navTo, onCloseMenu }: NavItemProps) {
   const pathname = usePathname();
-  const [isActive, setIsActive] = useState(pathname === navTo);
+  const [isActive, setIsActive] = useState<boolean>(pathname === navTo);
 
   useEffect(() => {
     setIsActive(pathname === navTo);

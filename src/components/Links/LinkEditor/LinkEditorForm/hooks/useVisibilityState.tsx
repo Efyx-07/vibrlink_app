@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 import { Platform } from '@/interfaces/release.interface';
 
 interface UseVisibilityStateParams {
@@ -14,11 +14,11 @@ export default function useVisibilityState({
 }: UseVisibilityStateParams) {
   // État pour la visibilité des plateformes
   const [platformsVisibility, setPlatformsVisibility] = useState<{
-    [key: number]: boolean;
+    [key: Platform['id']]: Platform['visibility'];
   }>({});
 
   // Référence pour vérifier si le hook a été initialisé
-  const isInitialized = useRef(false);
+  const isInitialized: RefObject<boolean> = useRef(false);
 
   // Effet pour initialiser la visibilité des plateformes
   useEffect(() => {
@@ -29,7 +29,10 @@ export default function useVisibilityState({
   }, [platforms]);
 
   // Fonction pour gérer le changement de visibilité
-  const handleVisibilityChange = (platformId: number, checked: boolean) => {
+  const handleVisibilityChange = (
+    platformId: number,
+    checked: boolean,
+  ): void => {
     setPlatformsVisibility((prevVisibilityStatus) => ({
       ...prevVisibilityStatus,
       [platformId]: checked,
@@ -47,9 +50,9 @@ export default function useVisibilityState({
 // Crée un objet de visibilité initial pour les plateformes
 // ===========================================================================================
 function createInitialVisibility(platforms: Platform[]): {
-  [key: number]: boolean;
+  [key: Platform['id']]: Platform['visibility'];
 } {
-  const visibility: { [key: number]: boolean } = {};
+  const visibility: { [key: Platform['id']]: Platform['visibility'] } = {};
   platforms.forEach((platform) => {
     visibility[platform.id] = platform.visibility;
   });

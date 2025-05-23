@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 interface PlatformSelectorProps {
   platformsWithoutUrl: Platform[];
   onChange: ChangeEventHandler<HTMLSelectElement>;
-  selectedPlatformId: number | null;
+  selectedPlatformId: Platform['id'] | null;
 }
 
 export default function PlatformSelector({
@@ -13,7 +13,7 @@ export default function PlatformSelector({
   onChange,
   selectedPlatformId,
 }: PlatformSelectorProps) {
-  const defaultOptionValue = '';
+  const defaultOptionValue: string = '';
   return (
     <div className="group relative h-14 w-full">
       <select

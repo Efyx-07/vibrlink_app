@@ -22,7 +22,9 @@ export default function NewLinkForm() {
   const { mutate, isPending } = useCreateLink();
 
   // Fonction de soumission du formulaire
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     e.preventDefault();
 
     // Vérifie si l'URL est valide

@@ -11,8 +11,8 @@ interface PlatformFieldProps {
   platformsWithUrl?: Platform[];
   platform: Platform;
   onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
-  platformsVisibility: { [key: number]: boolean };
-  onVisibilityChange: (platformId: number, checked: boolean) => void;
+  platformsVisibility: { [key: Platform['id']]: Platform['visibility'] };
+  onVisibilityChange: (platformId: Platform['id'], checked: boolean) => void;
 }
 
 // Composant global pour un champ du LinkEditorForm
@@ -93,8 +93,8 @@ function PlatformFieldInput({
 interface ActionButtonsProps {
   platform: Platform;
   platformsWithUrl?: Platform[];
-  platformsVisibility: { [key: number]: boolean };
-  onVisibilityChange: (platformId: number, checked: boolean) => void;
+  platformsVisibility: { [key: Platform['id']]: Platform['visibility'] };
+  onVisibilityChange: (platformId: Platform['id'], checked: boolean) => void;
   onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
 function ActionButtons({

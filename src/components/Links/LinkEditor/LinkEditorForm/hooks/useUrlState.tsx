@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, RefObject } from 'react';
 import { Platform } from '@/interfaces/release.interface';
 
 interface UseUrlStateParams {
@@ -23,7 +23,7 @@ export default function useUrlState({
   );
 
   // État pour les nouvelles URL
-  const [newUrls, setNewUrls] = useState<{ [key: number]: string }>({});
+  const [newUrls, setNewUrls] = useState<{ [key: Platform['id']]: string }>({});
 
   // État pour la plateforme sélectionnée
   const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
@@ -31,10 +31,12 @@ export default function useUrlState({
   );
 
   // État pour les IDs des plateformes à ajouter
-  const [platformIdsToAdd, setPlatformIdsToAdd] = useState<number[]>([]);
+  const [platformIdsToAdd, setPlatformIdsToAdd] = useState<Platform['id'][]>(
+    [],
+  );
 
   // Référence pour vérifier si le hook a été initialisé
-  const isInitialized = useRef(false);
+  const isInitialized: RefObject<boolean> = useRef(false);
 
   // Effet pour initialiser les URL des plateformes
   useEffect(() => {
@@ -54,12 +56,12 @@ export default function useUrlState({
   }, [platformIdsToAdd]);
 
   // Fonction pour gérer le changement d'URL
-  const handleUrlChange = (platformId: number, url: string): void => {
+  const handleUrlChange = (platformId: Platform['id'], url: string): void => {
     setNewUrls((prevUrls) => ({ ...prevUrls, [platformId]: url }));
   };
 
   // Fonction pour ajouter une plateforme avec URL
-  const addToPlatformsWithUrl = () => {
+  const addToPlatformsWithUrl = (): void => {
     if (selectedPlatform && newUrls[selectedPlatform.id]) {
       const platformToAdd = {
         ...selectedPlatform,
@@ -73,8 +75,10 @@ export default function useUrlState({
   };
 
   // Fonction pour gérer le changement de plateforme
-  const handlePlatformChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const id = parseInt(e.target.value);
+  const handlePlatformChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ): void => {
+    const id: Platform['id'] = parseInt(e.target.value);
     const platform = platforms.find((p) => p.id === id) ?? null;
     setSelectedPlatform(platform);
   };
@@ -93,8 +97,10 @@ export default function useUrlState({
 
 // Crée un objet d'URL initial à partir des plateformes
 // ===========================================================================================
-function createInitialUrls(platforms: Platform[]): { [key: number]: string } {
-  const urls: { [key: number]: string } = {};
+function createInitialUrls(platforms: Platform[]): {
+  [key: Platform['id']]: string;
+} {
+  const urls: { [key: Platform['id']]: string } = {};
   platforms.forEach((platform) => {
     if (platform.url) urls[platform.id] = platform.url;
   });
@@ -105,7 +111,7 @@ function createInitialUrls(platforms: Platform[]): { [key: number]: string } {
 // ===========================================================================================
 function filterPlatformsWithoutUrl(
   platformsWithoutUrl: Platform[],
-  platformIdsToAdd: number[],
+  platformIdsToAdd: Platform['id'][],
 ): Platform[] {
   return platformsWithoutUrl.filter(
     (platform) => !platformIdsToAdd.includes(platform.id),

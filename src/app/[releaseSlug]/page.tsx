@@ -6,15 +6,16 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import ReleaseLanding from '@/components/ReleaseLanding';
+import { Release } from '@/interfaces/release.interface';
 
 interface Props {
-  params: { releaseSlug: string };
+  params: { releaseSlug: Release['slug'] };
 }
 
 // Génère les métadonnées pour la page
 // ===========================================================================================
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const release = await fetchReleaseDataBySlug(params.releaseSlug);
+  const release: Release = await fetchReleaseDataBySlug(params.releaseSlug);
   if (!release) return { title: 'Not Found' };
 
   return {
@@ -38,7 +39,7 @@ export default async function ReleaseLandingPage({ params }: Props) {
   const queryClient = new QueryClient();
 
   // Précharge les données de la release côté serveur et les met en cache dans le client
-  const release = await fetchReleaseDataBySlug(params.releaseSlug);
+  const release: Release = await fetchReleaseDataBySlug(params.releaseSlug);
 
   // Utilise le client de requête pour précharger les données
   await queryClient.prefetchQuery({

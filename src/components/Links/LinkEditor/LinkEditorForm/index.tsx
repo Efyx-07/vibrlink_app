@@ -34,11 +34,14 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
   });
 
   // Nouveau flag pour gérer la mise à jour automatique après un changement
-  const [shouldUpdate, setShouldUpdate] = useState(false);
+  const [shouldUpdate, setShouldUpdate] = useState<boolean>(false);
 
   // Memo pour éviter recalcul à chaque render pour la visiibilité des plateformes
   // Transforme l'objet platformsVisibility en tableau d'objets
-  const platformsVisibilityArray = useMemo(
+  const platformsVisibilityArray: {
+    id: Platform['id'];
+    visibility: Platform['visibility'];
+  }[] = useMemo(
     () =>
       Object.entries(platformsVisibility).map(([id, visibility]) => ({
         id: Number(id),
@@ -51,7 +54,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
   const { mutate, isPending } = useUpdateReleaseLinks();
 
   // Fonction pour soumettre la mutation avec son payload
-  const submitMutation = () => {
+  const submitMutation = (): void => {
     mutate({
       releaseId: release.id,
       newUrls,
@@ -60,7 +63,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
   };
 
   // Soumission du formulaire
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
     submitMutation();
   };
