@@ -52,13 +52,17 @@ export async function loginUser(
       }),
     });
 
-    if (response.ok) {
-      const data: LoginResponse = await response.json();
-      return data;
-    } else {
-      throw new Error('Error while connecting: ' + response.statusText);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      const message =
+        errorData?.message || response.statusText || 'Unknown error';
+      throw new Error(message);
     }
+    const data: LoginResponse = await response.json();
+    return data;
   } catch (error) {
-    throw new Error('Error while connecting: ' + error);
+    throw error instanceof Error
+      ? error
+      : new Error('Unknown error during login');
   }
 }

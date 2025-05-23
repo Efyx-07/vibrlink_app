@@ -14,6 +14,5 @@ export function useLoginUser() {
       const { email, password } = params;
       return loginUser(email, password);
     },
-    onError: (error) => console.error('Login failed:', error),
   });
 }

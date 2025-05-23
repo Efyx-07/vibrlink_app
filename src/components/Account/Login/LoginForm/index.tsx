@@ -17,6 +17,9 @@ export default function LoginForm() {
   const [email, setEmail] = useState<User['email']>('');
   const [password, setPassword] = useState<string>('');
 
+  // State pour le message d'erreur
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
   // Utilise le hook pour gérer la visibilité du password
   const { isPasswordVisible, togglePasswordVisibility } =
     usePasswordVisibility();
@@ -31,6 +34,7 @@ export default function LoginForm() {
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(''); // Reset du message d'erreur
 
     // Appelle la mutation pour la connexion
     mutate(
@@ -42,7 +46,10 @@ export default function LoginForm() {
           setToken(data.token);
           router.push('/vl/links/my-links');
         },
-        onError: (error) => console.error('Error while connecting:', error),
+        onError: () => {
+          const message = 'Invalid email or password';
+          setErrorMessage(message);
+        },
       },
     );
   };
@@ -56,7 +63,10 @@ export default function LoginForm() {
         name="email"
         type="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          setEmail(e.target.value);
+          if (errorMessage) setErrorMessage('');
+        }}
         required
       />
       <FormField
@@ -65,7 +75,10 @@ export default function LoginForm() {
         name="password"
         type={isPasswordVisible('password') ? 'text' : 'password'}
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          setPassword(e.target.value);
+          if (errorMessage) setErrorMessage('');
+        }}
         isPasswordField={true}
         onEyeClick={() => togglePasswordVisibility('password')}
         isPasswordVisible={isPasswordVisible('password')}
@@ -77,6 +90,9 @@ export default function LoginForm() {
         isLoading={isPending}
         disabled={isButtonDisabled}
       />
+      {errorMessage && (
+        <p className="-mb-2 -mt-4 text-sm text-errorColor">{errorMessage}</p>
+      )}
     </form>
   );
 }
