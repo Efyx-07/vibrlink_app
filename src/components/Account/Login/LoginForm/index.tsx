@@ -21,6 +21,10 @@ export default function LoginForm() {
   const { isPasswordVisible, togglePasswordVisibility } =
     usePasswordVisibility();
 
+  // Vérifie que les champs sont remplis, non constitués d'espaces
+  const isButtonDisabled: boolean =
+    email.trim() === '' || password.trim() === '';
+
   // Utilisation du hook de connexion utilisateur
   const { mutate, isPending } = useLoginUser();
 
@@ -38,9 +42,7 @@ export default function LoginForm() {
           setToken(data.token);
           router.push('/vl/links/my-links');
         },
-        onError: (error) => {
-          console.error('Error while connecting:', error);
-        },
+        onError: (error) => console.error('Error while connecting:', error),
       },
     );
   };
@@ -55,6 +57,7 @@ export default function LoginForm() {
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
       />
       <FormField
         id="password"
@@ -66,8 +69,14 @@ export default function LoginForm() {
         isPasswordField={true}
         onEyeClick={() => togglePasswordVisibility('password')}
         isPasswordVisible={isPasswordVisible('password')}
+        required
       />
-      <Button type="submit" label="Log in" isLoading={isPending} disabled />
+      <Button
+        type="submit"
+        label="Log in"
+        isLoading={isPending}
+        disabled={isButtonDisabled}
+      />
     </form>
   );
 }

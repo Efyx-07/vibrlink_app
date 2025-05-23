@@ -13,6 +13,7 @@ interface FormFieldProps {
   isPasswordField?: boolean;
   isPasswordVisible?: boolean;
   onEyeClick?: () => void;
+  required?: boolean;
 }
 
 export default function FormField({
@@ -27,6 +28,7 @@ export default function FormField({
   isPasswordField,
   isPasswordVisible,
   onEyeClick,
+  required,
 }: FormFieldProps) {
   return (
     <div className="flex w-full flex-col gap-2">
@@ -40,6 +42,7 @@ export default function FormField({
           type={type}
           value={value}
           onChange={onChange}
+          required={required}
         />
         {isPasswordField && (
           <>

@@ -19,10 +19,16 @@ export default function Button({
   addMention,
   disabled,
 }: ButtonProps) {
+  const baseClasses = isLinkCard ? 'size-full min-h-10' : 'h-16 w-full';
+  const enabledClasses =
+    'cursor-pointer border border-accentColor5 bg-accentColor05 text-accentColor hover:bg-accentColor25';
+  const disabledClasses =
+    'cursor-not-allowed border-accentColor05 bg-accentColor05 text-whiteLight50';
+
   return (
     <button
       type={type}
-      className={`cursor-pointer border border-accentColor5 bg-accentColor05 text-accentColor hover:bg-accentColor25 ${isLinkCard ? 'size-full min-h-10' : 'h-16 w-full'} ${disabled ? 'cursor-not-allowed border-accentColor05 bg-accentColor05 text-whiteLight50 hover:bg-accentColor05' : ''} `}
+      className={`${disabled ? disabledClasses : enabledClasses} ${baseClasses}`}
       onClick={onButtonClick}
       disabled={disabled}
     >
