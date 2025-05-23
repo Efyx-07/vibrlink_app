@@ -17,6 +17,10 @@ export default function LoginForm() {
   const [email, setEmail] = useState<User['email']>('');
   const [password, setPassword] = useState<string>('');
 
+  // State pour l'opération de redirection
+  // Permet au bouton de rester en mode loading jusqu'à la fin du processus Succès
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+
   // State pour le message d'erreur
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -40,6 +44,7 @@ export default function LoginForm() {
           setUserData(data.user);
           localStorage.setItem('token', data.token);
           setToken(data.token);
+          setIsRedirecting(true);
           router.push('/vl/links/my-links');
         },
         onError: () => {
@@ -78,7 +83,12 @@ export default function LoginForm() {
         onEyeClick={() => togglePasswordVisibility('password')}
         isPasswordVisible={isPasswordVisible('password')}
       />
-      <Button type="submit" label="Log in" isLoading={isPending} />
+      <Button
+        type="submit"
+        label="Log in"
+        isLoading={isPending || isRedirecting}
+        disabled={isPending || isRedirecting}
+      />
       {errorMessage && (
         <p className="-mb-2 -mt-4 text-sm text-errorColor">{errorMessage}</p>
       )}
