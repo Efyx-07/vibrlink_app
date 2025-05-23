@@ -12,6 +12,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { User } from '@/interfaces/user.interface';
+import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
 
 // Composant pour l'inscription d'un utilisateur
 // ===========================================================================================
@@ -26,6 +27,10 @@ export default function SignupForm() {
   const [isPasswordValid, setPasswordValid] = useState<boolean>(false);
   const [isConfirmPasswordValid, setConfirmPasswordValid] =
     useState<boolean>(false);
+
+  // Utilise le hook pour gérer la visibilité des passwords
+  const { isPasswordVisible, togglePasswordVisibility } =
+    usePasswordVisibility();
 
   // Vérification de la validité des champs
   useEffect(() => {
@@ -76,20 +81,26 @@ export default function SignupForm() {
         label="Create a password"
         addedMention="8 characters, 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character"
         name="password"
-        type="password"
+        type={isPasswordVisible('password') ? 'text' : 'password'}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         isValid={isPasswordValid}
+        isPasswordField={true}
+        onEyeClick={() => togglePasswordVisibility('password')}
+        isPasswordVisible={isPasswordVisible('password')}
       />
       <FormField
         id="password-confirm"
         label="Confirm your password"
         addedMention="must be identical to your password"
         name="password-confirm"
-        type="password"
+        type={isPasswordVisible('confirmPassword') ? 'text' : 'password'}
         value={confirmPassword}
         onChange={(e) => setConfirmPassword(e.target.value)}
         isValid={isConfirmPasswordValid}
+        isPasswordField={true}
+        onEyeClick={() => togglePasswordVisibility('confirmPassword')}
+        isPasswordVisible={isPasswordVisible('confirmPassword')}
       />
       <Button type="submit" label="Sign up" isLoading={isPending} />
     </form>

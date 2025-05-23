@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import useUserStore from '@/stores/userStore';
 import { useLoginUser } from '@/hooks/useLoginUser';
 import { User } from '@/interfaces/user.interface';
+import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -15,6 +16,10 @@ export default function LoginForm() {
   // State pour le formulaire de connexion
   const [email, setEmail] = useState<User['email']>('');
   const [password, setPassword] = useState<string>('');
+
+  // Utilise le hook pour gérer la visibilité du password
+  const { isPasswordVisible, togglePasswordVisibility } =
+    usePasswordVisibility();
 
   // Utilisation du hook de connexion utilisateur
   const { mutate, isPending } = useLoginUser();
@@ -55,9 +60,12 @@ export default function LoginForm() {
         id="password"
         label="Enter your password"
         name="password"
-        type="password"
+        type={isPasswordVisible('password') ? 'text' : 'password'}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        isPasswordField={true}
+        onEyeClick={() => togglePasswordVisibility('password')}
+        isPasswordVisible={isPasswordVisible('password')}
       />
       <Button type="submit" label="Log in" isLoading={isPending} />
     </form>
