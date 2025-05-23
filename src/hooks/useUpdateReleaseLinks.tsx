@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateLink } from '@/services/release.service';
+import { Release, Platform } from '@/interfaces/release.interface';
 
 // Hook pour gérer la mise à jour des liens des plateformes d'une release avec React Query
 // ===========================================================================================
@@ -9,9 +10,12 @@ export function useUpdateReleaseLinks() {
   return useMutation({
     mutationKey: ['updateLink'],
     mutationFn: async (params: {
-      releaseId: number;
-      newUrls: { [key: number]: string };
-      platformsState: { id: number; visibility: boolean }[];
+      releaseId: Release['id'];
+      newUrls: { [key: Platform['id']]: string };
+      platformsState: {
+        id: Platform['id'];
+        visibility: Platform['visibility'];
+      }[];
     }) => {
       const { releaseId, newUrls, platformsState } = params;
       const platformsVisibility = platformsState.reduce(
@@ -19,7 +23,7 @@ export function useUpdateReleaseLinks() {
           acc[platform.id] = platform.visibility;
           return acc;
         },
-        {} as { [key: number]: boolean },
+        {} as { [key: Platform['id']]: Platform['visibility'] },
       );
       return updateLink(newUrls, platformsVisibility, releaseId);
     },
