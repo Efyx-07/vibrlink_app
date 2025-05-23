@@ -63,7 +63,6 @@ export default function LoginForm() {
           setEmail(e.target.value);
           if (errorMessage) setErrorMessage('');
         }}
-        required
       />
       <FormField
         id="password"
@@ -78,7 +77,6 @@ export default function LoginForm() {
         isPasswordField={true}
         onEyeClick={() => togglePasswordVisibility('password')}
         isPasswordVisible={isPasswordVisible('password')}
-        required
       />
       <Button type="submit" label="Log in" isLoading={isPending} />
       {errorMessage && (
