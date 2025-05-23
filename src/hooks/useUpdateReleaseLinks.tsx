@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateLink } from '@/services/release.service';
 
+// Hook pour gérer la mise à jour des liens des plateformes d'une release avec React Query
+// ===========================================================================================
 export function useUpdateReleaseLinks() {
   const queryClient = useQueryClient();
 

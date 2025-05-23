@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createLink } from '@/services/release.service';
 import { User } from '@/interfaces/user.interface';
 
+// Hook pour gérer la création d'un lien avec React Query
+// ===========================================================================================
 export function useCreateLink() {
   const queryClient = useQueryClient();
 

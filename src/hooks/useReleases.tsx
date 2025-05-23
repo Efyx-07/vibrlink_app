@@ -4,8 +4,11 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchReleasesData } from '@/services/release-api.service';
 import { useEffect } from 'react';
 
+// Hook pour gérer le fetch des releases d'un utilisateur(userId) avec React Query
+// ===========================================================================================
 export function useReleases(userId: User['id'] | undefined) {
   const queryClient = useQueryClient();
+
   // Re-fetch si userId devient dispo après le premier rendu
   useEffect(() => {
     if (typeof userId === 'number') {

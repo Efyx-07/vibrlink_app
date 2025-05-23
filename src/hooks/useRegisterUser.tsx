@@ -2,6 +2,8 @@ import { User } from '@/interfaces/user.interface';
 import { registerUser } from '@/services/auth.service';
 import { useMutation } from '@tanstack/react-query';
 
+// Hook pour gérer l'inscription utilisateur avec React Query
+// ===========================================================================================
 export function useRegisterUser() {
   return useMutation({
     mutationKey: ['registerUser'],
