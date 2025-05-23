@@ -8,6 +8,7 @@ import useUserStore from '@/stores/userStore';
 import { useLoginUser } from '@/hooks/useLoginUser';
 import { User } from '@/interfaces/user.interface';
 import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
+import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -89,9 +90,7 @@ export default function LoginForm() {
         isLoading={isPending || isRedirecting}
         disabled={isPending || isRedirecting}
       />
-      {errorMessage && (
-        <p className="-mb-2 -mt-4 text-sm text-errorColor">{errorMessage}</p>
-      )}
+      {errorMessage && <ErrorMessage text={errorMessage} />}
     </form>
   );
 }
