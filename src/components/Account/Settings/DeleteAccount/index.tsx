@@ -7,6 +7,7 @@ import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/Shared/Button';
+import SectionTitle from '@/components/Shared/SectionTitle';
 
 export default function DeleteAccount() {
   const router = useRouter();
@@ -36,28 +37,31 @@ export default function DeleteAccount() {
   // ===========================================================================================
 
   return (
-    <>
+    <div className="flex flex-col gap-8">
+      <SectionTitle title="Delete Account" textColor="text-errorColor" />
+      <p className="text-sm">
+        This operation is not reversible. It will remove your account and all
+        your associated datas. Please be certain.
+      </p>
       <div className="flex justify-end">
-        <div className="w-56">
-          <Button
-            type="button"
-            label="Delete my account"
-            onButtonClick={openConfirmModal}
-            isDangerous
-            isSmall
-          />
-        </div>
+        <Button
+          type="button"
+          label="Delete my account"
+          onButtonClick={openConfirmModal}
+          isDangerous
+          isSmall
+        />
       </div>
       {isOpen && (
         <ConfirmModal
           topline={`Are you sure you want to delete your account?`}
-          message="This will definitely remove this release."
+          message="This will definitely remove your account and all your datas."
           onConfirm={deleteAccount}
           onCancel={closeConfirmModal}
           icon="mdi:skull-crossbones"
           isLoading={isPending}
         />
       )}
-    </>
+    </div>
   );
 }

@@ -3,10 +3,10 @@ import Button from '@/components/Shared/Button';
 import PlatformSelector from './PlatformSelector';
 import PlatformField from './PlatformField';
 import { useUpdateReleaseLinks } from '@/hooks/useUpdateReleaseLinks';
-import HorizontalSeparator from '@/components/Shared/Separator/HorizontalSeparator';
 import useUrlState from './hooks/useUrlState';
 import useVisibilityState from './hooks/useVisibilityState';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import SectionTitle from '@/components/Shared/SectionTitle';
 
 interface LinkEditorFormProps {
   release: Release;
@@ -131,10 +131,7 @@ interface LinkEditorSectionProps {
 function LinkEditorSection({ title, children }: LinkEditorSectionProps) {
   return (
     <div className="flex w-full flex-col gap-8">
-      <div className="flex w-full items-baseline gap-4">
-        <h1 className="whitespace-nowrap">{title}</h1>
-        <HorizontalSeparator />
-      </div>
+      <SectionTitle title={title} />
       <div className="flex w-full flex-col gap-8 md:gap-6">{children}</div>
     </div>
   );

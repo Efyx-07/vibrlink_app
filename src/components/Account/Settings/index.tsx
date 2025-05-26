@@ -7,9 +7,10 @@ export default function Settings() {
   return (
     <div className="flex w-full items-center justify-center">
       <FormContainer>
-        <UpdatePasswordForm />
-        <HorizontalSeparator />
-        <DeleteAccount />
+        <div className="flex w-full flex-col gap-16">
+          <UpdatePasswordForm />
+          <DeleteAccount />
+        </div>
       </FormContainer>
     </div>
   );
