@@ -30,7 +30,7 @@ export default function Button({
   return (
     <button
       type={type}
-      className={`${isSmall ? 'size-full min-h-10' : 'h-16 w-full'} cursor-pointer border ${isDangerous ? dangerousColors : regularColors}`}
+      className={`${isSmall ? 'size-full min-h-10 md:w-60' : 'h-16 w-full'} cursor-pointer border ${isDangerous ? dangerousColors : regularColors}`}
       onClick={onButtonClick}
       disabled={disabled}
     >

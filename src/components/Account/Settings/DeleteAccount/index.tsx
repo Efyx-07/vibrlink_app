@@ -6,6 +6,7 @@ import { useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
 import { useRouter } from 'next/navigation';
+import Button from '@/components/Shared/Button';
 
 export default function DeleteAccount() {
   const router = useRouter();
@@ -37,12 +38,15 @@ export default function DeleteAccount() {
   return (
     <>
       <div className="flex justify-end">
-        <p
-          className="cursor-pointer hover:text-accentColor"
-          onClick={openConfirmModal}
-        >
-          Delete my account
-        </p>
+        <div className="w-56">
+          <Button
+            type="button"
+            label="Delete my account"
+            onButtonClick={openConfirmModal}
+            isDangerous
+            isSmall
+          />
+        </div>
       </div>
       {isOpen && (
         <ConfirmModal
