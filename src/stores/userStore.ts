@@ -8,7 +8,7 @@ interface State {
   setToken: (newToken: string | null) => void;
   saveUserDataInLocalStorage: () => void;
   setUserData: (user: User) => void;
-  logOutUser: () => void;
+  logoutUser: () => void;
   loadUserDataFromLocalStorage: () => Promise<void>;
 }
 
@@ -41,7 +41,7 @@ const useUserStore = create<State>((set, get) => ({
 
   // Déconnecte l'utilisateur : supprime token et données utilisateur du localStorage et du store
   // ===========================================================================================
-  logOutUser: () => {
+  logoutUser: () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     set({ user: null, token: null, isLoggedIn: false });

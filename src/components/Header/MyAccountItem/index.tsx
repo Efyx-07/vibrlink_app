@@ -14,7 +14,7 @@ export default function MyAccountItem() {
 
   // Récupère l'utilisateur connecté
   const user = useUserStore((state) => state.user);
-  const { logOutUser } = useUserStore();
+  const { logoutUser } = useUserStore();
 
   // Etat de visibilité du menu utilisateur
   const [isHoverUserMenuVisible, setIsHoverUserMenuVisible] =
@@ -31,7 +31,7 @@ export default function MyAccountItem() {
 
   // Fonction de déconnexion
   const handleLogout = (): void => {
-    logOutUser();
+    logoutUser();
     router.push('/vl/home');
     closeConfirmModal();
   };
@@ -69,7 +69,6 @@ export default function MyAccountItem() {
 
 // Composant local pour le menu utilisateur
 // ===========================================================================================
-
 interface HoverUserMenuProps {
   user: User | null;
   onAccountSettingsClick: () => void;

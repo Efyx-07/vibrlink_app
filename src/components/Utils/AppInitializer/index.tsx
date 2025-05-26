@@ -15,7 +15,7 @@ export default function AppInitializer({ children }: Props) {
   const [loading, setLoading] = useState<boolean>(true);
 
   // Récupère les méthodes du store
-  const { setToken, logOutUser, loadUserDataFromLocalStorage } = useUserStore();
+  const { setToken, logoutUser, loadUserDataFromLocalStorage } = useUserStore();
 
   useEffect(() => {
     const appInit = async () => {
@@ -28,12 +28,12 @@ export default function AppInitializer({ children }: Props) {
         if (token) setToken(token);
 
         // Vérifie si le token est expiré et déconnecte l'utilisateur si c'est le cas
-        if (token && isTokenExpired(token)) logOutUser();
+        if (token && isTokenExpired(token)) logoutUser();
 
         // Met en place un intervalle pour vérifier l'expiration du token toutes les heures
         const interval: NodeJS.Timeout = setInterval(() => {
           const storedToken = localStorage.getItem('token');
-          if (storedToken && isTokenExpired(storedToken)) logOutUser();
+          if (storedToken && isTokenExpired(storedToken)) logoutUser();
         }, 3600000);
 
         return () => clearInterval(interval);
@@ -45,7 +45,7 @@ export default function AppInitializer({ children }: Props) {
     };
 
     appInit();
-  }, [setToken, logOutUser, loadUserDataFromLocalStorage]);
+  }, [setToken, logoutUser, loadUserDataFromLocalStorage]);
 
   if (loading) return <LoadingPage />;
 

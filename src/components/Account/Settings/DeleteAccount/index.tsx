@@ -18,17 +18,18 @@ export default function DeleteAccount() {
   const openConfirmModal = () => setIsOpen(true);
   const closeConfirmModal = () => setIsOpen(false);
 
+  // Utilisation du hook et la mutation pour supprimer le compte utilisateur
+  const { mutate, isPending } = useDeleteAccount();
+
   // Récupération du user et methode de déconnexion du store
-  const { user, logOutUser } = userStore;
+  const { user, logoutUser } = userStore;
   const userId = user?.id as User['id'];
   if (!userId) return;
 
-  // Utilisation du hook et la mutation pour supprimer le compte utilisateur
-  const { mutate, isPending } = useDeleteAccount();
   const deleteAccount = async (): Promise<void> => {
     mutate(userId);
     closeConfirmModal();
-    logOutUser(); // Deconnecte l'utilisateur après la suppression
+    logoutUser(); // Deconnecte l'utilisateur après la suppression
     router.push('/'); // Redirige vers la page d'accueil après la suppression
   };
   // ===========================================================================================
@@ -45,7 +46,7 @@ export default function DeleteAccount() {
       </div>
       {isOpen && (
         <ConfirmModal
-          topline={`Are you sure you want to delete your account? ?`}
+          topline={`Are you sure you want to delete your account?`}
           message="This will definitely remove this release."
           onConfirm={deleteAccount}
           onCancel={closeConfirmModal}
