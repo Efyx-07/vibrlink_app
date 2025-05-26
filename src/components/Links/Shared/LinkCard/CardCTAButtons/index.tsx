@@ -71,6 +71,7 @@ export default function CardCTAButtons({ release }: CardCTAButtonsProps) {
             key={index}
             type="button"
             isSmall={true}
+            isDangerous={button.label === 'Delete link'}
             label={button.label}
             onButtonClick={button.onClick}
           />
