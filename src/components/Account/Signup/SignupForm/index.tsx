@@ -10,7 +10,7 @@ import {
 } from '@/utils/validateDatas';
 import { FormEvent, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useRegisterUser } from '@/hooks/useRegisterUser';
+import { useSignupUser } from '@/hooks/useSignupUser';
 import { User } from '@/interfaces/user.interface';
 import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
@@ -48,7 +48,7 @@ export default function SignupForm() {
   }, [email, password, confirmPassword]);
 
   // Utilisation du hook d'inscription utilisateur
-  const { mutate, isPending } = useRegisterUser();
+  const { mutate, isPending } = useSignupUser();
 
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {

@@ -16,3 +16,8 @@ export interface SignupResponse {
 export interface LoginResponse extends SignupResponse {
   success: boolean;
 }
+
+export interface UpdatePasswordResponse {
+  message?: string;
+  error?: string;
+}

@@ -4,9 +4,9 @@ import { useMutation } from '@tanstack/react-query';
 
 // Hook pour gérer l'inscription utilisateur avec React Query
 // ===========================================================================================
-export function useRegisterUser() {
+export function useSignupUser() {
   return useMutation({
-    mutationKey: ['registerUser'],
+    mutationKey: ['signupUser'],
     mutationFn: async (params: {
       email: User['email'];
       password: User['password'];
