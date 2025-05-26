@@ -22,7 +22,7 @@ export default function PlatformSelector({
         id="platform-select"
         value={selectedPlatformId ?? defaultOptionValue}
       >
-        <option disabled value={defaultOptionValue} className="default-option">
+        <option disabled value={defaultOptionValue}>
           Add a platform
         </option>
         {platformsWithoutUrl.map((platform) => (

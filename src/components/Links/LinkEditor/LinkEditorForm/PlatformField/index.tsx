@@ -47,7 +47,7 @@ export default function PlatformField({
           onChange={onChange}
           platform={platform}
         />
-        <div className="hidden h-full border-b border-t border-b-whiteLight border-t-whiteLight bg-darkColorRelief py-3 md:block">
+        <div className="hidden h-full border-y border-y-whiteLight bg-darkColorRelief py-3 md:block">
           <VerticalSeparator />
         </div>
         <div className="hidden size-full max-w-48 border border-l-0 border-whiteLight bg-darkColorRelief md:block">
@@ -79,7 +79,7 @@ function PlatformFieldInput({
 }: PlatformFieldInputProps) {
   return (
     <input
-      className="size-full border border-whiteLight bg-darkColorRelief pl-4 text-sm placeholder-whiteLight25 outline-none focus:border-accentColor md:border-r-transparent"
+      className="size-full border border-whiteLight bg-darkColorRelief pl-4 text-sm outline-none placeholder:text-whiteLight25 focus:border-accentColor md:border-r-transparent"
       type="url"
       value={value}
       onChange={(e) => onChange(platform.id, e.target.value)}

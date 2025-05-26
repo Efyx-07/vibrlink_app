@@ -8,7 +8,7 @@ interface ReleaseLinksProps {
 
 export default function ReleaseLinks({ release }: ReleaseLinksProps) {
   return (
-    <div className="flex h-full w-full flex-col bg-whiteLight xl:gap-4 xl:bg-transparent">
+    <div className="flex size-full flex-col bg-whiteLight xl:gap-4 xl:bg-transparent">
       {release.platforms.map((platform) =>
         platform.url && platform.visibility ? (
           <div

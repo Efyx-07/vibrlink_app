@@ -7,15 +7,19 @@ import {
 } from '@tanstack/react-query';
 import ReleaseLanding from '@/components/ReleaseLanding';
 import { Release } from '@/interfaces/release.interface';
+import { notFound } from 'next/navigation';
 
-interface Props {
-  params: { releaseSlug: Release['slug'] };
-}
+type Params = Promise<{ releaseSlug: string }>;
 
 // Génère les métadonnées pour la page
 // ===========================================================================================
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const release: Release = await fetchReleaseDataBySlug(params.releaseSlug);
+export async function generateMetadata({
+  params,
+}: {
+  params: Params;
+}): Promise<Metadata> {
+  const { releaseSlug } = await params;
+  const release: Release = await fetchReleaseDataBySlug(releaseSlug);
   if (!release) return { title: 'Not Found' };
 
   return {
@@ -35,13 +39,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 // Page de destination pour une release sélectionnée
 // ===========================================================================================
-export default async function ReleaseLandingPage({ params }: Props) {
-  const queryClient = new QueryClient();
+export default async function ReleaseLandingPage({
+  params,
+}: {
+  params: Params;
+}) {
+  const { releaseSlug } = await params;
 
   // Précharge les données de la release côté serveur et les met en cache dans le client
-  const release: Release = await fetchReleaseDataBySlug(params.releaseSlug);
+  const release: Release = await fetchReleaseDataBySlug(releaseSlug);
 
   // Utilise le client de requête pour précharger les données
+  const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ['release', release.slug],
     queryFn: () => Promise.resolve(release),

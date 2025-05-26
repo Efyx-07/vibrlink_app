@@ -15,9 +15,9 @@ export default function PageWrapper({
   return (
     <WithPageLoader>
       <div
-        className={`flex h-full min-h-[calc(100dvh-10rem)] w-full flex-col items-center ${isJustifyStart ? 'justify-start' : 'justify-center'}`}
+        className={`flex size-full min-h-[calc(100dvh-10rem)] flex-col items-center ${isJustifyStart ? 'justify-start' : 'justify-center'}`}
       >
-        <div className="flex h-full w-full max-w-[75rem] flex-col items-center justify-center px-4 py-16 md:px-8 2xl:max-w-[90rem]">
+        <div className="flex size-full max-w-[75rem] flex-col items-center justify-center px-4 py-16 md:px-8 2xl:max-w-[90rem]">
           {children}
         </div>
       </div>

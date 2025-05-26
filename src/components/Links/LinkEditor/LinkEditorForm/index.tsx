@@ -6,7 +6,7 @@ import { useUpdateReleaseLinks } from '@/hooks/useUpdateReleaseLinks';
 import HorizontalSeparator from '@/components/Shared/Separator/HorizontalSeparator';
 import useUrlState from './hooks/useUrlState';
 import useVisibilityState from './hooks/useVisibilityState';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 interface LinkEditorFormProps {
   release: Release;
@@ -53,14 +53,14 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
   // Utilisation du hook de mise à jour des liens
   const { mutate, isPending } = useUpdateReleaseLinks();
 
-  // Fonction pour soumettre la mutation avec son payload
-  const submitMutation = (): void => {
+  // Fonction pour soumettre la mutation avec son payload et memorisation avec useCallback
+  const submitMutation = useCallback((): void => {
     mutate({
       releaseId: release.id,
       newUrls,
       platformsState: platformsVisibilityArray,
     });
-  };
+  }, [mutate, release.id, newUrls, platformsVisibilityArray]);
 
   // Soumission du formulaire
   const handleSubmit = async (e: React.FormEvent): Promise<void> => {
@@ -74,7 +74,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
       submitMutation();
       setShouldUpdate(false);
     }
-  }, [shouldUpdate]);
+  }, [shouldUpdate, submitMutation]);
   // ===========================================================================================
 
   return (

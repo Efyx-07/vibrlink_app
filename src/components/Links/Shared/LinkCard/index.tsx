@@ -14,7 +14,7 @@ export default function LinkCard({ release, isEditor }: LinkCardProps) {
   return (
     <div className="flex w-full flex-col gap-8 border border-whiteLight bg-darkColorRelief p-4 md:grid md:grid-cols-[4fr_1.5fr]">
       <div className="flex gap-4">
-        <div className="size-full max-w-[13rem]">
+        <div className="size-full max-w-52">
           <ReleaseCover release={release} size={208} />
         </div>
         <LinkCardInfos release={release} isEditor={isEditor} />

@@ -41,7 +41,7 @@ interface ReleaseLandingCardProps {
 function ReleaseLandingCardDesktop({ release }: ReleaseLandingCardProps) {
   return (
     <div className="relative hidden h-dvh w-full grid-cols-2 gap-16 overflow-y-scroll p-16 xl:grid">
-      <div className="fixed top-1/2 ml-40 flex w-[33%] max-w-[35rem] -translate-y-1/2 transform items-center">
+      <div className="fixed top-1/2 ml-40 flex w-[33%] max-w-[35rem] -translate-y-1/2 items-center">
         <ReleaseCover release={release} size={750} />
       </div>
       <div className="col-start-2 col-end-[-1] flex w-full max-w-[45rem] flex-col gap-8 px-0 py-16">

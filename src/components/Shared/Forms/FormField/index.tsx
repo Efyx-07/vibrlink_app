@@ -44,7 +44,7 @@ export default function FormField({
         />
         {isPasswordField && (
           <>
-            <div className="h-full border-b border-t border-b-whiteLight border-t-whiteLight bg-darkColorRelief py-3">
+            <div className="h-full border-y border-y-whiteLight bg-darkColorRelief py-3">
               <VerticalSeparator />
             </div>
             <div className="flex size-full max-w-20 items-center justify-center border border-l-0 border-whiteLight bg-darkColorRelief">
