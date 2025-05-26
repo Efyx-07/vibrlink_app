@@ -64,7 +64,7 @@ export default function CardCTAButtons({ release }: CardCTAButtonsProps) {
   // ===========================================================================================
 
   return (
-    <div>
+    <>
       <div className="flex flex-col gap-4">
         {CTAButtons.map((button, index) => (
           <Button
@@ -86,6 +86,6 @@ export default function CardCTAButtons({ release }: CardCTAButtonsProps) {
           isLoading={isPending}
         />
       )}
-    </div>
+    </>
   );
 }
