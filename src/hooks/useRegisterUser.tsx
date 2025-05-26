@@ -1,5 +1,5 @@
 import { User } from '@/interfaces/user.interface';
-import { registerUser } from '@/services/auth.service';
+import { signupUser } from '@/services/auth.service';
 import { useMutation } from '@tanstack/react-query';
 
 // Hook pour gérer l'inscription utilisateur avec React Query
@@ -12,8 +12,7 @@ export function useRegisterUser() {
       password: User['password'];
     }) => {
       const { email, password } = params;
-      return registerUser(email, password);
+      return signupUser(email, password);
     },
-    onError: (error) => console.error('Registration failed:', error),
   });
 }

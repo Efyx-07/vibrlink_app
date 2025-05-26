@@ -7,7 +7,7 @@ import {
 
 // Service pour l'inscription d'un utilisateur, retourne les datas de l'utilisateur
 // ===========================================================================================
-export async function registerUser(
+export async function signupUser(
   email: User['email'],
   password: User['password'],
 ): Promise<SignupResponse> {
@@ -23,14 +23,18 @@ export async function registerUser(
       }),
     });
 
-    if (response.ok) {
-      const data: SignupResponse = await response.json();
-      return data;
-    } else {
-      throw new Error('Error during registration:' + response.statusText);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      const message =
+        errorData?.message || response.statusText || 'Unknown error';
+      throw new Error(message);
     }
+    const data: SignupResponse = await response.json();
+    return data;
   } catch (error) {
-    throw new Error('Error during registration:' + error);
+    throw error instanceof Error
+      ? error
+      : new Error('Unknown error during registration');
   }
 }
 

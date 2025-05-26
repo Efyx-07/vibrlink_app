@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import { useRegisterUser } from '@/hooks/useRegisterUser';
 import { User } from '@/interfaces/user.interface';
 import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
+import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 
 // Composant pour l'inscription d'un utilisateur
 // ===========================================================================================
@@ -27,6 +28,9 @@ export default function SignupForm() {
   const [isPasswordValid, setPasswordValid] = useState<boolean>(false);
   const [isConfirmPasswordValid, setConfirmPasswordValid] =
     useState<boolean>(false);
+
+  // State pour le message d'erreur
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   // Utilise le hook pour gérer la visibilité des passwords
   const { isPasswordVisible, togglePasswordVisibility } =
@@ -59,7 +63,10 @@ export default function SignupForm() {
       { email, password },
       {
         onSuccess: () => router.push('/vl/account/login'),
-        onError: (error) => console.error('Failed during registration:', error),
+        onError: () => {
+          const message: string = 'An error occured during registration';
+          setErrorMessage(message);
+        },
       },
     );
   };
@@ -103,6 +110,7 @@ export default function SignupForm() {
         isPasswordVisible={isPasswordVisible('confirmPassword')}
       />
       <Button type="submit" label="Sign up" isLoading={isPending} />
+      {errorMessage && <ErrorMessage text={errorMessage} />}
     </form>
   );
 }

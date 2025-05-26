@@ -49,7 +49,7 @@ export default function LoginForm() {
           router.push('/vl/links/my-links');
         },
         onError: () => {
-          const message = 'Invalid email or password';
+          const message: string = 'Invalid email or password';
           setErrorMessage(message);
         },
       },
