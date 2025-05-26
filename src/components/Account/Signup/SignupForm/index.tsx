@@ -53,6 +53,7 @@ export default function SignupForm() {
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+    setErrorMessage(''); // Reset du message d'erreur
 
     if (
       !validateData(email, password) ||
