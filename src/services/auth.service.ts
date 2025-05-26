@@ -4,6 +4,7 @@ import {
   SignupResponse,
   LoginResponse,
   UpdatePasswordResponse,
+  DeleteUserAccountResponse,
 } from '@/interfaces/user.interface';
 
 // Service pour l'inscription d'un utilisateur, retourne les datas de l'utilisateur
@@ -107,5 +108,31 @@ export async function updatePassword(
     throw error instanceof Error
       ? error
       : new Error('Unknown error during password update');
+  }
+}
+
+// Service pour la suppresion du compte utilisateur, retourne un message de succès ou d'erreur
+// ===========================================================================================
+export async function deleteUserAccount(
+  userId: User['id'],
+): Promise<DeleteUserAccountResponse> {
+  try {
+    const response = await fetch(`${apiUrl}/user/${userId}`, {
+      method: 'DELETE',
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      const message =
+        errorData?.message || response.statusText || 'Unknown error';
+      throw new Error(message);
+    }
+
+    const data: DeleteUserAccountResponse = await response.json();
+    return data;
+  } catch (error) {
+    throw error instanceof Error
+      ? error
+      : new Error('Unknown error during account deletion');
   }
 }

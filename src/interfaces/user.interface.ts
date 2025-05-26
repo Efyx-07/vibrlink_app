@@ -21,3 +21,8 @@ export interface UpdatePasswordResponse {
   message?: string;
   error?: string;
 }
+
+export interface DeleteUserAccountResponse {
+  message?: string;
+  error?: string;
+}
