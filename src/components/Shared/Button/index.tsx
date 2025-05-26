@@ -5,7 +5,7 @@ interface ButtonProps {
   label: string;
   isLoading?: boolean;
   onButtonClick?: () => void;
-  isLinkCard?: boolean;
+  isSmall?: boolean;
   addMention?: string;
   disabled?: boolean;
 }
@@ -15,14 +15,14 @@ export default function Button({
   label,
   isLoading,
   onButtonClick,
-  isLinkCard,
+  isSmall,
   addMention,
   disabled,
 }: ButtonProps) {
   return (
     <button
       type={type}
-      className={`${isLinkCard ? 'size-full min-h-10' : 'h-16 w-full'} cursor-pointer border border-accentColor5 bg-accentColor05 text-accentColor hover:bg-accentColor25`}
+      className={`${isSmall ? 'size-full min-h-10' : 'h-16 w-full'} cursor-pointer border border-accentColor5 bg-accentColor05 text-accentColor hover:bg-accentColor25`}
       onClick={onButtonClick}
       disabled={disabled}
     >

@@ -70,7 +70,7 @@ export default function CardCTAButtons({ release }: CardCTAButtonsProps) {
           <Button
             key={index}
             type="button"
-            isLinkCard={true}
+            isSmall={true}
             label={button.label}
             onButtonClick={button.onClick}
           />
