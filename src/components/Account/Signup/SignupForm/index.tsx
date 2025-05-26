@@ -29,6 +29,10 @@ export default function SignupForm() {
   const [isConfirmPasswordValid, setConfirmPasswordValid] =
     useState<boolean>(false);
 
+  // State pour l'opération de redirection
+  // Permet au bouton de rester en mode loading jusqu'à la fin du processus Succès
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+
   // State pour le message d'erreur
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -62,7 +66,10 @@ export default function SignupForm() {
     mutate(
       { email, password },
       {
-        onSuccess: () => router.push('/vl/account/login'),
+        onSuccess: () => {
+          setIsRedirecting(true);
+          router.push('/vl/account/login');
+        },
         onError: () => {
           const message: string = 'An error occured during registration';
           setErrorMessage(message);
@@ -109,7 +116,12 @@ export default function SignupForm() {
         onEyeClick={() => togglePasswordVisibility('confirmPassword')}
         isPasswordVisible={isPasswordVisible('confirmPassword')}
       />
-      <Button type="submit" label="Sign up" isLoading={isPending} />
+      <Button
+        type="submit"
+        label="Sign up"
+        isLoading={isPending || isRedirecting}
+        disabled={isPending || isRedirecting}
+      />
       {errorMessage && <ErrorMessage text={errorMessage} />}
     </form>
   );
