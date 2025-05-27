@@ -14,10 +14,10 @@
   --accentColor05: rgba(22, 241, 228, 0.05);
   --accentColor25: rgba(22, 241, 228, 0.25);
   --accentColor5: rgba(22, 241, 228, 0.5);
-  --errorColor: rgb(248, 81, 73);
-  --errorColor05: rgba(248, 81, 73, 0.05);
-  --errorColor25: rgba(248, 81, 73, 0.25);
-  --errorColor5: rgba(248, 81, 73, 0.5);
+  --errorColor: rgb(255, 82, 148);
+  --errorColor05: rgba(255, 82, 148, 0.05);
+  --errorColor25: rgba(255, 82, 148, 0.25);
+  --errorColor5: rgba(255, 82, 148, 0.5);
   --blackOverlay75: rgba(0, 0, 0, 0.75);
 }
 
