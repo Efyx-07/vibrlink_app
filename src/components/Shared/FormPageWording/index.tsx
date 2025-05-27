@@ -15,7 +15,7 @@ export default function FormPagesWording({
         <span className="text-accentColor">{mainTextPrimary}</span>{' '}
         {mainTextSecondary}
       </h1>
-      <p className="font-light lg:text-xl">{subText}</p>
+      <p className="font-extralight lg:text-[1.2rem]">{subText}</p>
     </div>
   );
 }

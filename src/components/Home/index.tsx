@@ -14,7 +14,7 @@ export default function Home() {
           <br />
           Ready to share your new music ?
         </h1>
-        <p className="text-lg font-light md:text-xl">
+        <p className="text-lg font-extralight md:text-xl">
           As a musician, we know how special this day is and how exciting it is
           to share your new release with your fan community. Let&apos;s do it!
         </p>
