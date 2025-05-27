@@ -30,3 +30,7 @@ body {
 .title-clamp {
   font-size: clamp(2.5rem, 8vw, 4rem);
 }
+
+.wording-and-form {
+  @apply flex w-full flex-col items-center gap-8 lg:flex-row;
+}
