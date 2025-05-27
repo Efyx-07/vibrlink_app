@@ -16,7 +16,7 @@ export default function Home() {
         </h1>
         <p className="text-lg font-extralight md:text-xl">
           As a musician, we know how special this day is and how exciting it is
-          to share your new release with your fan community. Let&apos;s do it!
+          to share your new release with your fan community. Let&apos;s do it !
         </p>
       </div>
       <div className="w-full max-w-80">
