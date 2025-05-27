@@ -26,3 +26,7 @@ body {
   color: var(--whiteColor);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.title-clamp {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+}
