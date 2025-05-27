@@ -14,6 +14,7 @@ import { useSignupUser } from '@/hooks/useSignupUser';
 import { User } from '@/interfaces/user.interface';
 import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
+import SectionTitle from '@/components/Shared/SectionTitle';
 
 // Composant pour l'inscription d'un utilisateur
 // ===========================================================================================
@@ -82,6 +83,7 @@ export default function SignupForm() {
 
   return (
     <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+      <SectionTitle title="Create account" textColor="text-accentColor" />
       <FormField
         id="email"
         label="Email address"

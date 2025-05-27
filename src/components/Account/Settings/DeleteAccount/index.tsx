@@ -38,7 +38,7 @@ export default function DeleteAccount() {
 
   return (
     <div className="flex flex-col gap-8">
-      <SectionTitle title="Delete Account" textColor="text-errorColor" />
+      <SectionTitle title="Delete account" textColor="text-errorColor" />
       <p className="text-sm">
         This operation is not reversible. It will remove your account and all
         your associated datas. Please be certain.

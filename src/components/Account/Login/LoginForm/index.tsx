@@ -9,6 +9,7 @@ import { useLoginUser } from '@/hooks/useLoginUser';
 import { User } from '@/interfaces/user.interface';
 import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
+import SectionTitle from '@/components/Shared/SectionTitle';
 
 export default function LoginForm() {
   const router = useRouter();
@@ -59,6 +60,7 @@ export default function LoginForm() {
 
   return (
     <form className="flex w-full flex-col gap-8" onSubmit={handleSubmit}>
+      <SectionTitle title="Login" textColor="text-accentColor" />
       <FormField
         id="email"
         label="Email address"

@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import { FormEvent, useEffect, useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
+import SectionTitle from '@/components/Shared/SectionTitle';
 
 export default function UpdatePasswordForm() {
   const router = useRouter();
@@ -84,6 +85,7 @@ export default function UpdatePasswordForm() {
   // ===========================================================================================
   return (
     <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+      <SectionTitle title="Update password" textColor="text-accentColor" />
       <FormField
         id="current-password"
         label="Type your current password"
