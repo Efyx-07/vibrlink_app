@@ -136,3 +136,33 @@ export async function deleteUserAccount(
       : new Error('Unknown error during account deletion');
   }
 }
+
+// Service pour demander la réinitialisation du mot de passe
+// ===========================================================================================
+export async function requestPasswordReset(
+  email: User['email'],
+): Promise<{ message: string }> {
+  try {
+    const response = await fetch(`${apiUrl}/passwordRoute/forgot-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      const message =
+        errorData?.error || response.statusText || 'Unknown error';
+      throw new Error(message);
+    }
+
+    const data: { message: string } = await response.json();
+    return data;
+  } catch (error) {
+    throw error instanceof Error
+      ? error
+      : new Error('Unknown error during email sending');
+  }
+}
