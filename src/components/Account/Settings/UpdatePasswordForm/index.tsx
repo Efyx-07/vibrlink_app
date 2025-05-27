@@ -105,7 +105,10 @@ export default function UpdatePasswordForm() {
         name="new-password"
         type={isPasswordVisible('newPassword') ? 'text' : 'password'}
         value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
+        onChange={(e) => {
+          setNewPassword(e.target.value);
+          if (errorMessage) setErrorMessage('');
+        }}
         isValid={isNewPasswordValid}
         isPasswordField={true}
         onEyeClick={() => togglePasswordVisibility('newPassword')}
@@ -118,7 +121,10 @@ export default function UpdatePasswordForm() {
         name="new-password-confirm"
         type={isPasswordVisible('confirmNewPassword') ? 'text' : 'password'}
         value={confirmNewPassword}
-        onChange={(e) => setConfirmNewPassword(e.target.value)}
+        onChange={(e) => {
+          setConfirmNewPassword(e.target.value);
+          if (errorMessage) setErrorMessage('');
+        }}
         isValid={isConfirmNewPasswordValid}
         isPasswordField={true}
         onEyeClick={() => togglePasswordVisibility('confirmNewPassword')}

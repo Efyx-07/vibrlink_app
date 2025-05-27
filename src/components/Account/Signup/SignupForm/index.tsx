@@ -88,7 +88,10 @@ export default function SignupForm() {
         name="email"
         type="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) => {
+          setEmail(e.target.value);
+          if (errorMessage) setErrorMessage('');
+        }}
         isValid={isEmailValid}
       />
       <FormField
@@ -98,7 +101,10 @@ export default function SignupForm() {
         name="password"
         type={isPasswordVisible('password') ? 'text' : 'password'}
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) => {
+          setPassword(e.target.value);
+          if (errorMessage) setErrorMessage('');
+        }}
         isValid={isPasswordValid}
         isPasswordField={true}
         onEyeClick={() => togglePasswordVisibility('password')}
@@ -111,7 +117,10 @@ export default function SignupForm() {
         name="password-confirm"
         type={isPasswordVisible('confirmPassword') ? 'text' : 'password'}
         value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
+        onChange={(e) => {
+          setConfirmPassword(e.target.value);
+          if (errorMessage) setErrorMessage('');
+        }}
         isValid={isConfirmPasswordValid}
         isPasswordField={true}
         onEyeClick={() => togglePasswordVisibility('confirmPassword')}
