@@ -10,6 +10,7 @@ import { Release } from '@/interfaces/release.interface';
 import { SpotifyEntry } from '@/interfaces/spotify.interface';
 import { useRouter } from 'next/navigation';
 import { useCreateLink } from '@/hooks/useCreateLink';
+import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 
 export default function NewLinkForm() {
   const userStore = useUserStore();
@@ -18,14 +19,20 @@ export default function NewLinkForm() {
   // State pour l'URL de l'album
   const [albumUrl, setAlbumUrl] = useState<SpotifyEntry['albumUrl']>('');
 
+  // State pour l'opération de redirection
+  // Permet au bouton de rester en mode loading jusqu'à la fin du processus Succès
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false);
+
+  // State pour le message d'erreur
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
   // Utilisation du hook de création des liens
   const { mutate, isPending } = useCreateLink();
 
   // Fonction de soumission du formulaire
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
+    setErrorMessage(''); // Reset du message d'erreur
 
     // Vérifie si l'URL est valide
     if (!validateSpotifyUrl(albumUrl)) return;
@@ -39,9 +46,13 @@ export default function NewLinkForm() {
       {
         onSuccess: (data) => {
           const releaseSlug: Release['slug'] = data.releaseSlug;
+          setIsRedirecting(true);
           router.push(`/vl/links/link-editor/${releaseSlug}`);
         },
-        onError: (error) => console.error('Failed to create link:', error),
+        onError: () => {
+          const message: string = 'Failed to create link';
+          setErrorMessage(message);
+        },
       },
     );
   };
@@ -58,7 +69,13 @@ export default function NewLinkForm() {
         value={albumUrl}
         onChange={(e) => setAlbumUrl(e.target.value)}
       />
-      <Button type="submit" label="Create my link" isLoading={isPending} />
+      <Button
+        type="submit"
+        label="Create my link"
+        isLoading={isPending || isRedirecting}
+        disabled={isPending || isRedirecting}
+      />
+      {errorMessage && <ErrorMessage text={errorMessage} />}
     </form>
   );
 }

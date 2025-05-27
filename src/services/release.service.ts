@@ -25,14 +25,19 @@ export async function createLink(
       },
     );
 
-    if (response.ok) {
-      const data: ReleaseResponse = await response.json();
-      return { releaseSlug: data.releaseSlug };
-    } else {
-      throw new Error('Failed to send album URL' + response.statusText);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      const message =
+        errorData?.message || response.statusText || 'Unknown error';
+      throw new Error(message);
     }
+
+    const data: ReleaseResponse = await response.json();
+    return { releaseSlug: data.releaseSlug };
   } catch (error) {
-    throw new Error('Failed to send album URL' + error);
+    throw error instanceof Error
+      ? error
+      : new Error('Unknown error during sending album URL');
   }
 }
 

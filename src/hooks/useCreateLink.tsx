@@ -18,6 +18,5 @@ export function useCreateLink() {
       return createLink(albumUrl, userId);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['releases'] }),
-    onError: (error) => console.error('Create failed:', error),
   });
 }
