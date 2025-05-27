@@ -24,18 +24,18 @@
 
 @media (min-width: 1024px) {
   .separator {
-    @apply h-[50vh] min-h-0 w-auto min-w-16;
+    @apply h-[50vh] min-h-0 w-auto min-w-12;
 
     .slider-line {
       @apply left-1/2 top-0 h-full w-px -translate-x-1/2 translate-y-0;
     }
 
     .separator-icon {
-      @apply left-0 top-1/2 size-16 -translate-x-1/2 -translate-y-1/2;
+      @apply left-0 top-1/2 size-12 -translate-x-1/2 -translate-y-0;
       animation: moveUpDown 3s infinite;
 
       .icon {
-        @apply text-[2rem];
+        @apply text-2xl;
       }
     }
   }
