@@ -12,7 +12,7 @@ export default function NewLink() {
         subText="It will automatically generate a new vibrlink with the Spotify, Deezer and YouTube links. Let's go !"
       />
       <StyledSeparator icon="ph:music-notes-simple-fill" />
-      <FormContainer>
+      <FormContainer isJustifyCenter>
         <NewLinkForm />
       </FormContainer>
     </div>

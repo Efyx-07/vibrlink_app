@@ -3,7 +3,7 @@ import PageWrapper from '@/components/Utils/PageWrapper';
 
 export default function SignupPage() {
   return (
-    <PageWrapper>
+    <PageWrapper isScrollingInside>
       <Signup />
     </PageWrapper>
   );

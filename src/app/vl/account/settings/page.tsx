@@ -3,7 +3,7 @@ import PageWrapper from '@/components/Utils/PageWrapper';
 
 export default function SettingsPage() {
   return (
-    <PageWrapper>
+    <PageWrapper isScrollingInside>
       <Settings />
     </PageWrapper>
   );

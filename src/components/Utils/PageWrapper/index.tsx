@@ -4,6 +4,7 @@ import { WithPageLoader } from '../WithPageLoader';
 interface PageWrapperProps {
   children: ReactNode;
   isJustifyStart?: boolean;
+  isScrollingInside?: boolean;
 }
 
 // Wrapper pour les pages du dashboard nécessitant un style commun inclut un loader de transition
@@ -11,13 +12,16 @@ interface PageWrapperProps {
 export default function PageWrapper({
   children,
   isJustifyStart,
+  isScrollingInside,
 }: PageWrapperProps) {
   return (
     <WithPageLoader>
       <div
         className={`flex size-full min-h-[calc(100dvh-10rem)] flex-col items-center ${isJustifyStart ? 'justify-start' : 'justify-center'}`}
       >
-        <div className="flex size-full max-w-[75rem] flex-col items-center justify-center px-4 py-16 md:px-8 2xl:max-w-[90rem]">
+        <div
+          className={`${isScrollingInside ? 'lg:py-0' : ''} flex size-full max-w-[75rem] flex-col items-center justify-center px-4 py-16 lg:px-8 2xl:max-w-[90rem]`}
+        >
           {children}
         </div>
       </div>

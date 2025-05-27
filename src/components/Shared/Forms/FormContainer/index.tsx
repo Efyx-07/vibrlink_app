@@ -4,6 +4,7 @@ interface FormContainerProps {
   children: React.ReactNode;
   addedLinkLabel?: string;
   addedLinkPath?: string;
+  isJustifyCenter?: boolean;
 }
 
 // Container pour les formulaires et pouvant accueillir un lien supplémentaire
@@ -12,10 +13,13 @@ export default function FormContainer({
   children,
   addedLinkLabel,
   addedLinkPath,
+  isJustifyCenter,
 }: FormContainerProps) {
   return (
-    <div className="flex w-full justify-center">
-      <div className="flex w-full max-w-[30rem] flex-col gap-8">
+    <div className="flex size-full justify-center">
+      <div
+        className={`${isJustifyCenter ? 'justify-center' : ''} flex size-full max-w-[31rem] flex-col gap-8 overflow-auto lg:py-16 lg:pr-4`}
+      >
         {children}
         {addedLinkLabel && addedLinkPath && (
           <Link

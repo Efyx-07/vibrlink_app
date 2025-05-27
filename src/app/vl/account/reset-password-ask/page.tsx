@@ -3,7 +3,7 @@ import ResetPasswordAsk from '@/components/Account/ResetPasswordAsk';
 
 export default function ResetPasswordAskPage() {
   return (
-    <PageWrapper>
+    <PageWrapper isScrollingInside>
       <ResetPasswordAsk />
     </PageWrapper>
   );

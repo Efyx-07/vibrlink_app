@@ -15,6 +15,7 @@ export default function ResetPasswordAsk() {
       <FormContainer
         addedLinkLabel="Back to sign in"
         addedLinkPath="/vl/account/login"
+        isJustifyCenter
       >
         <ResetPasswordAskForm />
       </FormContainer>

@@ -3,7 +3,7 @@ import PageWrapper from '@/components/Utils/PageWrapper';
 
 export default function NewLinkPage() {
   return (
-    <PageWrapper>
+    <PageWrapper isScrollingInside>
       <NewLink />
     </PageWrapper>
   );
