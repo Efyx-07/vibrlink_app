@@ -137,7 +137,7 @@ export async function deleteUserAccount(
   }
 }
 
-// Service pour demander la réinitialisation du mot de passe
+// Service pour demander la réinitialisation du mot de passe, retourne un message de succès ou d'erreur
 // ===========================================================================================
 export async function requestPasswordReset(
   email: User['email'],
@@ -164,5 +164,41 @@ export async function requestPasswordReset(
     throw error instanceof Error
       ? error
       : new Error('Unknown error during email sending');
+  }
+}
+
+// Service pour réinitialiser du mot de passe, retourne un message de succès ou d'erreur
+// ===========================================================================================
+export async function resetPassword(
+  token: string | null,
+  newPassword: User['password'],
+): Promise<{ message: string }> {
+  try {
+    console.log('Resetting password with token:', token);
+    console.log('New password:', newPassword);
+    const response = await fetch(
+      `${apiUrl}/passwordRoute/reset-password/${token}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ newPassword }),
+      },
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      const message =
+        errorData?.error || response.statusText || 'Unknown error';
+      throw new Error(message);
+    }
+
+    const data: { message: string } = await response.json();
+    return data;
+  } catch (error) {
+    throw error instanceof Error
+      ? error
+      : new Error('Unknown error during password reset');
   }
 }

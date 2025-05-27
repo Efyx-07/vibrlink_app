@@ -5,9 +5,20 @@ import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 import FormField from '@/components/Shared/Forms/FormField';
 import SectionTitle from '@/components/Shared/SectionTitle';
 import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
+import { useResetPassword } from '@/hooks/useResetPassword';
+import {
+  validatePassword,
+  validateConfirmPassword,
+} from '@/utils/validateDatas';
+import { useParams, useRouter } from 'next/navigation';
 
 export default function ResetPasswordForm() {
+  const router = useRouter();
+
+  // Récupère le token depuis les params
+  const { token } = useParams() as { token?: string };
+
   // State pour les champs du formulaire
   const [newPassword, setNewPassword] = useState<string>('');
   const [confirmNewPassword, setConfirmNewPassword] = useState<string>('');
@@ -26,16 +37,53 @@ export default function ResetPasswordForm() {
   const { isPasswordVisible, togglePasswordVisibility } =
     usePasswordVisibility();
 
+  // Vérification de la validité des champs
+  useEffect(() => {
+    setNewPasswordValid(validatePassword(newPassword));
+    setConfirmNewPasswordValid(
+      validateConfirmPassword(newPassword, confirmNewPassword),
+    );
+  }, [newPassword, confirmNewPassword]);
+
+  // Utilisation du hook de réinitialisation du mot de passe utilisateur
+  const { mutate, isPending } = useResetPassword();
+
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
     setErrorMessage('');
+
+    if (
+      !validatePassword(newPassword) ||
+      !validateConfirmPassword(newPassword, confirmNewPassword)
+    ) {
+      console.error('Invalid password format');
+      return;
+    }
+
+    // Vérifie si le token est présent
+    if (!token) return;
+
+    // Appelle la mutation pour la mise à jour du mot de passe
+    mutate(
+      { token, newPassword },
+      {
+        onSuccess: () => {
+          setIsRedirecting(true);
+          router.push('/vl/account/login');
+        },
+        onError: () => {
+          const message: string = 'An error occured during password reset';
+          setErrorMessage(message);
+        },
+      },
+    );
   };
   // ===========================================================================================
 
   return (
     <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
-      <SectionTitle title="Update password" textColor="text-accentColor" />
+      <SectionTitle title="Reset password" textColor="text-accentColor" />
       <FormField
         id="new-password"
         label="Create a new password"
@@ -70,9 +118,9 @@ export default function ResetPasswordForm() {
       />
       <Button
         type="submit"
-        label="Update my password"
-        //isLoading={isPending || isRedirecting}
-        //disabled={isPending || isRedirecting}
+        label="Reset my password"
+        isLoading={isPending || isRedirecting}
+        disabled={isPending || isRedirecting}
       />
       {errorMessage && <ErrorMessage text={errorMessage} />}
     </form>
