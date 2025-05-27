@@ -6,6 +6,7 @@ import { useReleases } from '@/hooks/useReleases';
 import LoadingPage from '@/components/LoadingPage';
 import LinkCard from '../Shared/LinkCard';
 import PageTitle from '@/components/Shared/PageTitle';
+import EmptyList from './EmptyList';
 
 export default function MyLinks() {
   const userStore = useUserStore();
@@ -18,7 +19,7 @@ export default function MyLinks() {
     <LoadingPage />
   ) : (
     <div className="flex w-full max-w-[70rem] flex-col gap-4">
-      {releases && (
+      {releases && releases.length > 0 ? (
         <>
           <PageTitle primaryPart="Manage" secondaryPart="your links" />
           {releases.map((release) => (
@@ -27,6 +28,8 @@ export default function MyLinks() {
             </div>
           ))}
         </>
+      ) : (
+        <EmptyList />
       )}
     </div>
   );
