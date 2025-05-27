@@ -83,6 +83,7 @@ export default function UpdatePasswordForm() {
     );
   };
   // ===========================================================================================
+
   return (
     <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
       <SectionTitle title="Update password" textColor="text-accentColor" />
