@@ -8,28 +8,6 @@ import { useRouter } from 'next/navigation';
 // deconnexion avec méthode du store
 // redirection vers la page d'accueil
 // ===========================================================================================
-/*export function useLogoutUser() {
-  const logoutUserLocal = useUserStore((state) => state.logoutUserLocal);
-  const router = useRouter();
-
-  const mutation = useMutation({ mutationFn: logoutUserApi });
-
-  const logout = () => {
-    mutation.mutate(undefined, {
-      onSuccess: () => {
-        logoutUserLocal();
-        router.push('/');
-      },
-      onError: (error) => console.error('Logout failed', error),
-    });
-  };
-
-  return {
-    ...mutation,
-    logout,
-  };
-}*/
-
 interface LogoutOptions {
   redirect?: boolean;
 }
@@ -45,18 +23,12 @@ export const useLogoutUser = () => {
       return _options;
     },
     onSuccess: (_data, variables) => {
-      if (variables?.redirect !== false) {
-        router.push('/vl/home');
-      }
+      if (variables?.redirect !== false) router.push('/');
     },
-    onError: (error) => {
-      console.error('Logout error:', error);
-    },
+    onError: (error) => console.error('Logout error:', error),
   });
 
-  const logout = (options?: LogoutOptions) => {
-    mutation.mutate(options); // options = { redirect: true/false }
-  };
+  const logout = (options?: LogoutOptions) => mutation.mutate(options); // options = { redirect: true/false }
 
   return {
     ...mutation,
