@@ -34,3 +34,28 @@ body {
 .wording-and-form {
   @apply flex w-full flex-col items-center gap-8 lg:h-screen-minus-10 lg:flex-row lg:gap-10;
 }
+
+/* Scrollbar customisée uniquement visible au hover */
+.scrollbar-custom {
+  scrollbar-width: thin; /* Pour Firefox */
+  scrollbar-color: var(--darkColor) transparent; /* Pour Firefox */
+}
+
+/* Webkit (Chrome, Safari) */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+  transition: opacity 0.2s;
+  opacity: 0;
+}
+
+.scrollbar-custom:hover::-webkit-scrollbar {
+  opacity: 1;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+}
