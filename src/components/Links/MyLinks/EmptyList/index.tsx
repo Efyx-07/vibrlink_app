@@ -6,7 +6,7 @@ export default function EmptyList() {
   const router = useRouter();
 
   return (
-    <div className="flex h-screen-minus-18 w-full flex-col justify-center items-center gap-8">
+    <div className="flex h-screen-minus-18 w-full flex-col items-center justify-center gap-8">
       <div className="max-w-64">
         <Image
           src="/svg/empty-list.svg"
