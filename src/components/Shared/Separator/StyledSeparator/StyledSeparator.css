@@ -2,52 +2,52 @@
 
 .separator {
   @apply relative min-h-12 w-full;
+}
 
-  .slider-line {
-    @apply absolute top-1/2 h-px w-full -translate-y-1/2 bg-whiteLight;
-  }
+.slider-line {
+  @apply absolute top-1/2 h-px w-full -translate-y-1/2 bg-whiteLight;
+}
 
-  .separator-icon {
-    @apply absolute left-1/2 flex size-12 -translate-x-1/2 items-center justify-center border-[0.25rem] border-dotted border-whiteLight50 bg-darkColor text-whiteLight50;
-    animation: moveLeftRight 3s infinite;
+.separator-icon {
+  @apply absolute left-1/2 flex size-12 -translate-x-1/2 items-center justify-center border-[0.25rem] border-dotted border-whiteLight50 bg-darkColor text-whiteLight50;
+  animation: moveLeftRight 3s infinite;
+}
 
-    .icon {
-      @apply text-2xl;
-      transition: transform 0.3s;
-    }
+.icon {
+  @apply text-2xl;
+  transition: transform 0.3s;
+}
 
-    &:hover > .icon {
-      transform: rotate(360deg);
-    }
-  }
+.separator-icon:hover > .icon {
+  transform: rotate(360deg);
 }
 
 @media (min-width: 1024px) {
   .separator {
     @apply h-[50vh] min-h-0 w-auto min-w-12;
+  }
 
-    .slider-line {
-      @apply left-1/2 top-0 h-full w-px -translate-x-1/2 translate-y-0;
-    }
+  .slider-line {
+    @apply left-1/2 top-0 h-full w-px -translate-x-1/2 translate-y-0;
+  }
 
-    .separator-icon {
-      @apply left-0 top-1/2 size-12 -translate-x-1/2 -translate-y-0;
-      animation: moveUpDown 3s infinite;
-
-      .icon {
-        @apply text-2xl;
-      }
-    }
+  .separator-icon {
+    @apply left-0 top-1/2 size-12 -translate-x-1/2 -translate-y-0;
+    animation: moveUpDown 3s infinite;
   }
 }
 
 @media (min-width: 1536px) {
   .separator {
     @apply min-w-20;
+  }
 
-    .separator-icon {
-      @apply size-20;
-    }
+  .separator-icon {
+    @apply size-20;
+  }
+
+  .icon {
+    @apply text-4xl;
   }
 }
 
