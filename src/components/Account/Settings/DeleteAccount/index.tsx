@@ -5,13 +5,14 @@ import { useDeleteAccount } from '@/hooks/useDeleteAccount';
 import { useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
-import { useRouter } from 'next/navigation';
 import Button from '@/components/Shared/Button';
 import SectionTitle from '@/components/Shared/SectionTitle';
+import { useLogoutUser } from '@/hooks/useLogoutUser';
 
 export default function DeleteAccount() {
-  const router = useRouter();
-  const userStore = useUserStore();
+  // Récupération du user dans le store
+  const user = useUserStore((state) => state.user);
+  const userId = user?.id as User['id'];
 
   // State pour gérer l'ouverture et la fermeture de la modale de confirmation
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -21,18 +22,27 @@ export default function DeleteAccount() {
   const closeConfirmModal = () => setIsOpen(false);
 
   // Utilisation du hook et la mutation pour supprimer le compte utilisateur
-  const { mutate, isPending } = useDeleteAccount();
+  const { mutate: deleteAccountMutation, isPending: isDeleting } =
+    useDeleteAccount();
 
-  // Récupération du user et methode de déconnexion du store
-  const { user, logoutUserLocal } = userStore;
-  const userId = user?.id as User['id'];
+  // Utilisation du hook pour la déconnexion et la redirection
+  const { logout, isPending: isLoggingOut } = useLogoutUser();
+
+  // Verifie si l'ID utilisateur est présent
   if (!userId) return;
 
-  const deleteAccount = async (): Promise<void> => {
-    mutate(userId);
-    closeConfirmModal();
-    logoutUserLocal(); // Deconnecte l'utilisateur après la suppression
-    router.push('/'); // Redirige vers la page d'accueil après la suppression
+  // Fonction pour la suppression du compte utilisateur et ses données
+  const deleteAccount = (): void => {
+    deleteAccountMutation(userId, {
+      onSuccess: () => {
+        logout(); // déconnexion + redirection
+        closeConfirmModal();
+      },
+      onError: (error) => {
+        console.error('Account deletion failed', error);
+        closeConfirmModal();
+      },
+    });
   };
   // ===========================================================================================
 
@@ -59,7 +69,7 @@ export default function DeleteAccount() {
           onConfirm={deleteAccount}
           onCancel={closeConfirmModal}
           icon="mdi:skull-crossbones"
-          isLoading={isPending}
+          isLoading={isDeleting || isLoggingOut}
         />
       )}
     </div>

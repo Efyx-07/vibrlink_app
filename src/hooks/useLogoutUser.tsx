@@ -18,7 +18,7 @@ export function useLogoutUser() {
     mutation.mutate(undefined, {
       onSuccess: () => {
         logoutUserLocal();
-        router.push('/vl/home');
+        router.push('/');
       },
       onError: (error) => console.error('Logout failed', error),
     });
