@@ -15,6 +15,7 @@ export default function Login() {
       <FormContainer
         addedLinkLabel="I forgot my password"
         addedLinkPath="/vl/account/reset-password-ask"
+        isJustifyCenter
       >
         <LoginForm />
       </FormContainer>
