@@ -4,11 +4,14 @@ import { useMutation } from '@tanstack/react-query';
 
 // Hook pour gérer la demande de réinitialisation de mot de passe avec React Query
 // ===========================================================================================
+type RequestPasswordResetParams = {
+  email: User['email'];
+};
+
 export function useRequestPasswordReset() {
   return useMutation({
     mutationKey: ['requestPasswordReset'],
-    mutationFn: async (params: { email: User['email'] }) => {
-      const { email } = params;
+    mutationFn: async ({ email }: RequestPasswordResetParams) => {
       return requestPasswordReset(email);
     },
   });

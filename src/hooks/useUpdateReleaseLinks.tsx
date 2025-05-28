@@ -4,20 +4,25 @@ import { Release, Platform } from '@/interfaces/release.interface';
 
 // Hook pour gérer la mise à jour des liens des plateformes d'une release avec React Query
 // ===========================================================================================
+type UpdateReleaseLinksParams = {
+  releaseId: Release['id'];
+  newUrls: { [key: Platform['id']]: string };
+  platformsState: {
+    id: Platform['id'];
+    visibility: Platform['visibility'];
+  }[];
+};
+
 export function useUpdateReleaseLinks() {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationKey: ['updateLink'],
-    mutationFn: async (params: {
-      releaseId: Release['id'];
-      newUrls: { [key: Platform['id']]: string };
-      platformsState: {
-        id: Platform['id'];
-        visibility: Platform['visibility'];
-      }[];
-    }) => {
-      const { releaseId, newUrls, platformsState } = params;
+    mutationFn: async ({
+      releaseId,
+      newUrls,
+      platformsState,
+    }: UpdateReleaseLinksParams) => {
       const platformsVisibility = platformsState.reduce(
         (acc, platform) => {
           acc[platform.id] = platform.visibility;
