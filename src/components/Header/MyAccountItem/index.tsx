@@ -30,23 +30,13 @@ export default function MyAccountItem() {
   };
   const closeConfirmModal = (): void => setIsConfirmModalOpen(false);
 
-  // Utilisation du hook de déconnexion utilisateur
-  const { mutate, isPending } = useLogoutUser();
+  // Utilisation du hook custom qui gère la mutation + logout local + redirection
+  const { logout, isPending } = useLogoutUser();
 
   // Fonction de déconnexion
   const handleLogout = (): void => {
-    // Appelle la mutation pour la déconnexion
-    mutate(undefined, {
-      onSuccess: (): void => {
-        logoutUserLocal();
-        router.push('/vl/home');
-        closeConfirmModal();
-      },
-      onError: (error: unknown): void => {
-        console.error('Logout failed', error);
-        closeConfirmModal();
-      },
-    });
+    logout();
+    closeConfirmModal();
   };
   // ===========================================================================================
 
