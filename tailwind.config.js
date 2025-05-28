@@ -2,6 +2,13 @@
 export const content = ['./src/**/*.{js,ts,jsx,tsx,mdx}'];
 export const theme = {
   extend: {
+    height: {
+      'screen-minus-10': 'calc(100dvh - 10rem)',
+      'screen-minus-18': 'calc(100dvh - 18rem)',
+    },
+    minHeight: {
+      'screen-minus-10': 'calc(100dvh - 10rem)',
+    },
     colors: {
       darkColor: 'var(--darkColor)',
       darkColorRelief: 'var(--darkColorRelief)',

@@ -17,7 +17,7 @@ export default function PageWrapper({
   return (
     <WithPageLoader>
       <div
-        className={`flex size-full min-h-[calc(100dvh-10rem)] flex-col items-center ${isJustifyStart ? 'justify-start' : 'justify-center'}`}
+        className={`flex size-full min-h-screen-minus-10 flex-col items-center ${isJustifyStart ? 'justify-start' : 'justify-center'}`}
       >
         <div
           className={`${isScrollingInside ? 'lg:py-0' : ''} flex size-full max-w-[75rem] flex-col items-center justify-center px-4 py-16 lg:px-8 2xl:max-w-[90rem]`}
