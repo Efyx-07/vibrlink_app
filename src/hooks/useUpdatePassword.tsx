@@ -4,17 +4,21 @@ import { useMutation } from '@tanstack/react-query';
 
 // Hook pour gérer la mise à jour du mot de passe d'un utilisateur avec React Query
 // ===========================================================================================
+type UpdatePasswordParams = {
+  userId: User['id'];
+  currentPassword: User['password'];
+  newPassword: User['password'];
+};
+
 export function useUpdatePassword() {
   return useMutation({
     mutationKey: ['updatePassword'],
-    mutationFn: async (params: {
-      token: string | null;
-      userId: User['id'];
-      currentPassword: User['password'];
-      newPassword: User['password'];
-    }) => {
-      const { token, userId, currentPassword, newPassword } = params;
-      return updatePassword(token, userId, currentPassword, newPassword);
+    mutationFn: async ({
+      userId,
+      currentPassword,
+      newPassword,
+    }: UpdatePasswordParams) => {
+      return updatePassword(userId, currentPassword, newPassword);
     },
   });
 }

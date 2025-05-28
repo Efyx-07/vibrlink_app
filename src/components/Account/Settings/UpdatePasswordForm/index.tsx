@@ -14,10 +14,14 @@ import { FormEvent, useEffect, useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
 import SectionTitle from '@/components/Shared/SectionTitle';
+import { useLogoutUser } from '@/hooks/useLogoutUser';
 
 export default function UpdatePasswordForm() {
   const router = useRouter();
-  const userStore = useUserStore();
+
+  // Récupération du user dans le store
+  const user = useUserStore((state) => state.user);
+  const userId = user?.id as User['id'];
 
   // State pour les champs du formulaire
   const [currentPassword, setCurrentPassword] = useState<string>('');
@@ -47,7 +51,11 @@ export default function UpdatePasswordForm() {
   }, [newPassword, confirmNewPassword]);
 
   // Utilisation du hook de mise à jour du mot de passe utilisateur
-  const { mutate, isPending } = useUpdatePassword();
+  const { mutate: updatingPasswordMutation, isPending: isUpdatingPassword } =
+    useUpdatePassword();
+
+  // Utilisation du hook pour la déconnexion
+  const { logout, isPending: isLoggingOut } = useLogoutUser();
 
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -62,16 +70,15 @@ export default function UpdatePasswordForm() {
       return;
     }
 
-    // Récupère le token et l'ID de l'utilisateur depuis le store
-    const { token, user } = userStore;
-    const userId = user?.id as User['id'];
-    if (!token || !userId) return;
+    // Verifie si l'ID utilisateur est présent
+    if (!userId) return;
 
     // Appelle la mutation pour la mise à jour du mot de passe
-    mutate(
-      { token, userId, currentPassword, newPassword },
+    updatingPasswordMutation(
+      { userId, currentPassword, newPassword },
       {
         onSuccess: () => {
+          logout({ redirect: false }); // déconnexion
           setIsRedirecting(true);
           router.push('/vl/account/login');
         },
@@ -136,8 +143,8 @@ export default function UpdatePasswordForm() {
       <Button
         type="submit"
         label="Update my password"
-        isLoading={isPending || isRedirecting}
-        disabled={isPending || isRedirecting}
+        isLoading={isUpdatingPassword || isLoggingOut || isRedirecting}
+        disabled={isUpdatingPassword || isLoggingOut || isRedirecting}
       />
       {errorMessage && <ErrorMessage text={errorMessage} />}
     </form>

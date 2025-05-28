@@ -96,7 +96,6 @@ export async function logoutUserApi(): Promise<{ message: string }> {
 // Service pour la mise à jour du mot de passe d'un utilisateur, retourne un message de succès ou d'erreur
 // ===========================================================================================
 export async function updatePassword(
-  token: string | null,
   userId: User['id'],
   currentPassword: User['password'],
   newUserPassword: User['password'],
@@ -106,8 +105,8 @@ export async function updatePassword(
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
       },
+      credentials: 'include', // Important pour que le cookie soit envoyé (token)
       body: JSON.stringify({
         userId,
         currentPassword,
