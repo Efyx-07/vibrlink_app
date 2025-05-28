@@ -52,6 +52,7 @@ export async function loginUser(
       headers: {
         'Content-type': 'application/json',
       },
+      credentials: 'include', // important pour la récupération du httpOnly token (dans les cookies)
       body: JSON.stringify({
         email,
         password,

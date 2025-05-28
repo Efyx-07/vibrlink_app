@@ -9,13 +9,16 @@ export async function fetchReleasesData(
   userId: User['id'],
 ): Promise<Release[]> {
   try {
-    const token = getAuthTokenFromLocalStorage();
-    if (!token) throw new Error('No auth token found');
+    // const token = getAuthTokenFromLocalStorage();
+    // if (!token) throw new Error('No auth token found');
+
+    // console.log('token envoyé: ', token)
 
     const response = await fetch(`${apiUrl}/releasesRoute/releases/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+      credentials: 'include',
     });
 
     if (!response.ok) throw new Error('Error while fetching datas');
