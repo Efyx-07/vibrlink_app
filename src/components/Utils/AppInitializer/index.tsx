@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+/*import { useEffect, useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import isTokenExpired from '@/utils/checkTokenExpiry';
 import LoadingPage from '@/components/LoadingPage';
@@ -53,6 +53,48 @@ export default function AppInitializer({ children }: Props) {
     if (!initialized) init();
     else setLoading(false);
   }, [initialized, token, logout, loadUserDataFromLocalStorage]);
+
+  if (loading) return <LoadingPage />;
+  return <>{children}</>;
+}
+*/
+
+'use client';
+
+import { useEffect, useState } from 'react';
+import useUserStore from '@/stores/userStore';
+import LoadingPage from '@/components/LoadingPage';
+import { useLogoutUser } from '@/hooks/useLogoutUser';
+import { fetchCurrentUser } from '@/services/auth.service';
+
+interface Props {
+  children: React.ReactNode;
+}
+
+export default function AppInitializer({ children }: Props) {
+  const [loading, setLoading] = useState(true);
+  const { initialized, loadUserDataFromLocalStorage } = useUserStore();
+  const { logout } = useLogoutUser();
+
+  useEffect(() => {
+    const init = async () => {
+      try {
+        await loadUserDataFromLocalStorage(); // charge données user locales
+
+        await fetchCurrentUser(); // vérifie token via /me
+      } catch (error) {
+        logout({ redirect: false }); // token invalide ou erreur => logout
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (!initialized) {
+      init();
+    } else {
+      setLoading(false);
+    }
+  }, [initialized, loadUserDataFromLocalStorage, logout]);
 
   if (loading) return <LoadingPage />;
   return <>{children}</>;

@@ -219,3 +219,26 @@ export async function resetPassword(
       : new Error('Unknown error during password reset');
   }
 }
+
+// Service pour checker l'utilisateur actuel
+// ===========================================================================================
+export async function fetchCurrentUser() {
+  try {
+    const response = await fetch(`${apiUrl}/user/me`, {
+      method: 'GET',
+      credentials: 'include', // important pour envoyer les cookies HttpOnly
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('Token invalide ou absent');
+    }
+
+    const data = await response.json();
+    return data.user;
+  } catch (error) {
+    throw error;
+  }
+}
