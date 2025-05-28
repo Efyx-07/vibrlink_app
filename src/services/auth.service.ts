@@ -52,7 +52,7 @@ export async function loginUser(
       headers: {
         'Content-type': 'application/json',
       },
-      credentials: 'include', // important pour la récupération du httpOnly token (dans les cookies)
+      credentials: 'include', // Important pour que le cookie soit envoyé (token)
       body: JSON.stringify({
         email,
         password,
@@ -72,6 +72,25 @@ export async function loginUser(
       ? error
       : new Error('Unknown error during login');
   }
+}
+
+// Service pour la déconnexion d'un utilisateur, retourne un message de succès
+// ===========================================================================================
+export async function logoutUserApi(): Promise<{ message: string }> {
+  const response = await fetch(`${apiUrl}/user/logout`, {
+    method: 'POST',
+    credentials: 'include', // Important pour que le cookie soit envoyé (token)
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => null);
+    const message =
+      errorData?.message || response.statusText || 'Unknown error';
+    throw new Error(message);
+  }
+
+  const data: { message: string } = await response.json();
+  return data;
 }
 
 // Service pour la mise à jour du mot de passe d'un utilisateur, retourne un message de succès ou d'erreur

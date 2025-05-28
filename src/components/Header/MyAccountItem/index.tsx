@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { MouseEventHandler, useState } from 'react';
 import ConfirmModal from '@/components/Shared/ConfirmModal';
 import { User } from '@/interfaces/user.interface';
+import { useLogoutUser } from '@/hooks/useLogoutUser';
 
 export default function MyAccountItem() {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function MyAccountItem() {
 
   // Récupère l'utilisateur connecté
   const user = useUserStore((state) => state.user);
-  const { logoutUser } = useUserStore();
+  const { logoutUserLocal } = useUserStore();
 
   // Etat de visibilité du menu utilisateur
   const [isHoverUserMenuVisible, setIsHoverUserMenuVisible] =
@@ -29,12 +30,25 @@ export default function MyAccountItem() {
   };
   const closeConfirmModal = (): void => setIsConfirmModalOpen(false);
 
+  // Utilisation du hook de déconnexion utilisateur
+  const { mutate, isPending } = useLogoutUser();
+
   // Fonction de déconnexion
   const handleLogout = (): void => {
-    logoutUser();
-    router.push('/vl/home');
-    closeConfirmModal();
+    // Appelle la mutation pour la déconnexion
+    mutate(undefined, {
+      onSuccess: (): void => {
+        logoutUserLocal();
+        router.push('/vl/home');
+        closeConfirmModal();
+      },
+      onError: (error: unknown): void => {
+        console.error('Logout failed', error);
+        closeConfirmModal();
+      },
+    });
   };
+  // ===========================================================================================
 
   return (
     isLogged && (
@@ -60,6 +74,7 @@ export default function MyAccountItem() {
             onConfirm={handleLogout}
             onCancel={closeConfirmModal}
             icon="material-symbols:question-mark"
+            isLoading={isPending}
           />
         )}
       </>

@@ -24,14 +24,14 @@ export default function DeleteAccount() {
   const { mutate, isPending } = useDeleteAccount();
 
   // Récupération du user et methode de déconnexion du store
-  const { user, logoutUser } = userStore;
+  const { user, logoutUserLocal } = userStore;
   const userId = user?.id as User['id'];
   if (!userId) return;
 
   const deleteAccount = async (): Promise<void> => {
     mutate(userId);
     closeConfirmModal();
-    logoutUser(); // Deconnecte l'utilisateur après la suppression
+    logoutUserLocal(); // Deconnecte l'utilisateur après la suppression
     router.push('/'); // Redirige vers la page d'accueil après la suppression
   };
   // ===========================================================================================
