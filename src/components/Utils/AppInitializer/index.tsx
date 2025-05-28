@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import isTokenExpired from '@/utils/checkTokenExpiry';
 import LoadingPage from '@/components/LoadingPage';
+import { useLogoutUser } from '@/hooks/useLogoutUser';
 
 interface Props {
   children: React.ReactNode;
@@ -12,29 +13,32 @@ interface Props {
 // Composant pour initialiser l'app avec les données de l'utilisateur
 // ===========================================================================================
 export default function AppInitializer({ children }: Props) {
-  const [loading, setLoading] = useState<boolean>(true);
+  // State pour le chargement
+  const [loading, setLoading] = useState(true);
 
   // Récupère les méthodes du store
-  const { setToken, logoutUserLocal, loadUserDataFromLocalStorage } =
-    useUserStore();
+  const { initialized, token, loadUserDataFromLocalStorage } = useUserStore();
+
+  // Utilise le hook de déconnexion centralisé
+  const { logout } = useLogoutUser();
 
   useEffect(() => {
-    const appInit = async () => {
+    const init = async () => {
       try {
         // Charge les données de l'utilisateur depuis le localStorage
         await loadUserDataFromLocalStorage();
 
-        // Vérifie si le token est présent dans le localStorage et met à jour le store
-        const token: string | null = localStorage.getItem('token');
-        if (token) setToken(token);
+        // Si token présent mais expiré => logout
+        if (token && isTokenExpired(token)) {
+          logout({ redirect: false });
+          return;
+        }
 
-        // Vérifie si le token est expiré et déconnecte l'utilisateur si c'est le cas
-        if (token && isTokenExpired(token)) logoutUserLocal();
-
-        // Met en place un intervalle pour vérifier l'expiration du token toutes les heures
-        const interval: NodeJS.Timeout = setInterval(() => {
-          const storedToken = localStorage.getItem('token');
-          if (storedToken && isTokenExpired(storedToken)) logoutUserLocal();
+        // Vérifie l'expiration du token toutes les heures
+        const interval = setInterval(() => {
+          const currentToken = localStorage.getItem('token');
+          if (currentToken && isTokenExpired(currentToken))
+            logout({ redirect: false });
         }, 3600000);
 
         return () => clearInterval(interval);
@@ -45,10 +49,11 @@ export default function AppInitializer({ children }: Props) {
       }
     };
 
-    appInit();
-  }, [setToken, logoutUserLocal, loadUserDataFromLocalStorage]);
+    // Init uniquement si non initialisé
+    if (!initialized) init();
+    else setLoading(false);
+  }, [initialized, token, logout, loadUserDataFromLocalStorage]);
 
   if (loading) return <LoadingPage />;
-
   return <>{children}</>;
 }

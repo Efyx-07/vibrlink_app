@@ -3,6 +3,7 @@ import { User } from '@/interfaces/user.interface';
 
 interface State {
   user: User | null;
+  initialized: boolean;
   token: string | null;
   isLoggedIn: boolean;
   setToken: (newToken: string | null) => void;
@@ -16,6 +17,7 @@ interface State {
 // ===========================================================================================
 const useUserStore = create<State>((set, get) => ({
   user: null,
+  initialized: false,
   token: null,
   isLoggedIn: false,
 
@@ -50,11 +52,27 @@ const useUserStore = create<State>((set, get) => ({
   // Charge les données utilisateur et le token depuis le local-storage
   // ===========================================================================================
   loadUserDataFromLocalStorage: async () => {
+    const { initialized } = get();
+
+    if (initialized) return;
+
     const localStorageUserData = localStorage.getItem('user');
     const token = localStorage.getItem('token');
+
     if (localStorageUserData && token)
-      set({ user: JSON.parse(localStorageUserData), token, isLoggedIn: true });
-    else set({ user: null, token: null, isLoggedIn: false });
+      set({
+        user: JSON.parse(localStorageUserData),
+        token,
+        isLoggedIn: true,
+      });
+    else
+      set({
+        user: null,
+        token: null,
+        isLoggedIn: false,
+      });
+
+    set({ initialized: true });
   },
 }));
 
