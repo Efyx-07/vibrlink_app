@@ -1,7 +1,6 @@
 import { apiUrl } from '@/config';
 import { Release, Platform } from '@/interfaces/release.interface';
 import { User } from '@/interfaces/user.interface';
-import { getAuthTokenFromLocalStorage } from '@/utils/getTokenFromLocalStorage';
 
 // Service pour fetcher les releases pour un utilisateur (userId). Retourne un tableau de Release
 // ===========================================================================================
@@ -9,16 +8,8 @@ export async function fetchReleasesData(
   userId: User['id'],
 ): Promise<Release[]> {
   try {
-    // const token = getAuthTokenFromLocalStorage();
-    // if (!token) throw new Error('No auth token found');
-
-    // console.log('token envoyé: ', token)
-
     const response = await fetch(`${apiUrl}/releasesRoute/releases/${userId}`, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
-      credentials: 'include',
+      credentials: 'include', // Important pour que le cookie soit envoyé (token)
     });
 
     if (!response.ok) throw new Error('Error while fetching datas');

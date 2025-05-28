@@ -193,8 +193,6 @@ export async function resetPassword(
   newPassword: User['password'],
 ): Promise<{ message: string }> {
   try {
-    console.log('Resetting password with token:', token);
-    console.log('New password:', newPassword);
     const response = await fetch(
       `${apiUrl}/passwordRoute/reset-password/${token}`,
       {
