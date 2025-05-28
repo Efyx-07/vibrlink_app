@@ -15,7 +15,6 @@ export default function MyAccountItem() {
 
   // Récupère l'utilisateur connecté
   const user = useUserStore((state) => state.user);
-  const { logoutUserLocal } = useUserStore();
 
   // Etat de visibilité du menu utilisateur
   const [isHoverUserMenuVisible, setIsHoverUserMenuVisible] =
