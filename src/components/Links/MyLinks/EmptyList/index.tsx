@@ -10,8 +10,8 @@ export default function EmptyList() {
       <div className="max-w-64">
         <Image
           src="/svg/empty-list.svg"
-          width={500}
-          height={500}
+          width={256}
+          height={256}
           alt="empty list"
           priority
         />
