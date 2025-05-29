@@ -220,25 +220,14 @@ export async function resetPassword(
   }
 }
 
-// Service pour checker l'utilisateur actuel
+// Service pour vérifier la session utilisateur
 // ===========================================================================================
-export async function fetchCurrentUser() {
-  try {
-    const response = await fetch(`${apiUrl}/user/me`, {
-      method: 'GET',
-      credentials: 'include', // important pour envoyer les cookies HttpOnly
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+export async function validateUserSession(): Promise<void> {
+  const response = await fetch(`${apiUrl}/user/me`, {
+    method: 'GET',
+    credentials: 'include', // Important pour que le cookie soit envoyé (token)
+    headers: { 'Content-Type': 'application/json' },
+  });
 
-    if (!response.ok) {
-      throw new Error('Token invalide ou absent');
-    }
-
-    const data = await response.json();
-    return data.user;
-  } catch (error) {
-    throw error;
-  }
+  if (!response.ok) throw new Error('Token invalide ou absent');
 }
