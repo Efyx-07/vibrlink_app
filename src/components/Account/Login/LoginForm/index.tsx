@@ -13,7 +13,7 @@ import SectionTitle from '@/components/Shared/SectionTitle';
 
 export default function LoginForm() {
   const router = useRouter();
-  const { setUserData, setToken } = useUserStore();
+  const { setUserData } = useUserStore();
 
   // State pour le formulaire de connexion
   const [email, setEmail] = useState<User['email']>('');
@@ -44,8 +44,6 @@ export default function LoginForm() {
       {
         onSuccess: (data) => {
           setUserData(data.user);
-          localStorage.setItem('token', data.token);
-          setToken(data.token);
           setIsRedirecting(true);
           router.push('/vl/links/my-links');
         },

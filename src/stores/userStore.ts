@@ -4,9 +4,7 @@ import { User } from '@/interfaces/user.interface';
 interface State {
   user: User | null;
   initialized: boolean;
-  token: string | null;
   isLoggedIn: boolean;
-  setToken: (newToken: string | null) => void;
   saveUserDataInLocalStorage: () => void;
   setUserData: (user: User) => void;
   logoutUserLocal: () => void;
@@ -18,15 +16,7 @@ interface State {
 const useUserStore = create<State>((set, get) => ({
   user: null,
   initialized: false,
-  token: null,
   isLoggedIn: false,
-
-  // Met à jour le token et statut de connexion, sauvegarde le token dans le local-storage
-  // ===========================================================================================
-  setToken: (newToken) => {
-    set({ token: newToken, isLoggedIn: !!newToken });
-    localStorage.setItem('token', newToken ?? '');
-  },
 
   // Sauvegarde les données user dans le local-storage
   // ===========================================================================================
@@ -37,19 +27,18 @@ const useUserStore = create<State>((set, get) => ({
   // Met à jour les données utilisateur dans le store et les sauvegarde dans le local-storage
   // ===========================================================================================
   setUserData: (user) => {
-    set({ user });
+    set({ user, isLoggedIn: true });
     get().saveUserDataInLocalStorage();
   },
 
-  // Déconnecte l'utilisateur : supprime token et données utilisateur du localStorage et du store
+  // Déconnecte l'utilisateur : supprime données utilisateur du localStorage et du store
   // ===========================================================================================
   logoutUserLocal: () => {
-    localStorage.removeItem('token');
     localStorage.removeItem('user');
-    set({ user: null, token: null, isLoggedIn: false });
+    set({ user: null, isLoggedIn: false });
   },
 
-  // Charge les données utilisateur et le token depuis le local-storage
+  // Charge les données utilisateur depuis le local-storage
   // ===========================================================================================
   loadUserDataFromLocalStorage: async () => {
     const { initialized } = get();
@@ -57,20 +46,13 @@ const useUserStore = create<State>((set, get) => ({
     if (initialized) return;
 
     const localStorageUserData = localStorage.getItem('user');
-    const token = localStorage.getItem('token');
 
-    if (localStorageUserData && token)
+    if (localStorageUserData)
       set({
         user: JSON.parse(localStorageUserData),
-        token,
         isLoggedIn: true,
       });
-    else
-      set({
-        user: null,
-        token: null,
-        isLoggedIn: false,
-      });
+    else set({ user: null, isLoggedIn: false });
 
     set({ initialized: true });
   },
