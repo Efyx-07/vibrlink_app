@@ -20,9 +20,8 @@ const useUserStore = create<State>((set, get) => ({
 
   // Sauvegarde les données user dans le local-storage
   // ===========================================================================================
-  saveUserDataInLocalStorage: () => {
-    localStorage.setItem('user', JSON.stringify(get().user));
-  },
+  saveUserDataInLocalStorage: () =>
+    localStorage.setItem('user', JSON.stringify(get().user)),
 
   // Met à jour les données utilisateur dans le store et les sauvegarde dans le local-storage
   // ===========================================================================================
@@ -42,11 +41,9 @@ const useUserStore = create<State>((set, get) => ({
   // ===========================================================================================
   loadUserDataFromLocalStorage: async () => {
     const { initialized } = get();
-
     if (initialized) return;
 
     const localStorageUserData = localStorage.getItem('user');
-
     if (localStorageUserData)
       set({
         user: JSON.parse(localStorageUserData),
