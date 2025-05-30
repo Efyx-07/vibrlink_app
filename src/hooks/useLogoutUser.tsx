@@ -23,7 +23,7 @@ export const useLogoutUser = () => {
       return _options;
     },
     onSuccess: (_data, variables) => {
-      if (variables?.redirect !== false) router.push('/');
+      if (variables?.redirect !== false) router.push('/vl/account/login');
     },
     onError: (error) => console.error('Logout error:', error),
   });
