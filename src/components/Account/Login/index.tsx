@@ -14,7 +14,7 @@ export default function Login() {
       <StyledSeparator icon="game-icons:brain-freeze" />
       <FormContainer
         addedLinkLabel="I forgot my password"
-        addedLinkPath="/vl/account/reset-password-ask"
+        addedLinkPath="/vl/account/reset-password/ask"
         isJustifyCenter
       >
         <LoginForm />

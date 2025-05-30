@@ -17,7 +17,7 @@ export function middleware(request: NextRequest) {
     '/vl/home',
     '/vl/account/login',
     '/vl/account/signup',
-    '/vl/account/reset-password-ask',
+    '/vl/account/reset-password',
   ];
 
   // Pages accessibles seulement si connecté
