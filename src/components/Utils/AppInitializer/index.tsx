@@ -10,18 +10,30 @@ interface Props {
   children: React.ReactNode;
 }
 
+// Initialise l'app au démarrage
+// ===========================================================================================
 export default function AppInitializer({ children }: Props) {
   const [loading, setLoading] = useState(true);
   const { initialized, loadUserDataFromLocalStorage } = useUserStore();
   const { logout } = useLogoutUser();
 
-  // Initialisation complète : charge données puis vérifie la session utilisateur
+  // Fonction principale d'initialisation
   const init = async () => {
     try {
+      // Charge les données utilisateurs avec la méthode du store
       await loadUserDataFromLocalStorage();
+
+      // Récupère l'état de connexion après le chargement des données
+      const { isLoggedIn } = useUserStore.getState();
+
+      // Si non connecté, ne fait rien
+      if (!isLoggedIn) return;
+
+      // Si oui, vérifie la session (validité du token)
       await validateUserSession();
     } catch (error) {
-      logout();
+      // Redirige si un token était présent mais invalide
+      logout({ redirect: true });
     } finally {
       setLoading(false);
     }
@@ -31,19 +43,21 @@ export default function AppInitializer({ children }: Props) {
     if (!initialized) init();
     else setLoading(false);
 
-    // Vérifie la validité de la session utilisateur toutes les heures
-    const intervalId: NodeJS.Timeout = setInterval(async () => {
+    // Revalidation toutes les heures si utilisateur connecté
+    const intervalId = setInterval(async () => {
+      const { isLoggedIn } = useUserStore.getState();
+      if (!isLoggedIn) return;
+
       try {
         await validateUserSession();
       } catch (error) {
-        logout();
+        logout({ redirect: true });
       }
-    }, 3600000);
+    }, 3600000); // 1h
 
     return () => clearInterval(intervalId);
   }, [initialized, loadUserDataFromLocalStorage, logout]);
 
   if (loading) return <LoadingPage />;
-
   return <>{children}</>;
 }

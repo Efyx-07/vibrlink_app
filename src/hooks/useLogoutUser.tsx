@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 // Hook pour gérer:
 // déconnexion utilisateur avec React Query
 // deconnexion avec méthode du store
-// redirection vers la page d'accueil
+// redirection vers la page de connexion
 // ===========================================================================================
 interface LogoutOptions {
   redirect?: boolean;
