@@ -19,14 +19,13 @@ export default function Home() {
           to share your new release with your fan community. Let&apos;s do it !
         </p>
       </div>
-      <div className="w-full max-w-80">
-        <Button
-          type="button"
-          label="Create a free account"
-          isLoading={false}
-          onButtonClick={() => router.push('/vl/account/signup')}
-        />
-      </div>
+      <Button
+        type="button"
+        label="Create a free account"
+        isLoading={false}
+        isMaxWidthLmited
+        onButtonClick={() => router.push('/vl/account/signup')}
+      />
     </div>
   );
 }

@@ -7,6 +7,7 @@ interface ButtonProps {
   onButtonClick?: () => void;
   isSmall?: boolean;
   isDangerous?: boolean;
+  isMaxWidthLmited?: boolean;
   addMention?: string;
   disabled?: boolean;
 }
@@ -20,6 +21,7 @@ export default function Button({
   addMention,
   disabled,
   isDangerous,
+  isMaxWidthLmited,
 }: ButtonProps) {
   // Classe pour les couleurs régulières
   const regularColors: string =
@@ -27,10 +29,11 @@ export default function Button({
   // Classe pour les couleurs dangereuses
   const dangerousColors: string =
     'border-errorColor5 bg-errorColor05 text-errorColor hover:bg-errorColor25';
+
   return (
     <button
       type={type}
-      className={`${isSmall ? 'size-full min-h-10 md:w-60' : 'h-16 w-full'} cursor-pointer border ${isDangerous ? dangerousColors : regularColors}`}
+      className={`${isSmall ? 'size-full min-h-10 md:w-60' : 'h-16 w-full'} cursor-pointer border ${isDangerous ? dangerousColors : regularColors} ${isMaxWidthLmited ? 'max-w-80' : ''}`}
       onClick={onButtonClick}
       disabled={disabled}
     >
