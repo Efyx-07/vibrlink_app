@@ -18,7 +18,7 @@ export default function AppInitializer({ children }: Props) {
   const { logout } = useLogoutUser();
 
   // Fonction principale d'initialisation. Mémorisée avec useCallback pour mémoriser la fonction entre les rendus.
-  const init = useCallback(async () => {
+  const init = useCallback(async (): Promise<void> => {
     try {
       // Charge les données utilisateurs avec la méthode du store
       await loadUserDataFromLocalStorage();
@@ -44,7 +44,7 @@ export default function AppInitializer({ children }: Props) {
     else setLoading(false);
 
     // Revalidation toutes les heures si utilisateur connecté
-    const intervalId = setInterval(async () => {
+    const intervalId: NodeJS.Timeout = setInterval(async () => {
       const { isLoggedIn } = useUserStore.getState();
       if (!isLoggedIn) return;
 
