@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import LoadingPage from '@/components/LoadingPage';
 import { useLogoutUser } from '@/hooks/useLogoutUser';
@@ -17,8 +17,8 @@ export default function AppInitializer({ children }: Props) {
   const { initialized, loadUserDataFromLocalStorage } = useUserStore();
   const { logout } = useLogoutUser();
 
-  // Fonction principale d'initialisation
-  const init = async () => {
+  // Fonction principale d'initialisation. Mémorisée avec useCallback pour mémoriser la fonction entre les rendus.
+  const init = useCallback(async () => {
     try {
       // Charge les données utilisateurs avec la méthode du store
       await loadUserDataFromLocalStorage();
@@ -31,13 +31,13 @@ export default function AppInitializer({ children }: Props) {
 
       // Si oui, vérifie la session (validité du token)
       await validateUserSession();
-    } catch (error) {
+    } catch {
       // Redirige si un token était présent mais invalide
       logout({ redirect: true });
     } finally {
       setLoading(false);
     }
-  };
+  }, [loadUserDataFromLocalStorage, logout]);
 
   useEffect(() => {
     if (!initialized) init();
@@ -50,13 +50,13 @@ export default function AppInitializer({ children }: Props) {
 
       try {
         await validateUserSession();
-      } catch (error) {
+      } catch {
         logout({ redirect: true });
       }
     }, 3600000); // 1h
 
     return () => clearInterval(intervalId);
-  }, [initialized, loadUserDataFromLocalStorage, logout]);
+  }, [initialized, init, logout]);
 
   if (loading) return <LoadingPage />;
   return <>{children}</>;
