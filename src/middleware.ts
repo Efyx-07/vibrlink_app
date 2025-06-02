@@ -7,6 +7,8 @@ function isAuthenticated(request: NextRequest) {
   return Boolean(token);
 }
 
+// Middleware pour gérer la sécurité et l'accès aux pages selon la validité de la session utilisateur
+// ===========================================================================================
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
