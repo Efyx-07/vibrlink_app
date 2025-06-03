@@ -53,12 +53,12 @@ function LinkCardInfos({ release, isEditor }: LinkCardInfosProps) {
         <>
           <HorizontalSeparator />
           <div className="flex flex-col gap-1">
-            <p className="text-xs font-normal opacity-75">
-              {formatDate(release.creationDate)}
+            <p className="text-xs font-light opacity-75">
+              created: {formatDate(release.creationDate)}
             </p>
             {release.creationDate !== release.lastUpdate && (
-              <p className="text-xs font-normal opacity-75">
-                {timeAgo(release.lastUpdate)}
+              <p className="text-xs font-light opacity-75">
+                updated: {timeAgo(release.lastUpdate)}
               </p>
             )}
           </div>
