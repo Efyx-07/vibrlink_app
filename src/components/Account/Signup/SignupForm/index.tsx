@@ -15,11 +15,14 @@ import { User } from '@/interfaces/user.interface';
 import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 import SectionTitle from '@/components/Shared/SectionTitle';
+import { useLoginUser } from '@/hooks/useLoginUser';
+import useUserStore from '@/stores/userStore';
 
 // Composant pour l'inscription d'un utilisateur
 // ===========================================================================================
 export default function SignupForm() {
   const router = useRouter();
+  const { setUserData } = useUserStore();
 
   // State pour les champs du formulaire
   const [email, setEmail] = useState<User['email']>('');
@@ -49,7 +52,10 @@ export default function SignupForm() {
   }, [email, password, confirmPassword]);
 
   // Utilisation du hook d'inscription utilisateur
-  const { mutate, isPending } = useSignupUser();
+  const { mutate: signupMutate, isPending: isSigningUp } = useSignupUser();
+
+  // Utilisation du hook de connexion de l'utilisateur
+  const { mutate: loginMutate, isPending: isLoging } = useLoginUser();
 
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -65,17 +71,26 @@ export default function SignupForm() {
     }
 
     // Appelle la mutation pour l'inscription
-    mutate(
+    signupMutate(
       { email, password },
       {
         onSuccess: () => {
-          setIsRedirecting(true);
-          router.push('/vl/account/login');
+          // Auto-login après inscription
+          loginMutate(
+            { email, password },
+            {
+              onSuccess: (data) => {
+                setUserData(data.user);
+                setIsRedirecting(true);
+                router.push('/vl/links/my-links');
+              },
+              onError: () =>
+                setErrorMessage('Signup succeeded, but login failed.'),
+            },
+          );
         },
-        onError: () => {
-          const message: string = 'An error occured during registration';
-          setErrorMessage(message);
-        },
+        onError: () =>
+          setErrorMessage('An error occurred during registration.'),
       },
     );
   };
@@ -130,9 +145,9 @@ export default function SignupForm() {
       />
       <Button
         type="submit"
-        label="Sign up"
-        isLoading={isPending || isRedirecting}
-        disabled={isPending || isRedirecting}
+        label="Signup and login"
+        isLoading={isSigningUp || isLoging || isRedirecting}
+        disabled={isSigningUp || isLoging || isRedirecting}
       />
       {errorMessage && <ErrorMessage text={errorMessage} />}
     </form>
