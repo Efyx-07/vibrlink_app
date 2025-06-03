@@ -3,8 +3,6 @@
 import Button from '@/components/Shared/Button';
 import FormField from '@/components/Shared/Forms/FormField';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import useUserStore from '@/stores/userStore';
 import { useLoginUser } from '@/hooks/useLoginUser';
 import { User } from '@/interfaces/user.interface';
 import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
@@ -12,9 +10,6 @@ import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 import SectionTitle from '@/components/Shared/SectionTitle';
 
 export default function LoginForm() {
-  const router = useRouter();
-  const { setUserData } = useUserStore();
-
   // State pour le formulaire de connexion
   const [email, setEmail] = useState<User['email']>('');
   const [password, setPassword] = useState<string>('');
@@ -31,7 +26,10 @@ export default function LoginForm() {
     usePasswordVisibility();
 
   // Utilisation du hook de connexion utilisateur
-  const { mutate, isPending } = useLoginUser();
+  const { mutate, isPending } = useLoginUser({
+    setIsRedirecting,
+    onError: () => setErrorMessage('Invalid email or password'),
+  });
 
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: React.FormEvent) => {
@@ -39,20 +37,7 @@ export default function LoginForm() {
     setErrorMessage(''); // Reset du message d'erreur
 
     // Appelle la mutation pour la connexion
-    mutate(
-      { email, password },
-      {
-        onSuccess: (data) => {
-          setUserData(data.user);
-          setIsRedirecting(true);
-          router.push('/vl/links/my-links');
-        },
-        onError: () => {
-          const message: string = 'Invalid email or password';
-          setErrorMessage(message);
-        },
-      },
-    );
+    mutate({ email, password });
   };
   // ===========================================================================================
 

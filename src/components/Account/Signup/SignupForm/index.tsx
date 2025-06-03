@@ -9,21 +9,16 @@ import {
   validateConfirmPassword,
 } from '@/utils/validateDatas';
 import { FormEvent, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useSignupUser } from '@/hooks/useSignupUser';
 import { User } from '@/interfaces/user.interface';
 import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 import SectionTitle from '@/components/Shared/SectionTitle';
 import { useLoginUser } from '@/hooks/useLoginUser';
-import useUserStore from '@/stores/userStore';
 
 // Composant pour l'inscription d'un utilisateur
 // ===========================================================================================
 export default function SignupForm() {
-  const router = useRouter();
-  const { setUserData } = useUserStore();
-
   // State pour les champs du formulaire
   const [email, setEmail] = useState<User['email']>('');
   const [password, setPassword] = useState<string>('');
@@ -55,7 +50,10 @@ export default function SignupForm() {
   const { mutate: signupMutate, isPending: isSigningUp } = useSignupUser();
 
   // Utilisation du hook de connexion de l'utilisateur
-  const { mutate: loginMutate, isPending: isLoging } = useLoginUser();
+  const { mutate: loginMutate, isPending: isLoggingIn } = useLoginUser({
+    setIsRedirecting,
+    onError: () => setErrorMessage('Signup succeeded, but login failed.'),
+  });
 
   // Fonction de soumission du formulaire
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -74,21 +72,7 @@ export default function SignupForm() {
     signupMutate(
       { email, password },
       {
-        onSuccess: () => {
-          // Auto-login après inscription
-          loginMutate(
-            { email, password },
-            {
-              onSuccess: (data) => {
-                setUserData(data.user);
-                setIsRedirecting(true);
-                router.push('/vl/links/my-links');
-              },
-              onError: () =>
-                setErrorMessage('Signup succeeded, but login failed.'),
-            },
-          );
-        },
+        onSuccess: () => loginMutate({ email, password }),
         onError: () =>
           setErrorMessage('An error occurred during registration.'),
       },
@@ -146,8 +130,8 @@ export default function SignupForm() {
       <Button
         type="submit"
         label="Signup and login"
-        isLoading={isSigningUp || isLoging || isRedirecting}
-        disabled={isSigningUp || isLoging || isRedirecting}
+        isLoading={isSigningUp || isLoggingIn || isRedirecting}
+        disabled={isSigningUp || isLoggingIn || isRedirecting}
       />
       {errorMessage && <ErrorMessage text={errorMessage} />}
     </form>
