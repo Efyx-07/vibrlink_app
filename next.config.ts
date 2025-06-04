@@ -19,11 +19,11 @@ const nextConfig: NextConfig = {
         destination: 'https://vibrlinks-backend.vercel.app/user/:path*',
       },
       {
-        source: '/vl/password/:path*',
+        source: '/vl/passwordRoute/:path*',
         destination: 'https://vibrlinks-backend.vercel.app/passwordRoute/:path*',
       },
       {
-        source: '/vl/releases/:path*',
+        source: '/vl/releasesRoute/:path*',
         destination: 'https://vibrlinks-backend.vercel.app/releasesRoute/:path*',
       },
     ];
