@@ -1,5 +1,5 @@
 //export const apiUrl: string | undefined = process.env.NEXT_PUBLIC_API_URL;
-export const apiUrl: string = '/vl'
+export const apiUrl: string = '/vl';
 export const appUrl: string | undefined = process.env.NEXT_PUBLIC_APP_URL;
 
 export const siteName: string = 'VibrLink';
