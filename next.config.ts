@@ -1,5 +1,7 @@
 import type { NextConfig } from 'next';
-import { apiUrl, backendUrl } from '@/config';
+import { backendUrl } from '@/config';
+
+if (!backendUrl) throw new Error('NEXT_PUBLIC_BACKEND_URL is not defined');
 
 const nextConfig: NextConfig = {
   images: {
@@ -16,15 +18,15 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: `${apiUrl}/user/:path*`,
+        source: '/vl/user/:path*',
         destination: `${backendUrl}/user/:path*`,
       },
       {
-        source: `${apiUrl}/passwordRoute/:path*`,
+        source: '/vl/passwordRoute/:path*',
         destination: `${backendUrl}/passwordRoute/:path*`,
       },
       {
-        source: `${apiUrl}/releasesRoute/:path*`,
+        source: '/vl/releasesRoute/:path*',
         destination: `${backendUrl}/releasesRoute/:path*`,
       },
     ];
