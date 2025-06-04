@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import { apiUrl, backendUrl } from '@/config';
 
 const nextConfig: NextConfig = {
   images: {
@@ -15,18 +16,16 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/vl/user/:path*',
-        destination: 'https://vibrlinks-backend.vercel.app/user/:path*',
+        source: `/${apiUrl}/user/:path*`,
+        destination: `${backendUrl}/user/:path*`,
       },
       {
-        source: '/vl/passwordRoute/:path*',
-        destination:
-          'https://vibrlinks-backend.vercel.app/passwordRoute/:path*',
+        source: `/${apiUrl}/passwordRoute/:path*`,
+        destination: `${backendUrl}/passwordRoute/:path*`,
       },
       {
-        source: '/vl/releasesRoute/:path*',
-        destination:
-          'https://vibrlinks-backend.vercel.app/releasesRoute/:path*',
+        source: `/${apiUrl}/releasesRoute/:path*`,
+        destination: `${backendUrl}/releasesRoute/:path*`,
       },
     ];
   },
