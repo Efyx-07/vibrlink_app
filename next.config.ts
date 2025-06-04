@@ -16,15 +16,15 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: `/${apiUrl}/user/:path*`,
+        source: `${apiUrl}/user/:path*`,
         destination: `${backendUrl}/user/:path*`,
       },
       {
-        source: `/${apiUrl}/passwordRoute/:path*`,
+        source: `${apiUrl}/passwordRoute/:path*`,
         destination: `${backendUrl}/passwordRoute/:path*`,
       },
       {
-        source: `/${apiUrl}/releasesRoute/:path*`,
+        source: `${apiUrl}/releasesRoute/:path*`,
         destination: `${backendUrl}/releasesRoute/:path*`,
       },
     ];
