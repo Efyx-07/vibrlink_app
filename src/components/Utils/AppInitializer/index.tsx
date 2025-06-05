@@ -5,6 +5,7 @@ import useUserStore from '@/stores/userStore';
 import LoadingPage from '@/components/LoadingPage';
 import { useLogoutUser } from '@/hooks/useLogoutUser';
 import { validateUserSession } from '@/services/auth.service';
+import AuthRedirector from '../AuthRedirector';
 
 interface Props {
   children: React.ReactNode;
@@ -95,5 +96,10 @@ export default function AppInitializer({ children }: Props) {
   }
 
   console.log('🧩 [AppInit] App prête, rendu des enfants');
-  return <>{children}</>;
+  return (
+    <>
+      <AuthRedirector />
+      {children}
+    </>
+  );
 }
