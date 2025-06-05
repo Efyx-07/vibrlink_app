@@ -1,4 +1,4 @@
-import { apiUrl } from '@/config';
+import { apiUrl, backendUrl } from '@/config';
 import { Release, Platform } from '@/interfaces/release.interface';
 import { User } from '@/interfaces/user.interface';
 
@@ -42,8 +42,13 @@ export async function fetchReleaseDataBySlug(
   releaseSlug: Release['slug'],
 ): Promise<Release> {
   try {
+    // Définit si le composant qui utilise le service est SSR ou CSR
+    const isServer = typeof window === 'undefined';
+    // Si server, passe l'url du backend sinon passe par le proxy (apiUrl)
+    const baseUrl = isServer ? backendUrl : apiUrl;
+
     const response = await fetch(
-      `${apiUrl}/releasesRoute/release/${releaseSlug}`,
+      `${baseUrl}/releasesRoute/release/${releaseSlug}`,
     );
 
     if (!response.ok)
