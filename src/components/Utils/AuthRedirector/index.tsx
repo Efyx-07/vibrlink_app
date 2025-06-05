@@ -13,6 +13,8 @@ const guestOnlyRoutes = [
 
 const authOnlyRoutes = ['/vl/links', '/vl/account/settings'];
 
+// Composant complémentaire au middleware pour fiabiliser les routes et redirections côté client
+// ===========================================================================================
 export default function AuthRedirector() {
   const router = useRouter();
   const pathname = usePathname();
@@ -26,13 +28,10 @@ export default function AuthRedirector() {
       pathname.startsWith(route),
     );
 
-    if (isLoggedIn && isGuestOnly) {
-      // Si connecté sur une page réservée aux guests → redirige vers my-links
-      router.replace('/vl/links/my-links');
-    } else if (!isLoggedIn && isAuthOnly) {
-      // Si non connecté sur une page nécessitant auth → redirige vers login
-      router.replace('/vl/account/login');
-    }
+    // Si connecté sur une page réservée aux guests → redirige vers my-links
+    if (isLoggedIn && isGuestOnly) router.replace('/vl/links/my-links');
+    // Si non connecté sur une page nécessitant auth → redirige vers login
+    else if (!isLoggedIn && isAuthOnly) router.replace('/vl/account/login');
   }, [isLoggedIn, pathname, router]);
 
   return null;

@@ -4,7 +4,6 @@ import { NextResponse, type NextRequest } from 'next/server';
 // ===========================================================================================
 function isAuthenticated(request: NextRequest) {
   const token = request.cookies.get('token')?.value;
-  console.log('🔐 Token:', token);
   return Boolean(token);
 }
 
@@ -33,24 +32,14 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/vl/links') ||
     authOnlyRoutes.some((route) => pathname.startsWith(route));
 
-  console.log('🧭 Path:', pathname);
-  console.log('👤 Logged In:', isLoggedIn);
-  console.log('🔓 Guest Only:', isGuestOnly);
-  console.log('🔐 Auth Only:', isAuthOnly);
-
   // Redirige les utilisateurs connectés hors des pages guest
-  if (isGuestOnly && isLoggedIn) {
-    console.log('➡️ Redirect: already logged in → /vl/links/my-links');
+  if (isGuestOnly && isLoggedIn)
     return NextResponse.redirect(new URL('/vl/links/my-links', request.url));
-  }
 
   // Redirige les utilisateurs non connectés
-  if (isAuthOnly && !isLoggedIn) {
-    console.log('➡️ Redirect: not logged in → /vl/account/login');
+  if (isAuthOnly && !isLoggedIn)
     return NextResponse.redirect(new URL('/vl/account/login', request.url));
-  }
 
-  console.log('✅ Access granted');
   return NextResponse.next();
 }
 
