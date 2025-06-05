@@ -1,4 +1,4 @@
-import { apiUrl } from '@/config';
+import { apiUrl, backendUrl } from '@/config';
 import {
   User,
   SignupResponse,
@@ -223,7 +223,7 @@ export async function resetPassword(
 // Service pour vérifier la session utilisateur
 // ===========================================================================================
 export async function validateUserSession(): Promise<void> {
-  const response = await fetch(`${apiUrl}/user/me`, {
+  const response = await fetch(`${backendUrl}/user/me`, {
     method: 'GET',
     credentials: 'include', // Important pour que le cookie soit envoyé (token)
     headers: { 'Content-Type': 'application/json' },
