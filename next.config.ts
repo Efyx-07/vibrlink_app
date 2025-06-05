@@ -3,6 +3,11 @@ import { backendUrl } from '@/config';
 
 if (!backendUrl) throw new Error('BACKEND_URL is not defined');
 
+console.log(
+  '🔧 [next.config] process.env.BACKEND_URL =',
+  process.env.BACKEND_URL,
+);
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
