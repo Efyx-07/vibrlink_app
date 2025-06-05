@@ -1,5 +1,5 @@
 import { fetchReleaseDataBySlug } from '@/services/release-api.service';
-import { backendUrl } from '@/config';
+import { apiUrl } from '@/config';
 
 describe('fetchReleaseDataBySlug', () => {
   const slug = 'test-release';
@@ -38,7 +38,7 @@ describe('fetchReleaseDataBySlug', () => {
     expect(release.platforms[0].visibility).toBe(true);
     expect(release.platforms[1].visibility).toBe(false);
     expect(fetch).toHaveBeenCalledWith(
-      `${backendUrl}/releasesRoute/release/${slug}`,
+      `${apiUrl}/releasesRoute/release/${slug}`,
     );
   });
 

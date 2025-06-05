@@ -1,4 +1,4 @@
-import { apiUrl, backendUrl } from '@/config';
+import { apiUrl } from '@/config';
 import { Release, Platform } from '@/interfaces/release.interface';
 import { User } from '@/interfaces/user.interface';
 
@@ -43,7 +43,7 @@ export async function fetchReleaseDataBySlug(
 ): Promise<Release> {
   try {
     const response = await fetch(
-      `${backendUrl}/releasesRoute/release/${releaseSlug}`,
+      `${apiUrl}/releasesRoute/release/${releaseSlug}`,
     );
 
     if (!response.ok)
