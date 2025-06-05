@@ -1,8 +1,3 @@
-console.log(
-  '🔧 [next.config] process.env.BACKEND_URL =',
-  process.env.BACKEND_URL,
-);
-
 import type { NextConfig } from 'next';
 import { backendUrl } from '@/config';
 

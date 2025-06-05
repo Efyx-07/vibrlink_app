@@ -1,6 +1,7 @@
 import { apiUrl, backendUrl } from '@/config';
 import { Release, Platform } from '@/interfaces/release.interface';
 import { User } from '@/interfaces/user.interface';
+import { isRunningOnServer } from '@/utils/isRunningOnServer';
 
 // Service pour fetcher les releases pour un utilisateur (userId). Retourne un tableau de Release
 // ===========================================================================================
@@ -43,9 +44,8 @@ export async function fetchReleaseDataBySlug(
 ): Promise<Release> {
   try {
     // Définit si le composant qui utilise le service est SSR ou CSR
-    const isServer = typeof window === 'undefined';
     // Si server, passe l'url du backend sinon passe par le proxy (apiUrl)
-    const baseUrl = isServer ? backendUrl : apiUrl;
+    const baseUrl = isRunningOnServer() ? backendUrl : apiUrl;
 
     if (!baseUrl) throw new Error('Base URL is undefined');
 
