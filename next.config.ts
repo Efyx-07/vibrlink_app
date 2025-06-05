@@ -1,12 +1,12 @@
-import type { NextConfig } from 'next';
-import { backendUrl } from '@/config';
-
-if (!backendUrl) throw new Error('BACKEND_URL is not defined');
-
 console.log(
   '🔧 [next.config] process.env.BACKEND_URL =',
   process.env.BACKEND_URL,
 );
+
+import type { NextConfig } from 'next';
+import { backendUrl } from '@/config';
+
+if (!backendUrl) throw new Error('BACKEND_URL is not defined');
 
 const nextConfig: NextConfig = {
   images: {
