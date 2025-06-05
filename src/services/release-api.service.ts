@@ -47,6 +47,8 @@ export async function fetchReleaseDataBySlug(
     // Si server, passe l'url du backend sinon passe par le proxy (apiUrl)
     const baseUrl = isServer ? backendUrl : apiUrl;
 
+    if (!baseUrl) throw new Error('Base URL is undefined');
+
     const response = await fetch(
       `${baseUrl}/releasesRoute/release/${releaseSlug}`,
     );
