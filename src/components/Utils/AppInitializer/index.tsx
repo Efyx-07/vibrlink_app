@@ -22,7 +22,9 @@ export default function AppInitializer({ children }: Props) {
     console.log('🟡 [AppInit] Initialisation en cours...');
     try {
       // Charge les données utilisateurs avec la méthode du store
-      console.log('📦 [AppInit] Chargement données user depuis localStorage...');
+      console.log(
+        '📦 [AppInit] Chargement données user depuis localStorage...',
+      );
       await loadUserDataFromLocalStorage();
 
       // Récupère l'état de connexion après le chargement des données
@@ -31,7 +33,9 @@ export default function AppInitializer({ children }: Props) {
 
       // Si non connecté, ne fait rien
       if (!isLoggedIn) {
-        console.log('❕ [AppInit] Utilisateur non connecté → skip session validation');
+        console.log(
+          '❕ [AppInit] Utilisateur non connecté → skip session validation',
+        );
         return;
       }
 
@@ -41,7 +45,9 @@ export default function AppInitializer({ children }: Props) {
       console.log('✅ [AppInit] Session valide');
     } catch {
       // Redirige si un token était présent mais invalide
-      console.warn('❌ [AppInit] Erreur lors de la vérification du token, déconnexion...');
+      console.warn(
+        '❌ [AppInit] Erreur lors de la vérification du token, déconnexion...',
+      );
       logout({ redirect: true });
     } finally {
       console.log('🟢 [AppInit] Initialisation terminée');
@@ -61,7 +67,10 @@ export default function AppInitializer({ children }: Props) {
     // Revalidation toutes les heures si utilisateur connecté
     const intervalId: NodeJS.Timeout = setInterval(async () => {
       const { isLoggedIn } = useUserStore.getState();
-      console.log('🔁 [AppInit] Revalidation périodique. isLoggedIn:', isLoggedIn);
+      console.log(
+        '🔁 [AppInit] Revalidation périodique. isLoggedIn:',
+        isLoggedIn,
+      );
 
       if (!isLoggedIn) return;
 
