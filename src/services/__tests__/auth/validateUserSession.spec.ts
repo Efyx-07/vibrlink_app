@@ -1,5 +1,5 @@
 import { validateUserSession } from '@/services/auth.service';
-import { apiUrl } from '@/config';
+import { backendUrl } from '@/config';
 
 describe('validateUserSession', () => {
   beforeEach(() => {
@@ -16,7 +16,7 @@ describe('validateUserSession', () => {
 
     await expect(validateUserSession()).resolves.toBeUndefined();
 
-    expect(fetch).toHaveBeenCalledWith(`${apiUrl}/user/me`, {
+    expect(fetch).toHaveBeenCalledWith(`${backendUrl}/user/me`, {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
