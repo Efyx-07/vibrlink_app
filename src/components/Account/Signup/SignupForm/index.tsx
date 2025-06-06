@@ -64,7 +64,7 @@ export default function SignupForm() {
       !validateData(email, password) ||
       !validateConfirmPassword(password, confirmPassword)
     ) {
-      console.error('Invalid email or password format');
+      setErrorMessage('Invalid email or password format');
       return;
     }
 
