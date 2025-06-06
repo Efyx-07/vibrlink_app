@@ -2,7 +2,7 @@
 
 import FormField from '@/components/Shared/Forms/FormField';
 import Button from '@/components/Shared/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { validateSpotifyUrl } from '@/utils/validateSpotifyUrl';
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
@@ -18,6 +18,7 @@ export default function NewLinkForm() {
 
   // State pour l'URL de l'album
   const [albumUrl, setAlbumUrl] = useState<SpotifyEntry['albumUrl']>('');
+  const [isAlbumUrlValid, setIsAlbumUrlValid] = useState<boolean>(false);
 
   // State pour l'opération de redirection
   // Permet au bouton de rester en mode loading jusqu'à la fin du processus Succès
@@ -25,6 +26,11 @@ export default function NewLinkForm() {
 
   // State pour le message d'erreur
   const [errorMessage, setErrorMessage] = useState<string>('');
+
+  // Vérification de la validité du champ
+  useEffect(() => {
+    setIsAlbumUrlValid(validateSpotifyUrl(albumUrl));
+  }, [albumUrl]);
 
   // Utilisation du hook de création des liens
   const { mutate, isPending } = useCreateLink();
@@ -35,7 +41,10 @@ export default function NewLinkForm() {
     setErrorMessage(''); // Reset du message d'erreur
 
     // Vérifie si l'URL est valide
-    if (!validateSpotifyUrl(albumUrl)) return;
+    if (!validateSpotifyUrl(albumUrl)) {
+      setErrorMessage('Invalid spotify url');
+      return;
+    }
 
     // Récupère l'ID de l'utilisateur dans le store
     const userId: User['id'] | undefined = userStore.user?.id;
@@ -67,7 +76,11 @@ export default function NewLinkForm() {
         name="albumUrl"
         type="url"
         value={albumUrl}
-        onChange={(e) => setAlbumUrl(e.target.value)}
+        onChange={(e) => {
+          setAlbumUrl(e.target.value);
+          if (errorMessage) setErrorMessage('');
+        }}
+        isValid={isAlbumUrlValid}
       />
       <Button
         type="submit"
