@@ -7,12 +7,14 @@ import LoadingPage from '@/components/LoadingPage';
 import LinkCard from '../Shared/LinkCard';
 import LinkEditorForm from './LinkEditorForm';
 import PageTitle from '@/components/Shared/PageTitle';
+import { apiUrl } from '@/config';
 
 export default function LinkEditor() {
   const { releaseSlug } = useParams();
 
   // Utilise le hook useRelease pour récupérer la release à éditer
   const { data: release, isLoading } = useRelease(
+    apiUrl,
     releaseSlug as Release['slug'],
   );
 

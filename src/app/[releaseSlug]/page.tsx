@@ -19,7 +19,10 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { releaseSlug } = await params;
-  const release: Release = await fetchReleaseDataBySlug(releaseSlug);
+  const release: Release = await fetchReleaseDataBySlug(
+    backendUrl,
+    releaseSlug,
+  );
   if (!release) return { title: 'Not Found' };
 
   return {
@@ -47,7 +50,10 @@ export default async function ReleaseLandingPage({
   const { releaseSlug } = await params;
 
   // Précharge les données de la release côté serveur et les met en cache dans le client
-  const release: Release = await fetchReleaseDataBySlug(releaseSlug);
+  const release: Release = await fetchReleaseDataBySlug(
+    backendUrl,
+    releaseSlug,
+  );
 
   // Utilise le client de requête pour précharger les données
   const queryClient = new QueryClient();

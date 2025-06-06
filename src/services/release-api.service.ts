@@ -40,15 +40,10 @@ export async function fetchReleasesData(
 // Service pour fetcher une release par son slug. Retourne un Release.
 // ===========================================================================================
 export async function fetchReleaseDataBySlug(
+  baseUrl: string,
   releaseSlug: Release['slug'],
 ): Promise<Release> {
   try {
-    // Définit si le composant qui utilise le service est SSR ou CSR
-    // Si server, passe l'url du backend sinon passe par le proxy (apiUrl)
-    const baseUrl = isRunningOnServer() ? backendUrl : apiUrl;
-
-    if (!baseUrl) throw new Error('Base URL is undefined');
-
     const response = await fetch(
       `${baseUrl}/releasesRoute/release/${releaseSlug}`,
     );
