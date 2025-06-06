@@ -38,6 +38,8 @@ export async function fetchReleasesData(
 }
 
 // Service pour fetcher une release par son slug. Retourne un Release.
+// Argument baseUrl:
+// Permet un appel direct au backend(backendUrl) si composant SSR ou au proxy(apiUrl) si CSR
 // ===========================================================================================
 export async function fetchReleaseDataBySlug(
   baseUrl: string,

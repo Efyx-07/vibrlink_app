@@ -1,5 +1,6 @@
 import { fetchReleaseDataBySlug } from '@/services/release-api.service';
-import { apiUrl } from '@/config';
+
+const mockBaseUrl: string = 'backendUrl';
 
 describe('fetchReleaseDataBySlug', () => {
   const slug = 'test-release';
@@ -31,14 +32,14 @@ describe('fetchReleaseDataBySlug', () => {
       } as Response),
     );
 
-    const release = await fetchReleaseDataBySlug(slug);
+    const release = await fetchReleaseDataBySlug(mockBaseUrl, slug);
 
     expect(release).toBeDefined();
     expect(release.slug).toBe('test-release');
     expect(release.platforms[0].visibility).toBe(true);
     expect(release.platforms[1].visibility).toBe(false);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/releasesRoute/release/${slug}`,
+      `${mockBaseUrl}/releasesRoute/release/${slug}`,
     );
   });
 
@@ -50,7 +51,7 @@ describe('fetchReleaseDataBySlug', () => {
       } as Response),
     );
 
-    await expect(fetchReleaseDataBySlug(slug)).rejects.toThrow(
+    await expect(fetchReleaseDataBySlug(mockBaseUrl, slug)).rejects.toThrow(
       'Error while fetching datas of the release',
     );
   });
@@ -66,7 +67,7 @@ describe('fetchReleaseDataBySlug', () => {
       } as Response),
     );
 
-    await expect(fetchReleaseDataBySlug(slug)).rejects.toThrow(
+    await expect(fetchReleaseDataBySlug(mockBaseUrl, slug)).rejects.toThrow(
       'Invalid response format',
     );
   });
@@ -75,6 +76,8 @@ describe('fetchReleaseDataBySlug', () => {
   it('should throw an error on fetch failure', async () => {
     global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
 
-    await expect(fetchReleaseDataBySlug(slug)).rejects.toThrow('Network error');
+    await expect(fetchReleaseDataBySlug(mockBaseUrl, slug)).rejects.toThrow(
+      'Network error',
+    );
   });
 });
