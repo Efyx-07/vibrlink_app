@@ -1,3 +1,4 @@
+import { div } from 'motion/react-client';
 import Link from 'next/link';
 
 interface FormContainerProps {
@@ -22,12 +23,14 @@ export default function FormContainer({
       >
         {children}
         {addedLinkLabel && addedLinkPath && (
-          <Link
-            href={addedLinkPath}
-            className="text-center text-sm font-light opacity-50 hover:text-accentColor hover:opacity-100"
-          >
-            {addedLinkLabel}
-          </Link>
+          <div className="flex w-full justify-center">
+            <Link
+              href={addedLinkPath}
+              className="text-center text-sm font-light opacity-50 hover:text-accentColor hover:opacity-100"
+            >
+              {addedLinkLabel}
+            </Link>
+          </div>
         )}
       </div>
     </div>
