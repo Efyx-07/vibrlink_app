@@ -62,11 +62,12 @@ export default function UpdatePasswordForm() {
     e.preventDefault();
     setErrorMessage(''); // Reset du message d'erreur
 
+    // Affiche un message d'erreur si les champs ne sont pas valides
     if (
       !validatePassword(newPassword) ||
       !validateConfirmPassword(newPassword, confirmNewPassword)
     ) {
-      console.error('Invalid password format');
+      setErrorMessage('Invalid password format');
       return;
     }
 
