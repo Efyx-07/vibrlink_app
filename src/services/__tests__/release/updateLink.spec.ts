@@ -41,16 +41,19 @@ describe('updateLink', () => {
 
   // Test erreur : réponse HTTP non OK
   it('should throw error when API response is not ok', async () => {
+    const mockErrorMessage = { message: 'Invalid input data' };
+
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: false,
+        json: () => Promise.resolve(mockErrorMessage),
         statusText: 'Bad Request',
       } as Response),
     );
 
     await expect(
       updateLink(newUrls, platformsVisibility, releaseId),
-    ).rejects.toThrow('Failed to update releaseBad Request');
+    ).rejects.toThrow('Invalid input data');
   });
 
   // Test erreur : fetch rejette la promesse
@@ -59,6 +62,6 @@ describe('updateLink', () => {
 
     await expect(
       updateLink(newUrls, platformsVisibility, releaseId),
-    ).rejects.toThrow('Failed to update releaseError: Network error');
+    ).rejects.toThrow('Network error');
   });
 });

@@ -23,16 +23,19 @@ describe('deleteLinkByReleaseId', () => {
   });
 
   // Test erreur : suppression échoue avec status non ok
-  it('should throw an error when API response is not ok', async () => {
+  it('should throw an error with message from response JSON when API response is not ok', async () => {
+    const errorMessage = { message: 'Release not found' };
+
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: false,
+        json: () => Promise.resolve(errorMessage),
         statusText: 'Not Found',
       } as Response),
     );
 
     await expect(deleteLinkByReleaseId(releaseId)).rejects.toThrow(
-      'Failed to delete releaseNot Found',
+      'Release not found',
     );
   });
 
@@ -41,7 +44,7 @@ describe('deleteLinkByReleaseId', () => {
     global.fetch = jest.fn(() => Promise.reject(new Error('Network failure')));
 
     await expect(deleteLinkByReleaseId(releaseId)).rejects.toThrow(
-      'Failed to delete releaseError: Network failure',
+      'Network failure',
     );
   });
 });

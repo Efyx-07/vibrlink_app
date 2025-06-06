@@ -223,13 +223,10 @@ export async function resetPassword(
 // Service pour vérifier la session utilisateur
 // ===========================================================================================
 export async function validateUserSession(): Promise<void> {
-  console.log('🔎 [validateUserSession] Appel API de validation...');
   const response = await fetch(`${apiUrl}/user/me`, {
     method: 'GET',
     credentials: 'include', // Important pour que le cookie soit envoyé (token)
     headers: { 'Content-Type': 'application/json' },
   });
-
-  console.log('📨 [validateUserSession] Status:', response.status);
   if (!response.ok) throw new Error('Token invalide ou absent');
 }

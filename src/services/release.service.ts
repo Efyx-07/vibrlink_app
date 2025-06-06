@@ -27,17 +27,16 @@ export async function createLink(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
-      const message =
+      const message: string =
         errorData?.message || response.statusText || 'Unknown error';
       throw new Error(message);
     }
 
     const data: ReleaseResponse = await response.json();
     return { releaseSlug: data.releaseSlug };
-  } catch (error) {
-    throw error instanceof Error
-      ? error
-      : new Error('Unknown error during sending album URL');
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Unknown error during sending album URL');
   }
 }
 
@@ -50,10 +49,18 @@ export async function deleteLinkByReleaseId(
     const response = await fetch(`${apiUrl}/releasesRoute/${releaseId}`, {
       method: 'DELETE',
     });
-    if (response.ok) return;
-    else throw new Error('Failed to delete release' + response.statusText);
-  } catch (error) {
-    throw new Error('Failed to delete release' + error);
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      const message: string =
+        errorData?.message || response.statusText || 'Unknown error';
+      throw new Error(message);
+    }
+
+    return;
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Failed to delete release');
   }
 }
 
@@ -73,13 +80,17 @@ export async function updateLink(
       body: JSON.stringify({ newUrls, platformsVisibility }),
     });
 
-    if (response.ok) {
-      const data: { message: string } = await response.json();
-      return data;
-    } else {
-      throw new Error('Failed to update release' + response.statusText);
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      const message: string =
+        errorData?.message || response.statusText || 'Unknown error';
+      throw new Error(message);
     }
-  } catch (error) {
-    throw new Error('Failed to update release' + error);
+
+    const data: { message: string } = await response.json();
+    return data;
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Failed to update release');
   }
 }
