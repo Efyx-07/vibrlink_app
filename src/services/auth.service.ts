@@ -27,16 +27,15 @@ export async function signupUser(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
-      const message =
+      const message: string =
         errorData?.message || response.statusText || 'Unknown error';
       throw new Error(message);
     }
     const data: SignupResponse = await response.json();
     return data;
-  } catch (error) {
-    throw error instanceof Error
-      ? error
-      : new Error('Unknown error during registration');
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Unknown error during registration');
   }
 }
 
@@ -61,16 +60,15 @@ export async function loginUser(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
-      const message =
+      const message: string =
         errorData?.message || response.statusText || 'Unknown error';
       throw new Error(message);
     }
     const data: LoginResponse = await response.json();
     return data;
-  } catch (error) {
-    throw error instanceof Error
-      ? error
-      : new Error('Unknown error during login');
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Unknown error during login');
   }
 }
 
@@ -84,7 +82,7 @@ export async function logoutUserApi(): Promise<{ message: string }> {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => null);
-    const message =
+    const message: string =
       errorData?.message || response.statusText || 'Unknown error';
     throw new Error(message);
   }
@@ -116,17 +114,16 @@ export async function updatePassword(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
-      const message =
+      const message: string =
         errorData?.message || response.statusText || 'Unknown error';
       throw new Error(message);
     }
 
     const data: UpdatePasswordResponse = await response.json();
     return data;
-  } catch (error) {
-    throw error instanceof Error
-      ? error
-      : new Error('Unknown error during password update');
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Unknown error during password update');
   }
 }
 
@@ -142,17 +139,16 @@ export async function deleteUserAccount(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
-      const message =
+      const message: string =
         errorData?.message || response.statusText || 'Unknown error';
       throw new Error(message);
     }
 
     const data: DeleteUserAccountResponse = await response.json();
     return data;
-  } catch (error) {
-    throw error instanceof Error
-      ? error
-      : new Error('Unknown error during account deletion');
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Unknown error during account deletion');
   }
 }
 
@@ -172,17 +168,16 @@ export async function requestPasswordReset(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
-      const message =
+      const message: string =
         errorData?.error || response.statusText || 'Unknown error';
       throw new Error(message);
     }
 
     const data: { message: string } = await response.json();
     return data;
-  } catch (error) {
-    throw error instanceof Error
-      ? error
-      : new Error('Unknown error during email sending');
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Unknown error during email sending');
   }
 }
 
@@ -206,17 +201,16 @@ export async function resetPassword(
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
-      const message =
+      const message: string =
         errorData?.error || response.statusText || 'Unknown error';
       throw new Error(message);
     }
 
     const data: { message: string } = await response.json();
     return data;
-  } catch (error) {
-    throw error instanceof Error
-      ? error
-      : new Error('Unknown error during password reset');
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Unknown error during password reset');
   }
 }
 

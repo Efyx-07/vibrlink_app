@@ -30,9 +30,9 @@ export async function fetchReleasesData(
 
     const releases: Release[] = data.formattedReleases;
     return releases;
-  } catch (error) {
-    console.error('Error while fetching datas', error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Error while fetching datas');
   }
 }
 
@@ -66,8 +66,8 @@ export async function fetchReleaseDataBySlug(
     });
 
     return releaseData;
-  } catch (error) {
-    console.error('Error while fetching datas', error);
-    throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error) throw error;
+    throw new Error('Error while fetching datas');
   }
 }
