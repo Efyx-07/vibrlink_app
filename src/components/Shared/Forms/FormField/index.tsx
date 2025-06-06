@@ -34,7 +34,7 @@ export default function FormField({
       {addedMention && <p className="text-xs opacity-50">{addedMention}</p>}
       <div className="flex h-16 w-full">
         <input
-          className={`size-full border ${isValid === false && value !== '' ? 'border-errorColor' : 'border-whiteLight'} bg-darkColorRelief pl-4 outline-none focus:border-accentColor ${isPasswordField && isValid === false && value !== ''  ? 'border-r-errorColor' : 'border-r-transparent'}`}
+          className={`size-full border ${isValid === false && value !== '' ? 'border-errorColor' : 'border-whiteLight'} bg-darkColorRelief pl-4 outline-none focus:border-accentColor ${isPasswordField && isValid === false && value !== '' ? 'border-r-errorColor' : 'border-r-transparent'}`}
           id={id}
           name={name}
           type={type}
