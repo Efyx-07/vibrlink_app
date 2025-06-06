@@ -1,7 +1,6 @@
-import { apiUrl, backendUrl } from '@/config';
+import { apiUrl } from '@/config';
 import { Release, Platform } from '@/interfaces/release.interface';
 import { User } from '@/interfaces/user.interface';
-import { isRunningOnServer } from '@/utils/isRunningOnServer';
 
 // Service pour fetcher les releases pour un utilisateur (userId). Retourne un tableau de Release
 // ===========================================================================================
