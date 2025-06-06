@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // Proxy pour eviter les restrictions CORS du backend avec un autre domaine.
+  // Proxy pour eviter les restrictions CORS du backend(qui n'est pas sur le même domaine).
   // !important pour l'utilisation du middleware en prod.
   async rewrites() {
     return [
