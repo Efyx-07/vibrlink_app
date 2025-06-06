@@ -7,14 +7,14 @@ import ReleaseCover from '../Shared/ReleaseCover';
 import ReleaseInfos from './ReleaseInfos';
 import ReleaseLinks from './ReleaseLinks';
 import Watermark from './Watermark';
-import { apiUrl } from '@/config';
+import { backendUrl } from '@/config';
 
 interface ReleaseLandingProps {
   slug: Release['slug'];
 }
 
 export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
-  const { data, isLoading } = useRelease(apiUrl, slug);
+  const { data, isLoading } = useRelease(backendUrl, slug);
 
   if (isLoading || !data) return <LoadingPage />;
   return (
