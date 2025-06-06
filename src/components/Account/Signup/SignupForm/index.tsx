@@ -60,6 +60,7 @@ export default function SignupForm() {
     e.preventDefault();
     setErrorMessage(''); // Reset du message d'erreur
 
+    // Affiche un message d'erreur si les champs ne sont pas valides
     if (
       !validateData(email, password) ||
       !validateConfirmPassword(password, confirmPassword)
