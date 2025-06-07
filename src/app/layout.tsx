@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   description: 'Fanlink generator',
 };
 
+// Layout global de l'app
+// ===========================================================================================
 export default function RootLayout({
   children,
 }: Readonly<{
