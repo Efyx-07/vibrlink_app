@@ -1,5 +1,5 @@
 import Signup from '@/components/Account/Signup';
-import PageWrapper from '@/components/Utils/PageWrapper';
+import PageWrapper from '@/components/Hoc/PageWrapper';
 
 export default function SignupPage() {
   return (

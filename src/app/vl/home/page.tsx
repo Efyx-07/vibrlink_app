@@ -1,4 +1,4 @@
-import PageWrapper from '@/components/Utils/PageWrapper';
+import PageWrapper from '@/components/Hoc/PageWrapper';
 import Home from '@/components/Home';
 
 export default function DashboardHomePage() {

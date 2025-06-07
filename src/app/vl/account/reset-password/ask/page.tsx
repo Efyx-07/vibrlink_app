@@ -1,4 +1,4 @@
-import PageWrapper from '@/components/Utils/PageWrapper';
+import PageWrapper from '@/components/Hoc/PageWrapper';
 import ResetPasswordAsk from '@/components/Account/ResetPasswordAsk';
 
 export default function ResetPasswordAskPage() {

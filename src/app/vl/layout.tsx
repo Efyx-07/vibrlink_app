@@ -1,4 +1,4 @@
-import AppInitializer from '@/components/Utils/AppInitializer';
+import AppInitializer from '@/components/Hoc/AppInitializer';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 

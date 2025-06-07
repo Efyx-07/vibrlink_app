@@ -1,5 +1,5 @@
 import LinkEditor from '@/components/Links/LinkEditor';
-import PageWrapper from '@/components/Utils/PageWrapper';
+import PageWrapper from '@/components/Hoc/PageWrapper';
 
 export default function LinkEditorPage() {
   return (
