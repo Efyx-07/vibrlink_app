@@ -1,32 +1,28 @@
 'use client';
 
-import { useRelease } from '@/hooks/useRelease';
 import { Release } from '@/interfaces/release.interface';
 import LoadingPage from '../LoadingPage';
 import ReleaseCover from '../Shared/ReleaseCover';
 import ReleaseInfos from './ReleaseInfos';
 import ReleaseLinks from './ReleaseLinks';
 import Watermark from './Watermark';
-import { backendUrl } from '@/config';
 
 interface ReleaseLandingProps {
-  slug: Release['slug'];
+  release: Release;
 }
 
-export default function ReleaseLanding({ slug }: ReleaseLandingProps) {
-  const { data, isLoading } = useRelease(backendUrl, slug);
-
-  if (isLoading || !data) return <LoadingPage />;
+export default function ReleaseLanding({ release }: ReleaseLandingProps) {
+  if (!release) return <LoadingPage />;
   return (
     <div
       className="flex h-dvh w-full justify-center overflow-hidden bg-cover bg-fixed bg-center"
-      style={{ backgroundImage: `url(${data.cover})` }}
+      style={{ backgroundImage: `url(${release.cover})` }}
     >
       <div className="flex w-full justify-center overflow-y-auto bg-blackOverlay75 backdrop-blur-xl">
         {/* Visible uniquement sur desktop */}
-        <ReleaseLandingCardDesktop release={data} />
+        <ReleaseLandingCardDesktop release={release} />
         {/* Visible uniquement sur mobile */}
-        <ReleaseLandingCardMobile release={data} />
+        <ReleaseLandingCardMobile release={release} />
       </div>
     </div>
   );

@@ -68,7 +68,7 @@ export default async function ReleaseLandingPage({
   // Passe le state pré-hydraté au composant client
   return (
     <HydrationBoundary state={dehydratedState}>
-      <ReleaseLanding slug={release.slug} />
+      <ReleaseLanding release={release} />
     </HydrationBoundary>
   );
 }
