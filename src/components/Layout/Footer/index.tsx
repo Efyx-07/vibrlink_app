@@ -1,4 +1,4 @@
-import { siteName, currentYear } from '@/config';
+import { siteName, currentYear } from '@/constant';
 
 export default function Footer() {
   return (

@@ -5,7 +5,7 @@ import { Release } from '@/interfaces/release.interface';
 import { openInANewTab } from '@/utils/openInANewTab';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { appUrl } from '@/config';
+import { appUrl } from '@/constant';
 
 interface CardCTAButtonsProps {
   release: Release;

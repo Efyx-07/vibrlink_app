@@ -1,5 +1,5 @@
 import { updateLink } from '@/services/release.service';
-import { apiUrl } from '@/config';
+import { apiUrl } from '@/constant';
 
 describe('updateLink', () => {
   const releaseId = 123;

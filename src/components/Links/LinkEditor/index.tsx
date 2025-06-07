@@ -7,7 +7,7 @@ import LoadingPage from '@/components/Layout/LoadingPage';
 import LinkCard from '../Shared/LinkCard';
 import LinkEditorForm from './LinkEditorForm';
 import PageTitle from '@/components/Shared/PageTitle';
-import { apiUrl } from '@/config';
+import { apiUrl } from '@/constant';
 
 export default function LinkEditor() {
   const { releaseSlug } = useParams();

@@ -1,5 +1,5 @@
 import type { NextConfig } from 'next';
-import { backendUrl } from '@/config';
+import { backendUrl } from '@/constant';
 
 if (!backendUrl) throw new Error('BACKEND_URL is not defined');
 

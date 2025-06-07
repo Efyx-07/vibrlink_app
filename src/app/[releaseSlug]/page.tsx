@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-query';
 import ReleaseLanding from '@/components/ReleaseLanding';
 import { Release } from '@/interfaces/release.interface';
-import { backendUrl } from '@/config';
+import { backendUrl } from '@/constant';
 
 type Params = Promise<{ releaseSlug: string }>;
 

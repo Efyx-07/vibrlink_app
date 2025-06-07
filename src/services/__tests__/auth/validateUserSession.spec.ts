@@ -1,5 +1,5 @@
 import { validateUserSession } from '@/services/auth.service';
-import { apiUrl } from '@/config';
+import { apiUrl } from '@/constant';
 
 describe('validateUserSession', () => {
   beforeEach(() => {

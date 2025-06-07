@@ -1,6 +1,6 @@
 'use client';
 
-import { siteName } from '@/config';
+import { siteName } from '@/constant';
 import { useRouter } from 'next/navigation';
 
 export default function SiteLogo() {

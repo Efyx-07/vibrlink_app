@@ -1,5 +1,5 @@
 import { fetchReleasesData } from '@/services/release-api.service';
-import { apiUrl } from '@/config';
+import { apiUrl } from '@/constant';
 
 describe('fetchReleasesData', () => {
   const userId = 123;

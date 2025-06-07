@@ -1,4 +1,4 @@
-import { apiUrl } from '@/config';
+import { apiUrl } from '@/constant';
 import { SpotifyEntry } from '@/interfaces/spotify.interface';
 import {
   Platform,

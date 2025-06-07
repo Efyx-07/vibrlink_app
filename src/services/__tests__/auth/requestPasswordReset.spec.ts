@@ -1,5 +1,5 @@
 import { requestPasswordReset } from '@/services/auth.service';
-import { apiUrl } from '@/config';
+import { apiUrl } from '@/constant';
 
 // Test de la fonction requestPasswordReset
 // ===========================================================================================

@@ -1,5 +1,5 @@
 import { deleteLinkByReleaseId } from '@/services/release.service';
-import { apiUrl } from '@/config';
+import { apiUrl } from '@/constant';
 
 describe('deleteLinkByReleaseId', () => {
   const releaseId = 123;

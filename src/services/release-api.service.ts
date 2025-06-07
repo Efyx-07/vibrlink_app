@@ -1,4 +1,4 @@
-import { apiUrl } from '@/config';
+import { apiUrl } from '@/constant';
 import { Release, Platform } from '@/interfaces/release.interface';
 import { User } from '@/interfaces/user.interface';
 

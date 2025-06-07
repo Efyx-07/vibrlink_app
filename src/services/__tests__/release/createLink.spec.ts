@@ -1,5 +1,5 @@
 import { createLink } from '@/services/release.service';
-import { apiUrl } from '@/config';
+import { apiUrl } from '@/constant';
 
 describe('createLink', () => {
   const albumUrl = 'https://open.spotify.com/album/test';

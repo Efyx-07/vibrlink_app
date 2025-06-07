@@ -1,5 +1,5 @@
 import { openInANewTab } from '@/utils/openInANewTab';
-import { appUrl, siteName } from '@/config';
+import { appUrl, siteName } from '@/constant';
 
 export default function Watermark() {
   return (
