@@ -1,6 +1,6 @@
 import Button from '@/components/Shared/Button';
 import ConfirmModal from '@/components/Shared/ConfirmModal';
-import { useDeleteLink } from '@/hooks/useDeleteLink';
+import { useDeleteLink } from '@/hooks/releases/useDeleteLink';
 import { Release } from '@/interfaces/release.interface';
 import { openInANewTab } from '@/utils/openInANewTab';
 import { useRouter } from 'next/navigation';

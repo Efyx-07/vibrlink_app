@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { MouseEventHandler, useState } from 'react';
 import ConfirmModal from '@/components/Shared/ConfirmModal';
 import { User } from '@/interfaces/user.interface';
-import { useLogoutUser } from '@/hooks/useLogoutUser';
+import { useLogoutUser } from '@/hooks/user/useLogoutUser';
 
 export default function MyAccountItem() {
   const router = useRouter();

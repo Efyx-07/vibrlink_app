@@ -2,7 +2,7 @@ import { Platform, Release } from '@/interfaces/release.interface';
 import Button from '@/components/Shared/Button';
 import PlatformSelector from './PlatformSelector';
 import PlatformField from './PlatformField';
-import { useUpdateReleaseLinks } from '@/hooks/useUpdateReleaseLinks';
+import { useUpdateReleaseLinks } from '@/hooks/releases/useUpdateReleaseLinks';
 import useUrlState from './hooks/useUrlState';
 import useVisibilityState from './hooks/useVisibilityState';
 import { useCallback, useEffect, useMemo, useState } from 'react';

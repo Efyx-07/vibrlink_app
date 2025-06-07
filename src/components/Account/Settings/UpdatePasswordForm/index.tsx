@@ -3,8 +3,8 @@
 import Button from '@/components/Shared/Button';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 import FormField from '@/components/Shared/Forms/FormField';
-import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
-import { useUpdatePassword } from '@/hooks/useUpdatePassword';
+import { usePasswordVisibility } from '@/hooks/password/usePasswordVisibility';
+import { useUpdatePassword } from '@/hooks/password/useUpdatePassword';
 import {
   validatePassword,
   validateConfirmPassword,
@@ -14,7 +14,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
 import SectionTitle from '@/components/Shared/SectionTitle';
-import { useLogoutUser } from '@/hooks/useLogoutUser';
+import { useLogoutUser } from '@/hooks/user/useLogoutUser';
 
 export default function UpdatePasswordForm() {
   const router = useRouter();

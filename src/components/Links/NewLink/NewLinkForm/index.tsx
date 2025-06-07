@@ -9,7 +9,7 @@ import { User } from '@/interfaces/user.interface';
 import { Release } from '@/interfaces/release.interface';
 import { SpotifyEntry } from '@/interfaces/spotify.interface';
 import { useRouter } from 'next/navigation';
-import { useCreateLink } from '@/hooks/useCreateLink';
+import { useCreateLink } from '@/hooks/releases/useCreateLink';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 
 export default function NewLinkForm() {

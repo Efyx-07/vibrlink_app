@@ -3,9 +3,9 @@
 import Button from '@/components/Shared/Button';
 import FormField from '@/components/Shared/Forms/FormField';
 import { useState } from 'react';
-import { useLoginUser } from '@/hooks/useLoginUser';
+import { useLoginUser } from '@/hooks/user/useLoginUser';
 import { User } from '@/interfaces/user.interface';
-import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
+import { usePasswordVisibility } from '@/hooks/password/usePasswordVisibility';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 import SectionTitle from '@/components/Shared/SectionTitle';
 

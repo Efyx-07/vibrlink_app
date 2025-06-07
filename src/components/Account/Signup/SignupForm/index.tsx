@@ -9,12 +9,12 @@ import {
   validateConfirmPassword,
 } from '@/utils/validateDatas';
 import { FormEvent, useEffect, useState } from 'react';
-import { useSignupUser } from '@/hooks/useSignupUser';
+import { useSignupUser } from '@/hooks/user/useSignupUser';
 import { User } from '@/interfaces/user.interface';
-import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
+import { usePasswordVisibility } from '@/hooks/password/usePasswordVisibility';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 import SectionTitle from '@/components/Shared/SectionTitle';
-import { useLoginUser } from '@/hooks/useLoginUser';
+import { useLoginUser } from '@/hooks/user/useLoginUser';
 
 // Composant pour l'inscription d'un utilisateur
 // ===========================================================================================

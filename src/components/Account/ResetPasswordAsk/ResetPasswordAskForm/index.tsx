@@ -6,7 +6,7 @@ import FormField from '@/components/Shared/Forms/FormField';
 import SectionTitle from '@/components/Shared/SectionTitle';
 import { User } from '@/interfaces/user.interface';
 import { useState } from 'react';
-import { useRequestPasswordReset } from '@/hooks/useRequestPasswordReset';
+import { useRequestPasswordReset } from '@/hooks/password/useRequestPasswordReset';
 
 export default function ResetPasswordAskForm() {
   // State pour le formulaire de connexion

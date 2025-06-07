@@ -4,9 +4,9 @@ import Button from '@/components/Shared/Button';
 import ErrorMessage from '@/components/Shared/Forms/ErrorMessage';
 import FormField from '@/components/Shared/Forms/FormField';
 import SectionTitle from '@/components/Shared/SectionTitle';
-import { usePasswordVisibility } from '@/hooks/usePasswordVisibility';
+import { usePasswordVisibility } from '@/hooks/password/usePasswordVisibility';
 import { FormEvent, useEffect, useState } from 'react';
-import { useResetPassword } from '@/hooks/useResetPassword';
+import { useResetPassword } from '@/hooks/password/useResetPassword';
 import {
   validatePassword,
   validateConfirmPassword,

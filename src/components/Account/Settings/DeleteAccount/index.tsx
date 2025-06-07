@@ -1,13 +1,13 @@
 'use client';
 
 import ConfirmModal from '@/components/Shared/ConfirmModal';
-import { useDeleteAccount } from '@/hooks/useDeleteAccount';
+import { useDeleteAccount } from '@/hooks/user/useDeleteAccount';
 import { useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
 import Button from '@/components/Shared/Button';
 import SectionTitle from '@/components/Shared/SectionTitle';
-import { useLogoutUser } from '@/hooks/useLogoutUser';
+import { useLogoutUser } from '@/hooks/user/useLogoutUser';
 
 export default function DeleteAccount() {
   // Récupération du user dans le store
