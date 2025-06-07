@@ -3,7 +3,7 @@
 import useUserStore from '@/stores/userStore';
 import { User } from '@/interfaces/user.interface';
 import { useReleases } from '@/hooks/releases/useReleases';
-import LoadingPage from '@/components/LoadingPage';
+import LoadingPage from '@/components/Layout/LoadingPage';
 import LinkCard from '../Shared/LinkCard';
 import PageTitle from '@/components/Shared/PageTitle';
 import EmptyList from './EmptyList';

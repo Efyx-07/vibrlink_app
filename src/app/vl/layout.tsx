@@ -1,6 +1,6 @@
 import AppInitializer from '@/components/Hoc/AppInitializer';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
+import Header from '@/components/Layout/Header';
+import Footer from '@/components/Layout/Footer';
 
 export default function MainLayout({
   children,

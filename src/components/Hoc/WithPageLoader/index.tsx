@@ -1,6 +1,6 @@
 'use client';
 
-import LoadingPage from '@/components/LoadingPage';
+import LoadingPage from '@/components/Layout/LoadingPage';
 import { useEffect, useState } from 'react';
 
 interface WithPageLoaderProps {

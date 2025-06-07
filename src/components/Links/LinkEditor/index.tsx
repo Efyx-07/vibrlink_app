@@ -3,7 +3,7 @@
 import { Release } from '@/interfaces/release.interface';
 import { useParams } from 'next/navigation';
 import { useRelease } from '@/hooks/releases/useRelease';
-import LoadingPage from '@/components/LoadingPage';
+import LoadingPage from '@/components/Layout/LoadingPage';
 import LinkCard from '../Shared/LinkCard';
 import LinkEditorForm from './LinkEditorForm';
 import PageTitle from '@/components/Shared/PageTitle';

@@ -1,7 +1,7 @@
 import FormContainer from '@/components/Shared/Forms/FormContainer';
 import UpdatePasswordForm from './UpdatePasswordForm';
 import DeleteAccount from './DeleteAccount';
-import FormPagesWording from '@/components/Shared/FormPageWording';
+import FormPagesWording from '@/components/Layout/FormPageWording';
 import StyledSeparator from '@/components/Shared/Separator/StyledSeparator';
 
 export default function Settings() {

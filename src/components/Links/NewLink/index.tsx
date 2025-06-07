@@ -1,6 +1,6 @@
 import FormContainer from '@/components/Shared/Forms/FormContainer';
 import NewLinkForm from './NewLinkForm';
-import FormPagesWording from '@/components/Shared/FormPageWording';
+import FormPagesWording from '@/components/Layout/FormPageWording';
 import StyledSeparator from '@/components/Shared/Separator/StyledSeparator';
 
 export default function NewLink() {

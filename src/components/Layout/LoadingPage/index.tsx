@@ -1,4 +1,4 @@
-import LoadingSpinner from '../Shared/LoadingSpinner';
+import LoadingSpinner from "@/components/Shared/LoadingSpinner";
 
 interface LoadingPageProps {
   mention?: string;

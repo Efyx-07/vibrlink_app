@@ -1,6 +1,6 @@
 import FormContainer from '../../Shared/Forms/FormContainer';
 import SignupForm from './SignupForm';
-import FormPagesWording from '@/components/Shared/FormPageWording';
+import FormPagesWording from '@/components/Layout/FormPageWording';
 import StyledSeparator from '@/components/Shared/Separator/StyledSeparator';
 
 export default function Signup() {

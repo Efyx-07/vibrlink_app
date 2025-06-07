@@ -1,7 +1,7 @@
 'use client';
 
 import { Release } from '@/interfaces/release.interface';
-import LoadingPage from '../LoadingPage';
+import LoadingPage from '../Layout/LoadingPage';
 import ReleaseCover from '../Shared/ReleaseCover';
 import ReleaseInfos from './ReleaseInfos';
 import ReleaseLinks from './ReleaseLinks';
