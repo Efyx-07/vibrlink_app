@@ -1,36 +1,97 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# VibrLink
 
-## Getting Started
+#### _- Partie frontend -_
 
-First, run the development server:
+#### Application de génération de fanlinks pour promotion musicale
+
+# • • •
+
+## Description
+
+Cette application permet à un utilisateur ...
+
+## Fonctionnalités
+
+- **xxxx** : xxxx
+
+## Technologies utilisées
+
+- **xxxx** : xxxx
+
+## Configuration
+
+### Communication avec le backend
+
+La partie frontend détaillée ici communique avec un backend présent sur un autre dépôt (<a href="">dépôt du backend</a>). Pour lier le backend au frontend:
+
+1. Créez un fichier `.env` à la racine du projet et l'URL du backend comme suit :
+   ```plaintext
+   NEXT_PUBLIC_BACKEND_URL=BackendUrl
+   ```
+2. Assurez-vous que votre fichier `.env` est ignoré par Git. Le fichier .gitignore doit inclure .env pour éviter que la clé ne soit exposée publiquement.
+
+## Installation
+
+1. Clonez le dépôt:
+   ```plaintext
+   git clone url depot
+   ```
+2. Accédez au projet:
+   ```plaintext
+   cd nom projet
+   ```
+3. Installez les dépendances:
+   ```plaintext
+   npm install
+   ```
+4. Lancez le serveur de développement:
+   ```plaintext
+   npm run dev
+   ```
+5. Ouvrez votre navigateur et accédez à http://localhost:3000 pour voir l'application en action.
+
+## Tests
+
+Des tests unitaires ont été écrits pour assurer le bon fonctionnement des fonctionnalités critiques de l’application. Pour les exécuter, utilisez la commande suivante:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# unit tests
+npm run test
+
+# test coverage
+npm run test:cov
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Screenshots
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Interface: Présentation de l'app.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![Screenshot 1](./screenshots/presentation.png)
 
-## Learn More
+2. Interface: Accueil du dashboard invitant à la création du compte.
 
-To learn more about Next.js, take a look at the following resources:
+![Screenshot 2](./screenshots/home.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Interface: Point d'entrée "Créer un nouveau fanlink".
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![Screenshot 3](./screenshots/new-link.png)
 
-## Deploy on Vercel
+4. Interface: Liste des fanlinks créés.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![Screenshot 4](./screenshots/my-links.png)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. Interface: Edition d'un fanlink (modifier url, supprimer plateforme, rendre visible ou invisible une plateforme).
+
+![Screenshot 5](./screenshots/link-editor.png)
+
+6. Interface: Exemple de la page publique à partager (version desktop).
+
+![Screenshot 6](./screenshots/landing-desktop.png)
+
+## Note
+
+Ce dépôt ne concerne que la partie frontend de l'application. Pour fonctionner celle-ci est indissociable de son backend réalisé en NodeJs.
+
+**Bonne découverte !**
+
+FX.
