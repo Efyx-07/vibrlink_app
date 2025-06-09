@@ -9,7 +9,7 @@ export default function ResetPasswordAsk() {
       <FormPagesWording
         mainTextPrimary="Oops !"
         mainTextSecondary="it seems you forgot your password"
-        subText="Login to your account and manage all your vibrlinks or just create a new one !"
+        subText="Don't worry, if your email exists in our database, we'll send you a reset link to choose another one !"
       />
       <StyledSeparator icon="emojione-monotone:face-screaming-in-fear" />
       <FormContainer
