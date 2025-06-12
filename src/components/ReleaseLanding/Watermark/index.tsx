@@ -1,3 +1,5 @@
+'use client';
+
 import { openInANewTab } from '@/utils/openInANewTab';
 import { appUrl, siteName } from '@/constant';
 

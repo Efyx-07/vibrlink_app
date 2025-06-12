@@ -1,5 +1,3 @@
-'use client';
-
 import { Release } from '@/interfaces/release.interface';
 import LoadingPage from '../Layout/LoadingPage';
 import ReleaseCover from '../Shared/ReleaseCover';
@@ -43,7 +41,7 @@ function ReleaseLandingCardDesktop({ release }: ReleaseLandingCardProps) {
       </div>
       <div className="col-start-2 col-end-[-1] flex w-full max-w-[45rem] flex-col gap-8 px-0 py-16">
         <ReleaseInfos release={release} />
-        <ReleaseLinks release={release} />
+        <ReleaseLinks slug={release.slug} />
         <Watermark />
       </div>
     </div>
@@ -59,7 +57,7 @@ function ReleaseLandingCardMobile({ release }: ReleaseLandingCardProps) {
         <ReleaseCover release={release} />
       </div>
       <ReleaseInfos release={release} />
-      <ReleaseLinks release={release} />
+      <ReleaseLinks slug={release.slug} />
       <Watermark />
     </div>
   );

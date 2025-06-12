@@ -1,10 +1,5 @@
 import { Metadata } from 'next';
 import { fetchReleaseDataBySlug } from '@/services/release-api.service';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
 import ReleaseLanding from '@/components/ReleaseLanding';
 import { Release } from '@/interfaces/release.interface';
 import { backendUrl } from '@/constant';
@@ -49,26 +44,10 @@ export default async function ReleaseLandingPage({
 }) {
   const { releaseSlug } = await params;
 
-  // Précharge les données de la release côté serveur et les met en cache dans le client
+  // Précharge les données de la release côté serveur
   const release: Release = await fetchReleaseDataBySlug(
     backendUrl,
     releaseSlug,
   );
-
-  // Utilise le client de requête pour précharger les données
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: ['release', release.slug],
-    queryFn: () => Promise.resolve(release),
-  });
-
-  // Déhydrate le cache dans un objet JS simple
-  const dehydratedState = dehydrate(queryClient);
-
-  // Passe le state pré-hydraté au composant client
-  return (
-    <HydrationBoundary state={dehydratedState}>
-      <ReleaseLanding release={release} />
-    </HydrationBoundary>
-  );
+  return <ReleaseLanding release={release} />;
 }
