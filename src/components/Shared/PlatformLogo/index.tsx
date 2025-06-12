@@ -6,14 +6,20 @@ interface PlatformLogoProps {
   size?: number;
 }
 
-export default function PlatformLogo({ platform, size }: PlatformLogoProps) {
+export default function PlatformLogo({
+  platform,
+  size = 125,
+}: PlatformLogoProps) {
   return (
-    <Image
-      src={platform.logoUrl}
-      width={size || 125}
-      height={size || 125}
-      alt={platform.name}
-      priority
-    />
+    <div style={{ position: 'relative', width: size, height: size }}>
+      <Image
+        src={platform.logoUrl}
+        alt={platform.name}
+        fill
+        sizes={`${size}px`}
+        style={{ objectFit: 'contain' }}
+        priority
+      />
+    </div>
   );
 }
