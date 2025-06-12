@@ -17,9 +17,9 @@ export default function ReleaseLinks({ slug }: ReleaseLinksProps) {
   const { data: release, isLoading, isError } = useRelease(apiUrl, slug);
 
   if (isLoading) return linkLoadingSkeleton();
-  if (isError || !release) return <p>Erreur lors du chargement</p>;
-
+  if (isError || !release) return <p>An error occured...</p>;
   // ===========================================================================================
+
   return (
     <div className="flex size-full flex-col bg-whiteLight xl:gap-4 xl:bg-transparent">
       {release.platforms.map((platform) =>
@@ -40,6 +40,8 @@ export default function ReleaseLinks({ slug }: ReleaseLinksProps) {
   );
 }
 
+// Composant local pour le squelette de chargement (= 3 liens)
+// ===========================================================================================
 function linkLoadingSkeleton() {
   const skeletonItem = (
     <div className="flex h-20 items-center justify-between border-t border-t-whiteLight px-4 xl:h-[4.25rem] xl:rounded-[4rem] xl:border xl:border-whiteLight xl:bg-whiteLight25 xl:px-8">
