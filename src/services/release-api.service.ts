@@ -1,37 +1,18 @@
 import { apiUrl } from '@/constant';
 import { Release, Platform } from '@/interfaces/release.interface';
-import { User } from '@/interfaces/user.interface';
 
-// Service pour fetcher les releases pour un utilisateur (userId). Retourne un tableau de Release
+// Service pour fetcher les releases pour un utilisateur (userId récupéré dans le token).
+// Retourne un tableau de Release.
 // ===========================================================================================
-export async function fetchReleasesData(
-  userId: User['id'],
-): Promise<Release[]> {
+export async function fetchReleasesData(): Promise<Release[]> {
   try {
-    const response = await fetch(
-      `${apiUrl}/releasesRoute/releases/user-releases`,
-      {
-        credentials: 'include', // Important pour que le cookie soit envoyé (token)
-      },
-    );
+    const response = await fetch(`${apiUrl}/releases/user-releases`, {
+      credentials: 'include', // Important pour que le cookie soit envoyé (token)
+    });
 
     if (!response.ok) throw new Error('Error while fetching datas');
 
-    const data = await response.json();
-
-    if (!data.formattedReleases) {
-      console.error('Invalid response format:', data);
-      throw new Error('Invalid response format');
-    }
-
-    // convert the visibility values from number to boolean (1 = true, 0 = false)
-    data.formattedReleases.forEach((release: Release) => {
-      release.platforms.forEach((platform: Platform) => {
-        platform.visibility = !!platform.visibility;
-      });
-    });
-
-    const releases: Release[] = data.formattedReleases;
+    const releases = await response.json();
     return releases;
   } catch (error: unknown) {
     if (error instanceof Error) throw error;
@@ -48,9 +29,7 @@ export async function fetchReleaseDataBySlug(
   releaseSlug: Release['slug'],
 ): Promise<Release> {
   try {
-    const response = await fetch(
-      `${baseUrl}/releasesRoute/releases/${releaseSlug}`,
-    );
+    const response = await fetch(`${baseUrl}/releases/${releaseSlug}`);
 
     if (!response.ok)
       throw new Error('Error while fetching datas of the release');
