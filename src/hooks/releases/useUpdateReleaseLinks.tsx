@@ -6,10 +6,10 @@ import { Release, Platform } from '@/interfaces/release.interface';
 // ===========================================================================================
 type UpdateReleaseLinksParams = {
   releaseId: Release['id'];
-  newUrls: { [key: Platform['id']]: string };
+  newUrls: { [key: Platform['platformId']]: string };
   platformsState: {
-    id: Platform['id'];
-    visibility: Platform['visibility'];
+    id: Platform['platformId'];
+    visibility: Platform['platformVisibility'];
   }[];
 };
 
@@ -28,7 +28,7 @@ export function useUpdateReleaseLinks() {
           acc[platform.id] = platform.visibility;
           return acc;
         },
-        {} as { [key: Platform['id']]: Platform['visibility'] },
+        {} as { [key: number]: Platform['platformVisibility'] },
       );
       return updateLink(newUrls, platformsVisibility, releaseId);
     },
