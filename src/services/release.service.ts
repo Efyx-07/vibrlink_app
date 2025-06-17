@@ -64,8 +64,10 @@ export async function deleteLinkByReleaseId(
 // Service mettre à jour un lien, retourne un message de succès
 // ===========================================================================================
 export async function updateLink(
-  newUrls: { [key: Platform['id']]: string },
-  platformsVisibility: { [key: Platform['id']]: Platform['visibility'] },
+  newUrls: { [key: Platform['platformId']]: string },
+  platformsVisibility: {
+    [key: Platform['platformId']]: Platform['platformVisibility'];
+  },
   releaseId: Release['id'],
 ): Promise<{ message: string }> {
   try {
