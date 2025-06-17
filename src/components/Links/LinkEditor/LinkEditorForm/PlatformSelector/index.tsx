@@ -5,7 +5,7 @@ import { Icon } from '@iconify/react';
 interface PlatformSelectorProps {
   platformsWithoutUrl: Platform[];
   onChange: ChangeEventHandler<HTMLSelectElement>;
-  selectedPlatformId: Platform['id'] | null;
+  selectedPlatformId: Platform['platformId'] | null;
 }
 
 export default function PlatformSelector({
@@ -26,8 +26,8 @@ export default function PlatformSelector({
           Add a platform
         </option>
         {platformsWithoutUrl.map((platform) => (
-          <option key={platform.id} value={platform.id}>
-            {platform.name}
+          <option key={platform.platformId} value={platform.platformId}>
+            {platform.platformName}
           </option>
         ))}
       </select>

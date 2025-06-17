@@ -23,15 +23,17 @@ export default function ReleaseLinks({ slug }: ReleaseLinksProps) {
   return (
     <div className="flex size-full flex-col bg-whiteLight xl:gap-4 xl:bg-transparent">
       {release.platforms.map((platform) =>
-        platform.url && platform.visibility ? (
+        platform.platformUrl && platform.platformVisibility ? (
           <div
             className="group flex h-20 cursor-pointer items-center justify-between border-t border-t-whiteLight px-4 hover:bg-darkColor xl:h-[4.25rem] xl:rounded-[4rem] xl:border xl:border-whiteLight xl:bg-whiteLight25 xl:px-8"
-            key={platform.id}
-            onClick={() => platform.url && openInANewTab(platform.url)}
+            key={platform.platformId}
+            onClick={() =>
+              platform.platformUrl && openInANewTab(platform.platformUrl)
+            }
           >
             <PlatformLogo platform={platform} size={112} />
             <button className="border border-whiteLight bg-transparent px-4 py-1 group-hover:bg-whiteColor group-hover:text-darkColor">
-              {platform.actionVerb}
+              {platform.platformActionVerb}
             </button>
           </div>
         ) : null,

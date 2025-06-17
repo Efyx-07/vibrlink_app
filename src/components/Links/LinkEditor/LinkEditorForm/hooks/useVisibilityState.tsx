@@ -14,7 +14,7 @@ export default function useVisibilityState({
 }: UseVisibilityStateParams) {
   // État pour la visibilité des plateformes
   const [platformsVisibility, setPlatformsVisibility] = useState<{
-    [key: Platform['id']]: Platform['visibility'];
+    [key: Platform['platformId']]: Platform['platformVisibility'];
   }>({});
 
   // Référence pour vérifier si le hook a été initialisé
@@ -50,11 +50,13 @@ export default function useVisibilityState({
 // Crée un objet de visibilité initial pour les plateformes
 // ===========================================================================================
 function createInitialVisibility(platforms: Platform[]): {
-  [key: Platform['id']]: Platform['visibility'];
+  [key: Platform['platformId']]: Platform['platformVisibility'];
 } {
-  const visibility: { [key: Platform['id']]: Platform['visibility'] } = {};
+  const visibility: {
+    [key: Platform['platformId']]: Platform['platformVisibility'];
+  } = {};
   platforms.forEach((platform) => {
-    visibility[platform.id] = platform.visibility;
+    visibility[platform.platformId] = platform.platformVisibility;
   });
   return visibility;
 }

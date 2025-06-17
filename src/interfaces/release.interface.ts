@@ -27,10 +27,10 @@ export interface Release {
 }
 
 export interface Platform {
-  id: number;
-  name: string;
-  logoUrl: string;
-  actionVerb: string;
-  url: string | null;
-  visibility: boolean;
+  platformId: number;
+  platformName: string;
+  platformLogoUrl: string;
+  platformActionVerb: string;
+  platformUrl: string | null;
+  platformVisibility: boolean;
 }

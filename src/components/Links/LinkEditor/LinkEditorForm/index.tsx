@@ -39,8 +39,8 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
   // Memo pour éviter recalcul à chaque render pour la visiibilité des plateformes
   // Transforme l'objet platformsVisibility en tableau d'objets
   const platformsVisibilityArray: {
-    id: Platform['id'];
-    visibility: Platform['visibility'];
+    id: Platform['platformId'];
+    visibility: Platform['platformVisibility'];
   }[] = useMemo(
     () =>
       Object.entries(platformsVisibility).map(([id, visibility]) => ({
@@ -82,10 +82,10 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
       <LinkEditorSection title="Generated links">
         {platformsWithUrl.map((platform) => (
           <PlatformField
-            key={platform.id}
+            key={platform.platformId}
             platform={platform}
             platformsWithUrl={platformsWithUrl}
-            value={newUrls[platform.id] || ''}
+            value={newUrls[platform.platformId] || ''}
             onChange={handleUrlChange}
             platformsVisibility={platformsVisibility}
             onVisibilityChange={handleVisibilityChange}
@@ -98,7 +98,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
           {selectedPlatform && (
             <PlatformField
               platform={selectedPlatform}
-              value={newUrls[selectedPlatform.id] || ''}
+              value={newUrls[selectedPlatform.platformId] || ''}
               onChange={handleUrlChange}
               platformsVisibility={{}}
               onVisibilityChange={() => {}}
@@ -108,7 +108,7 @@ export default function LinkEditorForm({ release }: LinkEditorFormProps) {
           <PlatformSelector
             platformsWithoutUrl={platformsWithoutUrl}
             onChange={handlePlatformChange}
-            selectedPlatformId={selectedPlatform?.id ?? null} // Réinitialise à la valeur par défaut après ajout d'une platform
+            selectedPlatformId={selectedPlatform?.platformId ?? null} // Réinitialise à la valeur par défaut après ajout d'une platform
           />
         </LinkEditorSection>
       )}

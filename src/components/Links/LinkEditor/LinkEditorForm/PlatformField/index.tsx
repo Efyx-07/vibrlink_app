@@ -7,12 +7,17 @@ import VerticalSeparator from '@/components/Shared/Separator/VerticalSeparator';
 
 interface PlatformFieldProps {
   value: string;
-  onChange: (platformId: Platform['id'], url: string) => void;
+  onChange: (platformId: Platform['platformId'], url: string) => void;
   platformsWithUrl?: Platform[];
   platform: Platform;
   onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
-  platformsVisibility: { [key: Platform['id']]: Platform['visibility'] };
-  onVisibilityChange: (platformId: Platform['id'], checked: boolean) => void;
+  platformsVisibility: {
+    [key: Platform['platformId']]: Platform['platformVisibility'];
+  };
+  onVisibilityChange: (
+    platformId: Platform['platformId'],
+    checked: boolean,
+  ) => void;
 }
 
 // Composant global pour un champ du LinkEditorForm
@@ -68,7 +73,7 @@ export default function PlatformField({
 // ===========================================================================================
 interface PlatformFieldInputProps {
   value: string;
-  onChange: (platformId: Platform['id'], url: string) => void;
+  onChange: (platformId: Platform['platformId'], url: string) => void;
   platform: Platform;
 }
 
@@ -82,7 +87,7 @@ function PlatformFieldInput({
       className="size-full border border-whiteLight bg-darkColorRelief pl-4 text-sm outline-none placeholder:text-whiteLight25 focus:border-accentColor md:border-r-transparent"
       type="url"
       value={value}
-      onChange={(e) => onChange(platform.id, e.target.value)}
+      onChange={(e) => onChange(platform.platformId, e.target.value)}
       placeholder="Enter your URL here"
     />
   );
@@ -93,8 +98,13 @@ function PlatformFieldInput({
 interface ActionButtonsProps {
   platform: Platform;
   platformsWithUrl?: Platform[];
-  platformsVisibility: { [key: Platform['id']]: Platform['visibility'] };
-  onVisibilityChange: (platformId: Platform['id'], checked: boolean) => void;
+  platformsVisibility: {
+    [key: Platform['platformId']]: Platform['platformVisibility'];
+  };
+  onVisibilityChange: (
+    platformId: Platform['platformId'],
+    checked: boolean,
+  ) => void;
   onAddButtonClick: MouseEventHandler<HTMLButtonElement>;
 }
 function ActionButtons({
@@ -110,12 +120,18 @@ function ActionButtons({
         <>
           <AcionButton
             label="Test link"
-            onClick={() => platform.url && openInANewTab(platform.url)}
+            onClick={() =>
+              platform.platformUrl && openInANewTab(platform.platformUrl)
+            }
           />
           <Switch
-            checked={platformsVisibility[platform.id] || false}
-            onChange={(checked) => onVisibilityChange(platform.id, checked)}
-            label={platformsVisibility[platform.id] ? 'Visible' : 'Hidden'}
+            checked={platformsVisibility[platform.platformId] || false}
+            onChange={(checked) =>
+              onVisibilityChange(platform.platformId, checked)
+            }
+            label={
+              platformsVisibility[platform.platformId] ? 'Visible' : 'Hidden'
+            }
           />
         </>
       ) : (

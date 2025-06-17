@@ -14,16 +14,18 @@ export default function useUrlState({
 }: UseUrlStateParams) {
   // État pour les plateformes avec URL
   const [platformsWithUrl, setPlatformsWithUrl] = useState<Platform[]>(
-    platforms.filter((platform) => platform.url),
+    platforms.filter((platform) => platform.platformUrl),
   );
 
   // État pour les plateformes sans URL
   const [platformsWithoutUrl, setPlatformsWithoutUrl] = useState<Platform[]>(
-    platforms.filter((platform) => !platform.url),
+    platforms.filter((platform) => !platform.platformUrl),
   );
 
   // État pour les nouvelles URL
-  const [newUrls, setNewUrls] = useState<{ [key: Platform['id']]: string }>({});
+  const [newUrls, setNewUrls] = useState<{
+    [key: Platform['platformId']]: string;
+  }>({});
 
   // État pour la plateforme sélectionnée
   const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(
@@ -31,9 +33,9 @@ export default function useUrlState({
   );
 
   // État pour les IDs des plateformes à ajouter
-  const [platformIdsToAdd, setPlatformIdsToAdd] = useState<Platform['id'][]>(
-    [],
-  );
+  const [platformIdsToAdd, setPlatformIdsToAdd] = useState<
+    Platform['platformId'][]
+  >([]);
 
   // Référence pour vérifier si le hook a été initialisé
   const isInitialized: RefObject<boolean> = useRef(false);
@@ -56,19 +58,22 @@ export default function useUrlState({
   }, [platformIdsToAdd]);
 
   // Fonction pour gérer le changement d'URL
-  const handleUrlChange = (platformId: Platform['id'], url: string): void => {
+  const handleUrlChange = (
+    platformId: Platform['platformId'],
+    url: string,
+  ): void => {
     setNewUrls((prevUrls) => ({ ...prevUrls, [platformId]: url }));
   };
 
   // Fonction pour ajouter une plateforme avec URL
   const addToPlatformsWithUrl = (): void => {
-    if (selectedPlatform && newUrls[selectedPlatform.id]) {
+    if (selectedPlatform && newUrls[selectedPlatform.platformId]) {
       const platformToAdd = {
         ...selectedPlatform,
-        url: newUrls[selectedPlatform.id],
+        url: newUrls[selectedPlatform.platformId],
       };
       setPlatformsWithUrl((prev) => [...prev, platformToAdd]);
-      setPlatformIdsToAdd((prev) => [...prev, selectedPlatform.id]);
+      setPlatformIdsToAdd((prev) => [...prev, selectedPlatform.platformId]);
       setSelectedPlatform(null);
       triggerUpdate(); // Signale au parent qu'il faut lancer la mutation
     }
@@ -78,8 +83,8 @@ export default function useUrlState({
   const handlePlatformChange = (
     e: React.ChangeEvent<HTMLSelectElement>,
   ): void => {
-    const id: Platform['id'] = parseInt(e.target.value);
-    const platform = platforms.find((p) => p.id === id) ?? null;
+    const id: Platform['platformId'] = parseInt(e.target.value);
+    const platform = platforms.find((p) => p.platformId === id) ?? null;
     setSelectedPlatform(platform);
   };
   // ===========================================================================================
@@ -98,11 +103,11 @@ export default function useUrlState({
 // Crée un objet d'URL initial à partir des plateformes
 // ===========================================================================================
 function createInitialUrls(platforms: Platform[]): {
-  [key: Platform['id']]: string;
+  [key: Platform['platformId']]: string;
 } {
-  const urls: { [key: Platform['id']]: string } = {};
+  const urls: { [key: Platform['platformId']]: string } = {};
   platforms.forEach((platform) => {
-    if (platform.url) urls[platform.id] = platform.url;
+    if (platform.platformUrl) urls[platform.platformId] = platform.platformUrl;
   });
   return urls;
 }
@@ -111,9 +116,9 @@ function createInitialUrls(platforms: Platform[]): {
 // ===========================================================================================
 function filterPlatformsWithoutUrl(
   platformsWithoutUrl: Platform[],
-  platformIdsToAdd: Platform['id'][],
+  platformIdsToAdd: Platform['platformId'][],
 ): Platform[] {
   return platformsWithoutUrl.filter(
-    (platform) => !platformIdsToAdd.includes(platform.id),
+    (platform) => !platformIdsToAdd.includes(platform.platformId),
   );
 }

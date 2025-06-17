@@ -13,8 +13,8 @@ export default function PlatformLogo({
   return (
     <div style={{ position: 'relative', width: size, height: size }}>
       <Image
-        src={platform.logoUrl}
-        alt={platform.name}
+        src={platform.platformLogoUrl}
+        alt={platform.platformName}
         fill
         sizes={`${size}px`}
         style={{ objectFit: 'contain' }}
