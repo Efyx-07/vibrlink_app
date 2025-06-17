@@ -10,20 +10,17 @@ import { User } from '@/interfaces/user.interface';
 // Service pour la création d'un lien. Retourne le slug qui servira pour la redirection.
 // ===========================================================================================
 export async function createLink(
-  albumUrl: SpotifyEntry['albumUrl'],
+  spotifyAlbumUrl: SpotifyEntry['albumUrl'],
   userId: User['id'] | undefined,
 ): Promise<{ releaseSlug: ReleaseResponse['releaseSlug'] }> {
   try {
-    const response = await fetch(
-      `${apiUrl}/releasesRoute/getReleaseSpotifyUrl`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ albumUrl, userId }),
+    const response = await fetch(`${apiUrl}/releases/create`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ spotifyAlbumUrl, userId }),
+    });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
@@ -46,7 +43,7 @@ export async function deleteLinkByReleaseId(
   releaseId: ReleaseResponse['releaseId'],
 ): Promise<void> {
   try {
-    const response = await fetch(`${apiUrl}/releasesRoute/${releaseId}`, {
+    const response = await fetch(`${apiUrl}/releases/${releaseId}`, {
       method: 'DELETE',
     });
 
@@ -72,7 +69,7 @@ export async function updateLink(
   releaseId: Release['id'],
 ): Promise<{ message: string }> {
   try {
-    const response = await fetch(`${apiUrl}/releasesRoute/${releaseId}`, {
+    const response = await fetch(`${apiUrl}/releases/${releaseId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

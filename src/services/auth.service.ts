@@ -14,7 +14,7 @@ export async function signupUser(
   password: User['password'],
 ): Promise<SignupResponse> {
   try {
-    const response = await fetch(`${apiUrl}/user/register`, {
+    const response = await fetch(`${apiUrl}/users/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ export async function loginUser(
   password: User['password'],
 ): Promise<LoginResponse> {
   try {
-    const response = await fetch(`${apiUrl}/user/login`, {
+    const response = await fetch(`${apiUrl}/users/login`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
@@ -75,7 +75,7 @@ export async function loginUser(
 // Service pour la déconnexion d'un utilisateur, retourne un message de succès
 // ===========================================================================================
 export async function logoutUserApi(): Promise<{ message: string }> {
-  const response = await fetch(`${apiUrl}/user/logout`, {
+  const response = await fetch(`${apiUrl}/users/logout`, {
     method: 'POST',
     credentials: 'include', // Important pour que le cookie soit envoyé (token)
   });
@@ -99,7 +99,7 @@ export async function updatePassword(
   newUserPassword: User['password'],
 ): Promise<UpdatePasswordResponse> {
   try {
-    const response = await fetch(`${apiUrl}/passwordRoute/update-password`, {
+    const response = await fetch(`${apiUrl}/password/update-password`, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json',
@@ -133,7 +133,7 @@ export async function deleteUserAccount(
   userId: User['id'],
 ): Promise<DeleteUserAccountResponse> {
   try {
-    const response = await fetch(`${apiUrl}/user/${userId}`, {
+    const response = await fetch(`${apiUrl}/users/${userId}`, {
       method: 'DELETE',
     });
 
@@ -158,7 +158,7 @@ export async function requestPasswordReset(
   email: User['email'],
 ): Promise<{ message: string }> {
   try {
-    const response = await fetch(`${apiUrl}/passwordRoute/forgot-password`, {
+    const response = await fetch(`${apiUrl}/password/forgot-password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -188,16 +188,13 @@ export async function resetPassword(
   newPassword: User['password'],
 ): Promise<{ message: string }> {
   try {
-    const response = await fetch(
-      `${apiUrl}/passwordRoute/reset-password/${token}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ newPassword }),
+    const response = await fetch(`${apiUrl}/password/reset-password/${token}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    );
+      body: JSON.stringify({ newPassword }),
+    });
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
@@ -217,7 +214,7 @@ export async function resetPassword(
 // Service pour vérifier la session utilisateur
 // ===========================================================================================
 export async function validateUserSession(): Promise<void> {
-  const response = await fetch(`${apiUrl}/user/me`, {
+  const response = await fetch(`${apiUrl}/users/me`, {
     method: 'GET',
     credentials: 'include', // Important pour que le cookie soit envoyé (token)
     headers: { 'Content-Type': 'application/json' },

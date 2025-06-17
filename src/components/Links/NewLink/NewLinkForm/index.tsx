@@ -17,7 +17,8 @@ export default function NewLinkForm() {
   const router = useRouter();
 
   // State pour l'URL de l'album
-  const [albumUrl, setAlbumUrl] = useState<SpotifyEntry['albumUrl']>('');
+  const [spotifyAlbumUrl, setSpotifyAlbumUrl] =
+    useState<SpotifyEntry['albumUrl']>('');
   const [isAlbumUrlValid, setIsAlbumUrlValid] = useState<boolean>(false);
 
   // State pour l'opération de redirection
@@ -29,8 +30,8 @@ export default function NewLinkForm() {
 
   // Vérification de la validité du champ
   useEffect(() => {
-    setIsAlbumUrlValid(validateSpotifyUrl(albumUrl));
-  }, [albumUrl]);
+    setIsAlbumUrlValid(validateSpotifyUrl(spotifyAlbumUrl));
+  }, [spotifyAlbumUrl]);
 
   // Utilisation du hook de création des liens
   const { mutate, isPending } = useCreateLink();
@@ -41,7 +42,7 @@ export default function NewLinkForm() {
     setErrorMessage(''); // Reset du message d'erreur
 
     // Vérifie si l'URL est valide
-    if (!validateSpotifyUrl(albumUrl)) {
+    if (!validateSpotifyUrl(spotifyAlbumUrl)) {
       setErrorMessage('Invalid spotify url');
       return;
     }
@@ -51,7 +52,7 @@ export default function NewLinkForm() {
 
     // Appelle la mutation pour créer le lien
     mutate(
-      { albumUrl, userId },
+      { spotifyAlbumUrl, userId },
       {
         onSuccess: (data) => {
           const releaseSlug: Release['slug'] = data.releaseSlug;
@@ -75,9 +76,9 @@ export default function NewLinkForm() {
         addedMention='example: "https://open.spotify.com/intl-fr/album/..."'
         name="albumUrl"
         type="url"
-        value={albumUrl}
+        value={spotifyAlbumUrl}
         onChange={(e) => {
-          setAlbumUrl(e.target.value);
+          setSpotifyAlbumUrl(e.target.value);
           if (errorMessage) setErrorMessage('');
         }}
         isValid={isAlbumUrlValid}

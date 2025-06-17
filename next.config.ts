@@ -20,16 +20,16 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       {
-        source: '/vl/user/:path*',
-        destination: `${backendUrl}/user/:path*`,
+        source: '/vl/users/:path*',
+        destination: `${backendUrl}/users/:path*`,
       },
       {
-        source: '/vl/passwordRoute/:path*',
-        destination: `${backendUrl}/passwordRoute/:path*`,
+        source: '/vl/password/:path*',
+        destination: `${backendUrl}/password/:path*`,
       },
       {
-        source: '/vl/releasesRoute/:path*',
-        destination: `${backendUrl}/releasesRoute/:path*`,
+        source: '/vl/releases/:path*',
+        destination: `${backendUrl}/releases/:path*`,
       },
     ];
   },

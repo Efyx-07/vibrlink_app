@@ -6,7 +6,7 @@ import { SpotifyEntry } from '@/interfaces/spotify.interface';
 // Hook pour gérer la création d'un lien avec React Query
 // ===========================================================================================
 type CreateLinkParams = {
-  albumUrl: SpotifyEntry['albumUrl'];
+  spotifyAlbumUrl: SpotifyEntry['albumUrl'];
   userId: User['id'] | undefined;
 };
 
@@ -15,8 +15,8 @@ export function useCreateLink() {
 
   return useMutation({
     mutationKey: ['createLink'],
-    mutationFn: async ({ albumUrl, userId }: CreateLinkParams) => {
-      return createLink(albumUrl, userId);
+    mutationFn: async ({ spotifyAlbumUrl, userId }: CreateLinkParams) => {
+      return createLink(spotifyAlbumUrl, userId);
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['releases'] }),
   });

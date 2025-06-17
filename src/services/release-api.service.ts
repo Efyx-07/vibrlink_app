@@ -8,9 +8,12 @@ export async function fetchReleasesData(
   userId: User['id'],
 ): Promise<Release[]> {
   try {
-    const response = await fetch(`${apiUrl}/releasesRoute/releases/${userId}`, {
-      credentials: 'include', // Important pour que le cookie soit envoyé (token)
-    });
+    const response = await fetch(
+      `${apiUrl}/releasesRoute/releases/user-releases`,
+      {
+        credentials: 'include', // Important pour que le cookie soit envoyé (token)
+      },
+    );
 
     if (!response.ok) throw new Error('Error while fetching datas');
 
@@ -46,7 +49,7 @@ export async function fetchReleaseDataBySlug(
 ): Promise<Release> {
   try {
     const response = await fetch(
-      `${baseUrl}/releasesRoute/release/${releaseSlug}`,
+      `${baseUrl}/releasesRoute/releases/${releaseSlug}`,
     );
 
     if (!response.ok)
