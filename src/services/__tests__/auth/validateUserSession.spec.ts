@@ -16,7 +16,7 @@ describe('validateUserSession', () => {
 
     await expect(validateUserSession()).resolves.toBeUndefined();
 
-    expect(fetch).toHaveBeenCalledWith(`${apiUrl}/user/me`, {
+    expect(fetch).toHaveBeenCalledWith(`${apiUrl}/users/me`, {
       method: 'GET',
       credentials: 'include',
       headers: { 'Content-Type': 'application/json' },

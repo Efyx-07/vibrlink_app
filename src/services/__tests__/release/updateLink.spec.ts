@@ -3,7 +3,7 @@ import { apiUrl } from '@/constant';
 
 describe('updateLink', () => {
   const releaseId = 123;
-  const endpoint = `${apiUrl}/releasesRoute/${releaseId}`;
+  const endpoint = `${apiUrl}/releases/${releaseId}`;
   const newUrls = {
     spotify: 'https://open.spotify.com/album/xyz',
     apple: 'https://music.apple.com/album/abc',

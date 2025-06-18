@@ -2,8 +2,6 @@ import { fetchReleasesData } from '@/services/release-api.service';
 import { apiUrl } from '@/constant';
 
 describe('fetchReleasesData', () => {
-  const userId = 123;
-
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -34,14 +32,13 @@ describe('fetchReleasesData', () => {
       } as Response),
     );
 
-    const releases = await fetchReleasesData(userId);
+    const releases = await fetchReleasesData();
     expect(releases).toHaveLength(1);
-    expect(releases[0].platforms[0].visibility).toBe(true);
-    expect(releases[0].platforms[1].visibility).toBe(false);
-    expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/releasesRoute/releases/${userId}`,
-      { credentials: 'include' },
-    );
+    expect(releases[0].platforms[0].platformVisibility).toBe(true);
+    expect(releases[0].platforms[1].platformVisibility).toBe(false);
+    expect(fetch).toHaveBeenCalledWith(`${apiUrl}/releases/user-releases`, {
+      credentials: 'include',
+    });
   });
 
   // Test erreur : fetch renvoie un status non ok
@@ -52,7 +49,7 @@ describe('fetchReleasesData', () => {
       } as Response),
     );
 
-    await expect(fetchReleasesData(userId)).rejects.toThrow(
+    await expect(fetchReleasesData()).rejects.toThrow(
       'Error while fetching datas',
     );
   });
@@ -68,7 +65,7 @@ describe('fetchReleasesData', () => {
       } as Response),
     );
 
-    await expect(fetchReleasesData(userId)).rejects.toThrow(
+    await expect(fetchReleasesData()).rejects.toThrow(
       'Invalid response format',
     );
   });
@@ -77,6 +74,6 @@ describe('fetchReleasesData', () => {
   it('should throw error on fetch failure', async () => {
     global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
 
-    await expect(fetchReleasesData(userId)).rejects.toThrow('Network error');
+    await expect(fetchReleasesData()).rejects.toThrow('Network error');
   });
 });

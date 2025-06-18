@@ -22,7 +22,7 @@ describe('logoutUserApi', () => {
     const data = await logoutUserApi();
     expect(data).toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/user/logout`,
+      `${apiUrl}/users/logout`,
       expect.objectContaining({
         method: 'POST',
         credentials: 'include',

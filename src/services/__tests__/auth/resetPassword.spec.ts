@@ -25,7 +25,7 @@ describe('resetPassword', () => {
     const data = await resetPassword(token, newPassword);
     expect(data).toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/passwordRoute/reset-password/${token}`,
+      `${apiUrl}/password/reset-password/${token}`,
       expect.objectContaining({
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

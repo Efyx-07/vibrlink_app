@@ -29,7 +29,7 @@ describe('loginUser', () => {
     const data = await loginUser(email, password);
     expect(data).toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/user/login`,
+      `${apiUrl}/users/login`,
       expect.objectContaining({
         method: 'POST',
         headers: { 'Content-type': 'application/json' },

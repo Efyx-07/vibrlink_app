@@ -25,7 +25,7 @@ describe('signupUser', () => {
     const data = await signupUser(email, password);
     expect(data).toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/user/register`,
+      `${apiUrl}/users/signup`,
       expect.objectContaining({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

@@ -3,7 +3,7 @@ import { apiUrl } from '@/constant';
 
 describe('deleteLinkByReleaseId', () => {
   const releaseId = 123;
-  const endpoint = `${apiUrl}/releasesRoute/${releaseId}`;
+  const endpoint = `${apiUrl}/releases/${releaseId}`;
 
   // Nettoyage après chaque test
   afterEach(() => {

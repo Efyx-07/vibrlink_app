@@ -26,7 +26,7 @@ describe('updatePassword', () => {
     const data = await updatePassword(userId, currentPassword, newUserPassword);
     expect(data).toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/passwordRoute/update-password`,
+      `${apiUrl}/password/update-password`,
       expect.objectContaining({
         method: 'PUT',
         headers: { 'Content-type': 'application/json' },

@@ -36,8 +36,8 @@ describe('fetchReleaseDataBySlug', () => {
 
     expect(release).toBeDefined();
     expect(release.slug).toBe('test-release');
-    expect(release.platforms[0].visibility).toBe(true);
-    expect(release.platforms[1].visibility).toBe(false);
+    expect(release.platforms[0].platformVisibility).toBe(true);
+    expect(release.platforms[1].platformVisibility).toBe(false);
     expect(fetch).toHaveBeenCalledWith(
       `${mockBaseUrl}/releasesRoute/release/${slug}`,
     );

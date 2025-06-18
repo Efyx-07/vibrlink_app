@@ -24,7 +24,7 @@ describe('requestPasswordReset', () => {
     const data = await requestPasswordReset(email);
     expect(data).toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/passwordRoute/forgot-password`,
+      `${apiUrl}/password/forgot-password`,
       expect.objectContaining({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

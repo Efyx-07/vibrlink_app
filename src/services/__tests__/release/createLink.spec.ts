@@ -2,9 +2,9 @@ import { createLink } from '@/services/release.service';
 import { apiUrl } from '@/constant';
 
 describe('createLink', () => {
-  const albumUrl = 'https://open.spotify.com/album/test';
+  const spotifyAlbumUrl = 'https://open.spotify.com/album/test';
   const userId = 42;
-  const endpoint = `${apiUrl}/releasesRoute/getReleaseSpotifyUrl`;
+  const endpoint = `${apiUrl}/releases/create`;
 
   // Restaurer les mocks après chaque test
   afterEach(() => {
@@ -22,13 +22,13 @@ describe('createLink', () => {
       } as Response),
     );
 
-    const result = await createLink(albumUrl, userId);
+    const result = await createLink(spotifyAlbumUrl, userId);
 
     expect(result).toEqual({ releaseSlug: 'test-slug' });
     expect(fetch).toHaveBeenCalledWith(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ albumUrl, userId }),
+      body: JSON.stringify({ spotifyAlbumUrl, userId }),
     });
   });
 
@@ -44,7 +44,7 @@ describe('createLink', () => {
       } as Response),
     );
 
-    await expect(createLink(albumUrl, userId)).rejects.toThrow(
+    await expect(createLink(spotifyAlbumUrl, userId)).rejects.toThrow(
       'Invalid album URL',
     );
   });
@@ -59,14 +59,18 @@ describe('createLink', () => {
       } as Response),
     );
 
-    await expect(createLink(albumUrl, userId)).rejects.toThrow('Bad Request');
+    await expect(createLink(spotifyAlbumUrl, userId)).rejects.toThrow(
+      'Bad Request',
+    );
   });
 
   // Test erreur : fetch rejette la promesse (ex : erreur réseau)
   it('should throw an error on fetch failure', async () => {
     global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
 
-    await expect(createLink(albumUrl, userId)).rejects.toThrow('Network error');
+    await expect(createLink(spotifyAlbumUrl, userId)).rejects.toThrow(
+      'Network error',
+    );
   });
 
   // Test erreur : fetch renvoie une erreur inconnue (non instance d’Error)
@@ -76,7 +80,7 @@ describe('createLink', () => {
       return Promise.reject('Something went wrong');
     });
 
-    await expect(createLink(albumUrl, userId)).rejects.toThrow(
+    await expect(createLink(spotifyAlbumUrl, userId)).rejects.toThrow(
       'Unknown error during sending album URL',
     );
   });

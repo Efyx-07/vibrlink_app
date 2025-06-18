@@ -24,7 +24,7 @@ describe('deleteUserAccount', () => {
     const data = await deleteUserAccount(userId);
     expect(data).toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/user/${userId}`,
+      `${apiUrl}/users/${userId}`,
       expect.objectContaining({
         method: 'DELETE',
       }),
