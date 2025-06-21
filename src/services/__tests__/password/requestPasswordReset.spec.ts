@@ -1,19 +1,18 @@
-import { signupUser } from '@/services/auth.service';
+import { requestPasswordReset } from '@/services/password.service';
 import { apiUrl } from '@/constant';
 
-// Test de la fonction signupUser
+// Test de la fonction requestPasswordReset
 // ===========================================================================================
-describe('signupUser', () => {
+describe('requestPasswordReset', () => {
   const email = 'test@example.com';
-  const password = 'Password123!';
 
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  // Test succès: retourne les données utilisateur après inscription réussie
-  it('should return data on successful signup', async () => {
-    const mockResponse = { userId: 1, email };
+  // Test succès : retourne un message de succès après demande de réinitialisation
+  it('should return success message on successful password reset request', async () => {
+    const mockResponse = { message: 'Password reset email sent' };
 
     global.fetch = jest.fn(() =>
       Promise.resolve({
@@ -22,34 +21,34 @@ describe('signupUser', () => {
       } as Response),
     );
 
-    const data = await signupUser(email, password);
+    const data = await requestPasswordReset(email);
     expect(data).toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/users/signup`,
+      `${apiUrl}/password/forgot-password`,
       expect.objectContaining({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email }),
       }),
     );
   });
 
-  // Test erreur: l'API renvoie un message d'erreur explicite (ex: email déjà existant)
+  // Test erreur : l'API renvoie un message d'erreur explicite
   it('should throw error with message from API when response is not ok', async () => {
-    const errorMessage = 'Email already exists';
+    const errorMessage = 'Email not registered';
 
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: false,
-        json: () => Promise.resolve({ message: errorMessage }),
-        statusText: 'Conflict',
+        json: () => Promise.resolve({ error: errorMessage }),
+        statusText: 'Bad Request',
       } as Response),
     );
 
-    await expect(signupUser(email, password)).rejects.toThrow(errorMessage);
+    await expect(requestPasswordReset(email)).rejects.toThrow(errorMessage);
   });
 
-  // Test erreur: l'API ne renvoie pas de message dans le JSON, on utilise statusText
+  // Test erreur : l'API ne renvoie pas de message, on utilise statusText
   it('should throw error with statusText if API does not send message', async () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
@@ -59,15 +58,15 @@ describe('signupUser', () => {
       } as Response),
     );
 
-    await expect(signupUser(email, password)).rejects.toThrow(
+    await expect(requestPasswordReset(email)).rejects.toThrow(
       'Internal Server Error',
     );
   });
 
-  // Test erreur: échec réseau ou autre erreur non prévue
+  // Test erreur : échec réseau ou erreur inconnue
   it('should throw generic error on network failure', async () => {
     global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
 
-    await expect(signupUser(email, password)).rejects.toThrow('Network error');
+    await expect(requestPasswordReset(email)).rejects.toThrow('Network error');
   });
 });

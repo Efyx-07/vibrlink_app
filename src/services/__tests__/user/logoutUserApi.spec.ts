@@ -1,18 +1,16 @@
-import { deleteUserAccount } from '@/services/auth.service';
+import { logoutUserApi } from '@/services/user.service';
 import { apiUrl } from '@/constant';
 
-// Test de la fonction deleteUserAccount
+// Test de la fonction logoutUserApi
 // ===========================================================================================
-describe('deleteUserAccount', () => {
-  const userId = 123;
-
+describe('logoutUserApi', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  // Test succès : retourne un message de succès après suppression du compte utilisateur
-  it('should return success message on successful account deletion', async () => {
-    const mockResponse = { message: 'Account deleted successfully' };
+  // Test succès : retourne un message de succès après déconnexion
+  it('should return success message on successful logout', async () => {
+    const mockResponse = { message: 'Logout successful' };
 
     global.fetch = jest.fn(() =>
       Promise.resolve({
@@ -21,50 +19,49 @@ describe('deleteUserAccount', () => {
       } as Response),
     );
 
-    const data = await deleteUserAccount(userId);
+    const data = await logoutUserApi();
     expect(data).toEqual(mockResponse);
     expect(fetch).toHaveBeenCalledWith(
-      `${apiUrl}/users/${userId}`,
+      `${apiUrl}/users/logout`,
       expect.objectContaining({
-        method: 'DELETE',
+        method: 'POST',
+        credentials: 'include',
       }),
     );
   });
 
   // Test erreur : l'API renvoie un message d'erreur explicite
   it('should throw error with message from API when response is not ok', async () => {
-    const errorMessage = 'User not found';
+    const errorMessage = 'Logout failed';
 
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: false,
         json: () => Promise.resolve({ message: errorMessage }),
-        statusText: 'Not Found',
+        statusText: 'Bad Request',
       } as Response),
     );
 
-    await expect(deleteUserAccount(userId)).rejects.toThrow(errorMessage);
+    await expect(logoutUserApi()).rejects.toThrow(errorMessage);
   });
 
-  // Test erreur : l'API ne renvoie pas de message, on utilise statusText
+  // Test erreur : l'API ne renvoie pas de message dans le JSON, on utilise statusText
   it('should throw error with statusText if API does not send message', async () => {
     global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: false,
         json: () => Promise.reject('fail'),
-        statusText: 'Internal Server Error',
+        statusText: 'Service Unavailable',
       } as Response),
     );
 
-    await expect(deleteUserAccount(userId)).rejects.toThrow(
-      'Internal Server Error',
-    );
+    await expect(logoutUserApi()).rejects.toThrow('Service Unavailable');
   });
 
-  // Test erreur : échec réseau ou erreur inconnue
+  // Test erreur : échec réseau ou autre erreur non prévue
   it('should throw generic error on network failure', async () => {
     global.fetch = jest.fn(() => Promise.reject(new Error('Network error')));
 
-    await expect(deleteUserAccount(userId)).rejects.toThrow('Network error');
+    await expect(logoutUserApi()).rejects.toThrow('Network error');
   });
 });

@@ -1,5 +1,5 @@
 import { User } from '@/interfaces/user.interface';
-import { signupUser } from '@/services/auth.service';
+import { signupUser } from '@/services/user.service';
 import { useMutation } from '@tanstack/react-query';
 
 // Hook pour gérer l'inscription utilisateur avec React Query

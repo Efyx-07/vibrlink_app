@@ -1,5 +1,5 @@
 import { User } from '@/interfaces/user.interface';
-import { loginUser } from '@/services/auth.service';
+import { loginUser } from '@/services/user.service';
 import { useMutation } from '@tanstack/react-query';
 import useUserStore from '@/stores/userStore';
 import { useRouter } from 'next/navigation';

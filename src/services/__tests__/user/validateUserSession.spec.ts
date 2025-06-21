@@ -1,4 +1,4 @@
-import { validateUserSession } from '@/services/auth.service';
+import { validateUserSession } from '@/services/user.service';
 import { apiUrl } from '@/constant';
 
 describe('validateUserSession', () => {

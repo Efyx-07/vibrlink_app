@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { logoutUserApi } from '@/services/auth.service';
+import { logoutUserApi } from '@/services/user.service';
 import useUserStore from '@/stores/userStore';
 import { useRouter } from 'next/navigation';
 

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useUserStore from '@/stores/userStore';
 import LoadingPage from '@/components/Layout/LoadingPage';
 import { useLogoutUser } from '@/hooks/user/useLogoutUser';
-import { validateUserSession } from '@/services/auth.service';
+import { validateUserSession } from '@/services/user.service';
 import AuthRedirector from '../AuthRedirector';
 
 interface Props {

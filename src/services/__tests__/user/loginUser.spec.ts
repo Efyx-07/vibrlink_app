@@ -1,4 +1,4 @@
-import { loginUser } from '@/services/auth.service';
+import { loginUser } from '@/services/user.service';
 import { apiUrl } from '@/constant';
 
 // Test de la fonction loginUser

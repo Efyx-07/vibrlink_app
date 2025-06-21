@@ -1,4 +1,4 @@
-import { updatePassword } from '@/services/auth.service';
+import { updatePassword } from '@/services/password.service';
 import { apiUrl } from '@/constant';
 
 // Test de la fonction updatePassword

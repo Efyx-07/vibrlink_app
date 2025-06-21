@@ -1,5 +1,5 @@
 import { User } from '@/interfaces/user.interface';
-import { resetPassword } from '@/services/auth.service';
+import { resetPassword } from '@/services/password.service';
 import { useMutation } from '@tanstack/react-query';
 
 // Hook pour gérer la réinitialisation du mot de passe d'un utilisateur avec React Query

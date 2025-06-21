@@ -1,5 +1,5 @@
 import { apiUrl } from '@/constant';
-import { Release, Platform } from '@/interfaces/release.interface';
+import { Release } from '@/interfaces/release.interface';
 
 // Service pour fetcher les releases pour un utilisateur (userId récupéré dans le token).
 // Retourne un tableau de Release.

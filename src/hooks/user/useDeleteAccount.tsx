@@ -1,6 +1,6 @@
 import { DeleteUserAccountResponse, User } from '@/interfaces/user.interface';
 import { useMutation } from '@tanstack/react-query';
-import { deleteUserAccount } from '@/services/auth.service';
+import { deleteUserAccount } from '@/services/user.service';
 
 // Hook pour gérer la suppression d'un compte utilisateur avec React Query
 // ===========================================================================================

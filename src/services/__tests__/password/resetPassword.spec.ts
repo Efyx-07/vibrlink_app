@@ -1,4 +1,4 @@
-import { resetPassword } from '@/services/auth.service';
+import { resetPassword } from '@/services/password.service';
 import { apiUrl } from '@/constant';
 
 // Test de la fonction resetPassword
