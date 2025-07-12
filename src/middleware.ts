@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 // Fonction de vérification d'authentification
 // ===========================================================================================
 function isAuthenticated(request: NextRequest) {
-  const token = request.cookies.get('token')?.value;
+  const token: string | undefined = request.cookies.get('token')?.value;
   return Boolean(token);
 }
 
@@ -12,10 +12,10 @@ function isAuthenticated(request: NextRequest) {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  const isLoggedIn = isAuthenticated(request);
+  const isLoggedIn: boolean = isAuthenticated(request);
 
   // Pages accessibles seulement si non connecté
-  const guestOnlyRoutes = [
+  const guestOnlyRoutes: string[] = [
     '/vl/home',
     '/vl/account/login',
     '/vl/account/signup',
@@ -23,12 +23,12 @@ export function middleware(request: NextRequest) {
   ];
 
   // Pages accessibles seulement si connecté
-  const authOnlyRoutes = ['/vl/account/settings'];
+  const authOnlyRoutes: string[] = ['/vl/account/settings'];
 
-  const isGuestOnly = guestOnlyRoutes.some((route) =>
+  const isGuestOnly: boolean = guestOnlyRoutes.some((route) =>
     pathname.startsWith(route),
   );
-  const isAuthOnly =
+  const isAuthOnly: boolean =
     pathname.startsWith('/vl/links') ||
     authOnlyRoutes.some((route) => pathname.startsWith(route));
 
