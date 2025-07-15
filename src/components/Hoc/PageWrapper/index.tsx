@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import { WithPageLoader } from '../WithPageLoader';
+import { WithPageLoader } from './WithPageLoader';
 import { motion } from 'motion/react';
 
 interface PageWrapperProps {
